@@ -1,16 +1,15 @@
 package view;
 
-import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Year {
 	
-	Map<String, Month> months = new HashMap<String, Month>();
-	Map<Integer, String> monthNames = new HashMap<Integer, String>();
-	int year;
-	boolean leapYear;
+	private Map<String, Month> months = new HashMap<String, Month>();
+	private Map<Integer, String> monthNames = new HashMap<Integer, String>();
+	private int year;
+	private boolean leapYear;
 
 		public Year(int year) {
 			fillMonthNames();
@@ -31,6 +30,15 @@ public class Year {
 			
 		}
 		
+		public Year(int year, List<Month> months) {
+			fillMonthNames();
+			leapYear = leap(year);
+			this.year = year;
+			for (Month month : months) {
+				this.months.put(month.getName(), month);
+			}
+		}
+		
 		private void fillMonthNames() {
 			monthNames.put(1, "January");
 			monthNames.put(2, "February");
@@ -45,16 +53,8 @@ public class Year {
 			monthNames.put(11, "November");
 			monthNames.put(12, "December");
 		}
-
-		public Year(int year, List<Month> months) {
-			leapYear = leap(year);
-			this.year = year;
-			for (Month month : months) {
-				this.months.put(month.getName(), month, year);
-			}
-		}
 		
-		public setMonth(Month month) {
+		public void setMonth(Month month) {
 			months.put(month.getName(), month);
 		}
 		
