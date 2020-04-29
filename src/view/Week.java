@@ -10,7 +10,7 @@ public class Week {
 		days = new Day[7]; 
 	}
 	
-	public Week(int weekNum, day[] days) {
+	public Week(int weekNum, Day[] days) {
 		this.weekNum = weekNum;
 		this.days = days;
 	}
