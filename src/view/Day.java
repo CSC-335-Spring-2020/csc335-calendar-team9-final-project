@@ -1,3 +1,4 @@
+package view;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,23 @@ public class Day {
 		return events;
 		
 	}
+	
+	/**
+	 * Adds the given event to the events list of the day, returns false if the event 
+	 * already exists
+	 * @param i The index at which to insert the event
+	 * @param event The event to add
+	 * @return boolean indicating if the event is able to be added or not
+	 */
+	public boolean addEvent(int i, Event event) {
+		if (events.contains(event)) {
+			return false;
+		}
+		events.add(i, event);
+		return true;
+		
+	}	
+	
 	
 	/**
 	 * This method sets the events to the passed in list of events

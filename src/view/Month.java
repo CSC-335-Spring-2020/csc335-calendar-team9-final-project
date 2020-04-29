@@ -64,14 +64,14 @@ public class Month {
 		}
 	}
 	
-	public day getDay(int dayNum) {
+	public Day getDay(int dayNum) {
 		if (dayNum <= days.length) {
 			return days[dayNum - 1];
 		}
 		return null;
 	}
 	
-	public days[] getDays() {
+	public Day[] getDays() {
 		return days;
 	}
 	
