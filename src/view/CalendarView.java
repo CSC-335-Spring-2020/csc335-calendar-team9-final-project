@@ -25,7 +25,7 @@ public class CalendarView extends Application {
 	
 	public static class MonthView extends Stage {
 		private static final int WIDTH = 7;
-		private static final int HEIGHT = 5;
+		private static final int HEIGHT = 6;
 		private GridPane grid;
 		public MonthView() {
 			BorderPane control = new BorderPane();
@@ -50,6 +50,9 @@ public class CalendarView extends Application {
 					grid.add(tempStack, j, i);
 				}
 			}
+			grid.setOnMouseClicked((event) -> {
+				System.out.println((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
+			});
 		}
 	}
 }
