@@ -1,4 +1,7 @@
-package view;
+package controller;
+
+import model.Day;
+import model.Event;
 
 public class CalendarController {
 	

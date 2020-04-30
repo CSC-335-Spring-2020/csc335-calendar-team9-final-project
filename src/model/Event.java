@@ -1,4 +1,5 @@
-package view;
+package model;
+
 /**
  * This class represents an Event object that contains a variety of information about a given calendar event. 
  */
