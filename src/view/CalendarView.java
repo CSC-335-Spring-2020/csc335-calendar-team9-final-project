@@ -10,4 +10,10 @@ public class CalendarView extends Application {
 		// TODO Auto-generated method stub
 		
 	}
+	private class MonthView extends javafx.stage.Stage {
+		
+	}
 }
+
+
+
