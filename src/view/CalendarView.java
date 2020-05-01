@@ -23,24 +23,31 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Day;
+import model.Year;
 
 public class CalendarView extends Application {
 	private CalendarController controller;
+	private int currYear;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		controller = new CalendarController(2020);
-		MonthView months = new MonthView();
+		currYear = 2020;
+		MonthView months = new MonthView("May");
 		months.show();
 	}
 	
-	public static class MonthView extends Stage {
+	public class MonthView extends Stage {
 		private static final int WIDTH = 7;
 		private static final int HEIGHT = 6;
 		private GridPane grid;
 		private HBox buttonRow;
-		public MonthView() {
+		private String month;
+		public MonthView(String month) {
+			this.month = month;
 			BorderPane control = new BorderPane();
 			control.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
 			grid = new GridPane();
@@ -57,12 +64,20 @@ public class CalendarView extends Application {
 		
 		private void buildGrid() {
 			grid.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
+			Day[] days = controller.getDays(month, currYear);
+			int currDay = 1;
 			for(int i=0;i<HEIGHT;i++) {
 				for(int j=0;j<WIDTH;j++) {
 					StackPane tempStack = new StackPane();
-					tempStack.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, null, null)));
+					tempStack.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
 					Rectangle tempRect = new Rectangle(80,70,Color.LIGHTBLUE);
 					tempStack.getChildren().add(tempRect);
+					System.out.println(null == days[0]);
+					if(days[i*WIDTH + j] != null) {
+						Text dayLabel = new Text(String.valueOf(currDay));
+						currDay++;
+						tempStack.getChildren().add(dayLabel);
+					}
 					StackPane.setMargin(tempRect, new Insets(5));
 					grid.add(tempStack, j, i);
 				}
@@ -103,7 +118,7 @@ public class CalendarView extends Application {
 		}
 	}
 	
-	public static class WeekView extends Stage {
+	public class WeekView extends Stage {
 		private static final int WIDTH = 7;
 		private GridPane grid;
 		public WeekView() {
@@ -131,14 +146,14 @@ public class CalendarView extends Application {
 		}
 	}
 	
-	public static class DayView extends Stage {
+	public class DayView extends Stage {
 		
 		public DayView() {
 			//TODO
 		}
 	}
 	
-	public static class EventBox extends Stage {
+	public class EventBox extends Stage {
 		
 		public EventBox() {
 			//TODO
