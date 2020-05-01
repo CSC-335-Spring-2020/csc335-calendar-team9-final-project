@@ -28,6 +28,22 @@ public class CalendarController extends Observable{
 	}
 	
 	/**
+	 * Adds an event to the given day object
+	 * @param day The object to add the event to
+	 * @param label The label of the event
+	 * @param sH The starting hour of the event
+	 * @param sM The starting minute of the event
+	 * @param eH The end hour of the event
+	 * @param eM The end minute of the minute
+	 * @param notes The notes of the event (can be null)
+	 * @param loc The location of the event (can be null)
+	 */
+	public void addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc) {
+		Event event = new Event(day, label, sH, sM, eH, eM, notes, loc);
+		day.addEvent(day.getEvents().size()-1, event);
+	}
+	
+	/**
 	 * Adds the given event to the given day's list of events. Returns false if 
 	 * the event already existed for the day
 	 * @param index The index at which the event is to be added
