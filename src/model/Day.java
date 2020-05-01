@@ -17,12 +17,35 @@ public class Day extends java.util.Observable{
 	/**
 	 * This is the primary constructor that creates a day object,
 	 * also initiating an empty list of events for that day. 
-	 * @param day The given day of the week
+	 * @param day The given day of the week 0 = sunday, 6 = saturday
 	 * @param date The given date
 	 * @param month The given month that the day is in
 	 */
-	public Day(String day, int date, String month) {
-		this.day = day;
+	public Day(int day, int date, String month) {
+		switch(day) {
+			case 0:
+				this.day = "Sunday";
+				break;
+			case 1:
+				this.day = "Monday";
+				break;
+			case 2:
+				this.day = "Tuesday";
+				break;
+			case 3:
+				this.day = "Wendsday";
+				break;
+			case 4:
+				this.day = "Thursday";
+				break;
+			case 5:
+				this.day = "Friday";
+				break;
+			case 6:
+				this.day = "Saturday";
+				break;
+			
+		}
 		this.date = date;
 		this.month = month;
 		events = new ArrayList<Event>();
