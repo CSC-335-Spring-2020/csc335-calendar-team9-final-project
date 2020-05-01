@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 
+import controller.CalendarController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -25,13 +26,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class CalendarView extends Application {
-
+	private CalendarController controller;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
+		controller = new CalendarController();
 		MonthView months = new MonthView();
 		months.show();
-		WeekView week = new WeekView();
-		week.show();
 	}
 	
 	public static class MonthView extends Stage {
@@ -130,6 +131,27 @@ public class CalendarView extends Application {
 		}
 	}
 	
+	public static class DayView extends Stage {
+		
+		public DayView() {
+			//TODO
+		}
+	}
+	
+	public static class EventBox extends Stage {
+		
+		public EventBox() {
+			//TODO
+		}
+	}
+	
+	/**
+	 * Utility method for retrieving the node at a given location in a grid pane.
+	 * @param grid The grid to locate a node within.
+	 * @param row The row index of the grid to grab from.
+	 * @param column The
+	 * @return
+	 */
 	public Node getNodeByRowColumnIndex(GridPane grid,int row,int column) {
 		  Node result = null;
 		  List<Node> childrens = grid.getChildren();
