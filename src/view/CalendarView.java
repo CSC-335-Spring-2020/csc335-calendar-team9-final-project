@@ -66,7 +66,7 @@ public class CalendarView extends Application implements Observer {
 		
 		private void buildGrid() {
 			grid.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
-			Day[] days = controller.getDays(month, currYear);
+			Day[] days = controller.getDays(month);
 			int currDay = 1;
 			for(int i=0;i<HEIGHT;i++) {
 				for(int j=0;j<WIDTH;j++) {
@@ -74,7 +74,6 @@ public class CalendarView extends Application implements Observer {
 					tempStack.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
 					Rectangle tempRect = new Rectangle(80,70,Color.LIGHTBLUE);
 					tempStack.getChildren().add(tempRect);
-					System.out.println(null == days[0]);
 					if(days[i*WIDTH + j] != null) {
 						Text dayLabel = new Text(String.valueOf(currDay));
 						currDay++;
@@ -113,7 +112,7 @@ public class CalendarView extends Application implements Observer {
 					"November", 
 					"December"
 					);
-			months.setValue("January");
+			months.setValue("May");
 			buttonRow.getChildren().addAll(zoomIn, zoomOut, months);
 			buttonRow.setSpacing(8);
 			

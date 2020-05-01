@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -23,6 +24,7 @@ public class CalendarController extends Observable{
 	 */
 	public CalendarController(int currYear, CalendarView view) {
 		this.currYear = currYear;
+		years = new HashMap<Integer, Year>();
 		years.put(currYear, new Year(currYear, view));
 		years.put(currYear - 1, new Year(currYear - 1, view));
 		years.put(currYear + 1, new Year(currYear + 1, view));
