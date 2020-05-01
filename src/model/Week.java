@@ -1,6 +1,6 @@
 package model;
 
-public class Week {
+public class Week extends java.util.Observable{
 	
 	private Day[] days;
 	private int weekNum;

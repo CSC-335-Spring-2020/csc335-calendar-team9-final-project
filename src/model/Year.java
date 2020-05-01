@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Year {
+public class Year extends java.util.Observable{
 	
 	private Map<String, Month> months = new HashMap<String, Month>();
 	private Map<Integer, String> monthNames = new HashMap<Integer, String>();
