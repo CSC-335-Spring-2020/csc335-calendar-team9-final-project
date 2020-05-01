@@ -99,16 +99,6 @@ public class CalendarView extends Application implements Observer {
 		}
 		
 		private void buildButtons() {
-			ImageView plusView = new ImageView(new Image("https://i.ibb.co/Fg6jnYd/plus.png"));
-			ImageView minusView = new ImageView(new Image("https://i.ibb.co/XXBNvcq/plus.png"));
-			Button zoomIn = new Button();
-			zoomIn.setGraphic(plusView);
-			zoomIn.setTooltip(new Tooltip("Week View"));
-			zoomIn.setShape(new Circle(7));
-			Button zoomOut = new Button();
-			zoomOut.setGraphic(minusView);
-			zoomOut.setTooltip(new Tooltip("Year View"));
-			zoomOut.setShape(new Circle(7));
 			ComboBox<String> weeks = new ComboBox<String>();
 			weeks.getItems().addAll("Month View", "Week 1", "Week 2","Week 3","Week 4","Week 5","Week 6");
 			weeks.setValue("Month View");
