@@ -15,18 +15,18 @@ public class Year extends java.util.Observable{
 			fillMonthNames();
 			leapYear = leap(year);
 			this.year = year;
-			months.put("January", new Month("January", leapYear, year));
-			months.put("February", new Month("February", leapYear, year));
-			months.put("March", new Month("March", leapYear, year));
-			months.put("April", new Month("April", leapYear, year));
-			months.put("May", new Month("May", leapYear, year));
-			months.put("June", new Month("June", leapYear, year));
-			months.put("July", new Month("July", leapYear, year));
-			months.put("August", new Month("August", leapYear, year));
-			months.put("September", new Month("September", leapYear, year));
-			months.put("October", new Month("October", leapYear, year));
-			months.put("November", new Month("November", leapYear, year));
-			months.put("December", new Month("December", leapYear, year));
+			months.put("January", new Month("January", year));
+			months.put("February", new Month("February", year));
+			months.put("March", new Month("March", year));
+			months.put("April", new Month("April", year));
+			months.put("May", new Month("May", year));
+			months.put("June", new Month("June", year));
+			months.put("July", new Month("July", year));
+			months.put("August", new Month("August", year));
+			months.put("September", new Month("September", year));
+			months.put("October", new Month("October", year));
+			months.put("November", new Month("November", year));
+			months.put("December", new Month("December", year));
 			
 		}
 		

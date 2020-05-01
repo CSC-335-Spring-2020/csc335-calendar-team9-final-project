@@ -7,10 +7,6 @@ public class Month extends java.util.Observable{
 	private Day[] days;
 	private int startDayOfWeek;
 	
-	public Month(String name, boolean leapYear, int year) {
-		
-	}
-	
 	public Month(String name, int year) {
 		this.name = name;
 		this.year = year;
