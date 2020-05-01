@@ -12,6 +12,7 @@ public class Year extends java.util.Observable{
 	private Map<String, Month> months = new HashMap<String, Month>();
 	private Map<Integer, String> monthNames = new HashMap<Integer, String>();
 	private int year;
+	private CalendarView observer;
 
 		public Year(int year, CalendarView view) {
 			fillMonthNames();
@@ -30,7 +31,18 @@ public class Year extends java.util.Observable{
 			months.put("October", new Month("October", year, view));
 			months.put("November", new Month("November", year, view));
 			months.put("December", new Month("December", year, view));
-
+			months.get("January").addObserver(view);
+			months.get("February").addObserver(view);
+			months.get("March").addObserver(view);
+			months.get("April").addObserver(view);
+			months.get("May").addObserver(view);
+			months.get("June").addObserver(view);
+			months.get("July").addObserver(view);
+			months.get("August").addObserver(view);
+			months.get("September").addObserver(view);
+			months.get("October").addObserver(view);
+			months.get("November").addObserver(view);
+			months.get("September").addObserver(view);
 		}
 		
 		public Year(int year, List<Month> months) {

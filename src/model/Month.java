@@ -10,12 +10,10 @@ public class Month extends java.util.Observable{
 	private int year;
 	private Day[] days;
 	private int startDayOfWeek;
-	
-	public Month(String name, boolean leapYear, int year, CalendarView view) {
-		
-	}
+	private CalendarView observer;
 	
 	public Month(String name, int year, CalendarView view) {
+		this.observer = view;
 		this.name = name;
 		this.year = year;
 		int offset = getOffset();
@@ -33,56 +31,67 @@ public class Month extends java.util.Observable{
 				case "January":
 					for (int i = offset; i < 31 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "March":
 					for (int i = offset; i < 31 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "April":
 					for (int i = offset; i < 30 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "May":
 					for (int i = offset; i < 31 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "June":
 					for (int i = offset; i < 30 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "July":
 					for (int i = offset; i < 31 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "August":
 					for (int i = offset; i < 31 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "September":
 					for (int i = offset; i < 30 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "October":
 					for (int i = offset; i < 31 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "November":
 					for (int i = offset; i < 30 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 				case "December":
 					for (int i = offset; i < 31 + offset; i++) {
 						days[i] = new Day(i % 7, i - offset, name, view);
+						days[i].addObserver(view);
 					}
 					break;
 			}
