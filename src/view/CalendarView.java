@@ -29,6 +29,7 @@ public class CalendarView extends Application implements Observer {
 	private CalendarController controller;
 	private int currYear;
 	private MonthView months;
+	private WeekView weeks;
 	private String currMonth;
 	
 	@Override
@@ -41,12 +42,32 @@ public class CalendarView extends Application implements Observer {
 	}
 	
 	private void newMonth(String month) {
-		months.close();
+		if (months != null) {
+			months.close();
+		}
+		if (weeks != null){
+			weeks.close();
+		}
 		currMonth = month;
 		months = new MonthView(month);
 		months.show();
 	}
-	public class MonthView extends Stage {
+	
+	private void newWeek(String week) {
+		if (months != null) {
+			months.close();
+		}
+		if (weeks != null){
+			weeks.close();
+		}
+		String[] instruction = week.split(" ");
+		int num = Integer.valueOf(instruction[1]);
+		System.out.println(num);
+		weeks = new WeekView(num, currMonth);
+		weeks.show();
+	}
+	
+	private class MonthView extends Stage {
 		private static final int WIDTH = 7;
 		private static final int HEIGHT = 6;
 		private GridPane grid;
@@ -91,11 +112,11 @@ public class CalendarView extends Application implements Observer {
 				System.out.println((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
 			});
 		}
-		
 		private void buildButtons() {
 			ComboBox<String> weeks = new ComboBox<String>();
 			weeks.getItems().addAll("Month View", "Week 1", "Week 2","Week 3","Week 4","Week 5","Week 6");
 			weeks.setValue("Month View");
+			weeks.setOnAction(e -> newWeek(weeks.getValue()));
 			ComboBox<String> months = new ComboBox<String>();
 			months.getItems().addAll(
 					"January", 
@@ -128,16 +149,24 @@ public class CalendarView extends Application implements Observer {
 		}
 	}
 	
-	public class WeekView extends Stage {
+	private class WeekView extends Stage {
 		private static final int WIDTH = 7;
+		private int weekNum;
 		private GridPane grid;
-		public WeekView() {
+		private HBox buttonRow;
+		private String month;
+		public WeekView(int weekNum, String currMonth) {
+			this.month = currMonth;
+			this.weekNum = weekNum;
 			BorderPane control = new BorderPane();
 			control.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
 			grid = new GridPane();
+			buttonRow = new HBox();
 			BorderPane.setMargin(grid, new Insets(8));
 			buildGrid();
+			buildButtons();
 			control.setCenter(grid);
+			control.setTop(buttonRow);
 			this.setTitle("Calendar");
 			this.setScene(new Scene(control));
 			this.show();
@@ -145,25 +174,88 @@ public class CalendarView extends Application implements Observer {
 		
 		private void buildGrid() {
 			grid.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
-			for(int i=0;i<WIDTH;i++) {
+			int count = 0;
+			Day[] days = controller.getDays(month);
+			int low = (weekNum - 1) * 7;
+			int high = (weekNum * 7);
+			for(int i=0;i<days.length;i++) {
+				if (days[i] != null) {
+					count++;
+				}
+				if (i >= low && i < high) {
 					StackPane tempStack = new StackPane();
 					tempStack.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, null, null)));
 					Rectangle tempRect = new Rectangle(80,512,Color.LIGHTBLUE);
 					tempStack.getChildren().add(tempRect);
+					if (count > 0) {
+						Text dayLabel = new Text(String.valueOf(count));
+						tempStack.getChildren().add(dayLabel);
+					}
 					StackPane.setMargin(tempRect, new Insets(5));
 					grid.add(tempStack, i, 0);
+						}
+					}
+					
 			}
+		
+		
+		private void buildButtons() {
+			ComboBox<String> weeks = new ComboBox<String>();
+			weeks.getItems().addAll("Month View", "Week 1", "Week 2","Week 3","Week 4","Week 5","Week 6");
+			weeks.setValue("Week " + weekNum);
+			
+			ComboBox<String> months = new ComboBox<String>();
+			months.getItems().addAll(
+					"January", 
+					"February", 
+					"March",
+					"April",
+					"May",
+					"June",
+					"July",
+					"August", 
+					"September",
+					"October", 
+					"November", 
+					"December"
+					);
+			months.setValue(currMonth);
+			months.setOnAction(e -> newMonth(months.getValue()));
+			
+			ComboBox<String> years = new ComboBox<String>();
+			years.getItems().addAll("2019", "2020", "2021");
+			years.setValue(String.valueOf(currYear));
+			years.setOnAction(e -> {
+				currYear = Integer.valueOf(years.getValue());
+				controller.changeYear(Integer.valueOf(years.getValue()));
+				newMonth(months.getValue());
+			});
+			weeks.setOnAction(e -> {
+				if (weeks.getValue().equals("Month View")) {
+					newMonth(months.getValue());
+				}
+				else {
+					newWeek(weeks.getValue());
+				}
+			});
+			System.out.println(weeks == null);
+			System.out.println(months == null);
+			System.out.println(years == null);
+			buttonRow.getChildren().addAll(weeks, months, years);
+			buttonRow.setSpacing(8);
+			
 		}
 	}
 	
-	public class DayView extends Stage {
+	
+	private class DayView extends Stage {
 		
 		public DayView() {
 			//TODO
 		}
 	}
 	
-	public class EventBox extends Stage {
+	private class EventBox extends Stage {
 		
 		public EventBox() {
 			//TODO
