@@ -34,7 +34,7 @@ public class CalendarView extends Application {
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		controller = new CalendarController(2020);
+		controller = new CalendarController(2020,this);
 		currYear = 2020;
 		MonthView months = new MonthView("May");
 		months.show();
