@@ -24,6 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -94,9 +95,14 @@ public class CalendarView extends Application implements Observer {
 			Button zoomIn = new Button();
 			zoomIn.setGraphic(plusView);
 			zoomIn.setTooltip(new Tooltip("Week View"));
+			zoomIn.setShape(new Circle(7));
 			Button zoomOut = new Button();
 			zoomOut.setGraphic(minusView);
 			zoomOut.setTooltip(new Tooltip("Year View"));
+			zoomOut.setShape(new Circle(7));
+			ComboBox<String> weeks = new ComboBox<String>();
+			weeks.getItems().addAll("Month View", "Week 1", "Week 2","Week 3","Week 4","Week 5","Week 6");
+			weeks.setValue("Month View");
 			ComboBox<String> months = new ComboBox<String>();
 			months.getItems().addAll(
 					"January", 
@@ -113,7 +119,10 @@ public class CalendarView extends Application implements Observer {
 					"December"
 					);
 			months.setValue("May");
-			buttonRow.getChildren().addAll(zoomIn, zoomOut, months);
+			ComboBox<String> years = new ComboBox<String>();
+			years.getItems().addAll("2019", "2020", "2021");
+			years.setValue("2020");
+			buttonRow.getChildren().addAll(weeks, months, years);
 			buttonRow.setSpacing(8);
 			
 		}
