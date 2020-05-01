@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -69,9 +70,11 @@ public class CalendarView extends Application {
 			Button zoomIn = new Button();
 			zoomIn.setGraphic(plusView);
 			zoomIn.setTooltip(new Tooltip("Week View"));
+			zoomIn.setShape(new Circle(7));
 			Button zoomOut = new Button();
 			zoomOut.setGraphic(minusView);
 			zoomOut.setTooltip(new Tooltip("Year View"));
+			zoomOut.setShape(new Circle(7));
 			ComboBox<String> months = new ComboBox<String>();
 			months.getItems().addAll(
 					"January", 
