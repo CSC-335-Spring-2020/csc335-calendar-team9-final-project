@@ -43,7 +43,7 @@ public class Year extends java.util.Observable{
 			months.get("October").addObserver(view);
 			months.get("November").addObserver(view);
 			months.get("September").addObserver(view);
-		}
+		}{}
 		
 		public Year(int year, List<Month> months) {
 			fillMonthNames();
