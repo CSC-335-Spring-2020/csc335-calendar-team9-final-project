@@ -3,6 +3,11 @@ package view;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -10,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -27,13 +33,18 @@ public class CalendarView extends Application {
 		private static final int WIDTH = 7;
 		private static final int HEIGHT = 5;
 		private GridPane grid;
+		private HBox buttonRow;
 		public MonthView() {
 			BorderPane control = new BorderPane();
 			control.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
 			grid = new GridPane();
+			buttonRow = new HBox();
 			BorderPane.setMargin(grid, new Insets(8));
+			BorderPane.setMargin(buttonRow, new Insets(5, 0, 3, 8));
 			this.buildGrid();
+			this.buildButtons();
 			control.setCenter(grid);
+			control.setTop(buttonRow);
 			this.setTitle("Calendar");
 			this.setScene(new Scene(control));
 		}
@@ -50,6 +61,36 @@ public class CalendarView extends Application {
 					grid.add(tempStack, j, i);
 				}
 			}
+		}
+		
+		private void buildButtons() {
+			ImageView plusView = new ImageView(new Image("https://i.ibb.co/Fg6jnYd/plus.png"));
+			ImageView minusView = new ImageView(new Image("https://i.ibb.co/XXBNvcq/plus.png"));
+			Button zoomIn = new Button();
+			zoomIn.setGraphic(plusView);
+			zoomIn.setTooltip(new Tooltip("Week View"));
+			Button zoomOut = new Button();
+			zoomOut.setGraphic(minusView);
+			zoomOut.setTooltip(new Tooltip("Year View"));
+			ComboBox<String> months = new ComboBox<String>();
+			months.getItems().addAll(
+					"January", 
+					"February", 
+					"March",
+					"April",
+					"May",
+					"June",
+					"July",
+					"August", 
+					"September",
+					"October", 
+					"November", 
+					"December"
+					);
+			months.setValue("January");
+			buttonRow.getChildren().addAll(zoomIn, zoomOut, months);
+			buttonRow.setSpacing(8);
+			
 		}
 	}
 }
