@@ -113,7 +113,7 @@ public class Day extends java.util.Observable{
 		case 6:
 			dayOf =  "Friday";
 		case 7:
-			dayOf =  "Sunday";
+			return "Sunday";
 		}
 		return dayOf;
 	}

@@ -17,7 +17,7 @@ public class Year extends java.util.Observable{
 			fillMonthNames();
 
 			this.year = year;
-			this.addObserver((Observer) view);
+
 			months.put("January", new Month("January", year, view));
 			months.put("February", new Month("February", year, view));
 			months.put("March", new Month("March", year, view));
@@ -27,10 +27,10 @@ public class Year extends java.util.Observable{
 			months.put("July", new Month("July", year, view));
 			months.put("August", new Month("August", year, view));
 			months.put("September", new Month("September", year, view));
-			months.put("October", new Month("October", year,view));
-			months.put("November", new Month("November", year,view));
-			months.put("December", new Month("December", year,view));
-			
+			months.put("October", new Month("October", year, view));
+			months.put("November", new Month("November", year, view));
+			months.put("December", new Month("December", year, view));
+
 		}
 		
 		public Year(int year, List<Month> months) {
