@@ -22,7 +22,6 @@ public class Month extends java.util.Observable{
 		days = new Day[42];
 		if (name.equals("February")) {
 			if (leap(year)) {
-				System.out.println("leap");
 				for (int i = offset; i < 29 + offset; i++) {
 					days[i] = new Day(i % 7, i - offset, name, view);
 					days[i].addObserver(view);
