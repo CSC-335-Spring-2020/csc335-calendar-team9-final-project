@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,17 +13,19 @@ import view.Calendar;
 import view.CalendarView;
 
 public class CalendarController extends Observable{
-	private Year[] years;
 	private CalendarView view;
+	private int currYear;
+	private Map<Integer, Year> years;
 	
 	/**
 	 * The constructor for the controller, taking in an int representing the current year
 	 * @param currYear
 	 */
 	public CalendarController(int currYear, CalendarView view) {
-		years = new Year[3];
-		years[0] = new Year(currYear-1, view); years[1] = new Year(currYear, view); 
-		years[2] = new Year(currYear + 1, view);
+		this.currYear = currYear;
+		years.put(currYear, new Year(currYear, view));
+		years.put(currYear - 1, new Year(currYear - 1, view));
+		years.put(currYear + 1, new Year(currYear + 1, view));
 		this.addObserver((Observer) view);
 	
 	}
@@ -62,8 +65,8 @@ public class CalendarController extends Observable{
 	 * @param year The year in which the month is
 	 * @return Day[] the array of days for that month
 	 */
-	public Day[] getDays(String monthName, Year year) {
-		return year.getMonth(monthName).getDays();
+	public Day[] getDays(String monthName) {
+		return years.get(currYear).getMonth(monthName).getDays();
 	
 	}
 
