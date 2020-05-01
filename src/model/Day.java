@@ -1,6 +1,9 @@
 package model;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
+
+import view.CalendarView;
 
 /**
  * 
@@ -9,7 +12,7 @@ import java.util.List;
  *
  */
 public class Day extends java.util.Observable{
-	private String day;
+	private int day;
 	private int date;
 	private String month;
 	private List<Event> events;
@@ -17,37 +20,15 @@ public class Day extends java.util.Observable{
 	/**
 	 * This is the primary constructor that creates a day object,
 	 * also initiating an empty list of events for that day. 
-	 * @param day The given day of the week 0 = sunday, 6 = saturday
+	 * @param i The given day of the week
 	 * @param date The given date
 	 * @param month The given month that the day is in
 	 */
-	public Day(int day, int date, String month) {
-		switch(day) {
-			case 0:
-				this.day = "Sunday";
-				break;
-			case 1:
-				this.day = "Monday";
-				break;
-			case 2:
-				this.day = "Tuesday";
-				break;
-			case 3:
-				this.day = "Wendsday";
-				break;
-			case 4:
-				this.day = "Thursday";
-				break;
-			case 5:
-				this.day = "Friday";
-				break;
-			case 6:
-				this.day = "Saturday";
-				break;
-			
-		}
+	public Day(int i, int date, String month, CalendarView view) {
+		this.day = i;
 		this.date = date;
 		this.month = month;
+		this.addObserver((Observer) view);
 		events = new ArrayList<Event>();
 	}
 	
@@ -59,7 +40,7 @@ public class Day extends java.util.Observable{
 	 * @param month The given month that the day is in
 	 * @param events The given list of events to set as the day's events
 	 */
-	public Day(String day, int date, String month, List<Event> events) {
+	public Day(int day, int date, String month, List<Event> events) {
 		this.day = day;
 		this.date = date;
 		this.month = month;
@@ -117,14 +98,31 @@ public class Day extends java.util.Observable{
 	 * @return a string indicating day of the week
 	 */
 	public String getDay() {
-		return day;
+		String dayOf = "";
+		switch (this.day) {
+		case 1:
+			dayOf =  "Sunday";
+		case 2:
+			dayOf =  "Monday";
+		case 3:
+			dayOf =  "Tuesday";
+		case 4:
+			dayOf =  "Wednesday";
+		case 5:
+			dayOf =  "Thursday";
+		case 6:
+			dayOf =  "Friday";
+		case 7:
+			return "Sunday";
+		}
+		return dayOf;
 	}
 	
 	/**
 	 * This sets the current day of the week to the passed in day
 	 * @param day The new day of the week to attribute to the day
 	 */
-	public void setDay(String day) {
+	public void setDay(int day) {
 		this.day = day;
 		this.setChanged();
 		this.notifyObservers();

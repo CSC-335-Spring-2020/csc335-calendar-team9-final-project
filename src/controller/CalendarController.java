@@ -1,23 +1,46 @@
 package controller;
 
 
+import java.util.Observable;
+import java.util.Observer;
+
 import model.Day;
 import model.Event;
 import model.Month;
 import model.Year;
 import view.Calendar;
+import view.CalendarView;
 
-public class CalendarController {
+public class CalendarController extends Observable{
 	private Year[] years;
+	private CalendarView view;
 	
 	/**
 	 * The constructor for the controller, taking in an int representing the current year
 	 * @param currYear
 	 */
-	public CalendarController(int currYear) {
+	public CalendarController(int currYear, CalendarView view) {
 		years = new Year[3];
-		years[0] = new Year(currYear-1); years[1] = new Year(currYear); years[2] = new Year(currYear + 1);
-		
+		years[0] = new Year(currYear-1, view); years[1] = new Year(currYear, view); 
+		years[2] = new Year(currYear + 1, view);
+		this.addObserver((Observer) view);
+	
+	}
+	
+	/**
+	 * Adds an event to the given day object
+	 * @param day The object to add the event to
+	 * @param label The label of the event
+	 * @param sH The starting hour of the event
+	 * @param sM The starting minute of the event
+	 * @param eH The end hour of the event
+	 * @param eM The end minute of the minute
+	 * @param notes The notes of the event (can be null)
+	 * @param loc The location of the event (can be null)
+	 */
+	public void addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc) {
+		Event event = new Event(day, label, sH, sM, eH, eM, notes, loc);
+		day.addEvent(day.getEvents().size()-1, event);
 	}
 	
 	/**
