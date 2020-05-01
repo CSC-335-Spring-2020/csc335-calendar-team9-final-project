@@ -8,7 +8,7 @@ import java.util.List;
  * about the day, including date, day (of the week), events, and the month the day is in.
  *
  */
-public class Day {
+public class Day extends java.util.Observable{
 	private String day;
 	private int date;
 	private String month;
@@ -69,6 +69,8 @@ public class Day {
 			return false;
 		}
 		events.add(i, event);
+		this.setChanged();
+		this.notifyObservers();
 		return true;
 		
 	}	
@@ -83,6 +85,8 @@ public class Day {
 		for (int i = 0; i < events.size(); i++) {
 			this.events.add(events.get(i));
 		}
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -99,7 +103,8 @@ public class Day {
 	 */
 	public void setDay(String day) {
 		this.day = day;
-		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -117,6 +122,8 @@ public class Day {
 	 */
 	public void setMonth(String month) {
 		this.month = month;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -134,6 +141,8 @@ public class Day {
 	 */
 	public void setDate(int date) {
 		this.date = date;
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 }

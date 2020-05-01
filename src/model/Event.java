@@ -3,7 +3,7 @@ package model;
 /**
  * This class represents an Event object that contains a variety of information about a given calendar event. 
  */
-public class Event {
+public class Event extends java.util.Observable{
 	private Day day;
 	private String label;
 	private int sH;
@@ -110,6 +110,8 @@ public class Event {
 	 */
 	public void setDay(Day day) {
 		this.day = day;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -118,6 +120,8 @@ public class Event {
 	 */
 	public void setLabel(String label) {
 		this.label = label;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -126,6 +130,8 @@ public class Event {
 	 */
 	public void setSH(int sH) {
 		this.sH = sH;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -134,6 +140,8 @@ public class Event {
 	 */
 	public void setSM(int sM) {
 		this.sM = sM;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -142,6 +150,8 @@ public class Event {
 	 */
 	public void setEH(int eH) {
 		this.eH = eH;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -150,6 +160,8 @@ public class Event {
 	 */
 	public void setEM(int eM) {
 		this.eM = eM;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -158,6 +170,8 @@ public class Event {
 	 */
 	public void setNotes(String notes) {
 		this.notes = notes;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/**
@@ -166,6 +180,8 @@ public class Event {
 	 */
 	public void setLoc(String loc) {
 		this.loc = loc;
+		this.setChanged();
+		this.notifyObservers();
 	}
 		
 	
