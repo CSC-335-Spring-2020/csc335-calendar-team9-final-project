@@ -75,6 +75,9 @@ public class CalendarView extends Application {
 			zoomOut.setGraphic(minusView);
 			zoomOut.setTooltip(new Tooltip("Year View"));
 			zoomOut.setShape(new Circle(7));
+			ComboBox<String> weeks = new ComboBox<String>();
+			weeks.getItems().addAll("Month View", "Week 1", "Week 2","Week 3","Week 4","Week 5","Week 6");
+			weeks.setValue("Month View");
 			ComboBox<String> months = new ComboBox<String>();
 			months.getItems().addAll(
 					"January", 
@@ -90,8 +93,11 @@ public class CalendarView extends Application {
 					"November", 
 					"December"
 					);
-			months.setValue("January");
-			buttonRow.getChildren().addAll(zoomIn, zoomOut, months);
+			months.setValue("May");
+			ComboBox<String> years = new ComboBox<String>();
+			years.getItems().addAll("2019", "2020", "2021");
+			years.setValue("2020");
+			buttonRow.getChildren().addAll(weeks, months, years);
 			buttonRow.setSpacing(8);
 			
 		}
