@@ -1,6 +1,8 @@
 package view;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import controller.CalendarController;
 import javafx.application.Application;
@@ -28,7 +30,7 @@ import javafx.stage.Stage;
 import model.Day;
 import model.Year;
 
-public class CalendarView extends Application {
+public class CalendarView extends Application implements Observer {
 	private CalendarController controller;
 	private int currYear;
 	
@@ -179,5 +181,11 @@ public class CalendarView extends Application {
 		  }
 
 		  return result;
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 }
