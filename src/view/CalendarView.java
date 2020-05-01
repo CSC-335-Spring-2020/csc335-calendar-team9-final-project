@@ -1,7 +1,10 @@
 package view;
 
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -27,6 +30,8 @@ public class CalendarView extends Application {
 	public void start(Stage stage) throws Exception {
 		MonthView months = new MonthView();
 		months.show();
+		WeekView week = new WeekView();
+		week.show();
 	}
 	
 	public static class MonthView extends Stage {
@@ -41,8 +46,8 @@ public class CalendarView extends Application {
 			buttonRow = new HBox();
 			BorderPane.setMargin(grid, new Insets(8));
 			BorderPane.setMargin(buttonRow, new Insets(5, 0, 3, 8));
-			this.buildGrid();
-			this.buildButtons();
+			buildGrid();
+			buildButtons();
 			control.setCenter(grid);
 			control.setTop(buttonRow);
 			this.setTitle("Calendar");
@@ -95,5 +100,47 @@ public class CalendarView extends Application {
 			buttonRow.setSpacing(8);
 			
 		}
+	}
+	
+	public static class WeekView extends Stage {
+		private static final int WIDTH = 7;
+		private GridPane grid;
+		public WeekView() {
+			BorderPane control = new BorderPane();
+			control.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
+			grid = new GridPane();
+			BorderPane.setMargin(grid, new Insets(8));
+			buildGrid();
+			control.setCenter(grid);
+			this.setTitle("Calendar");
+			this.setScene(new Scene(control));
+			this.show();
+		}
+		
+		private void buildGrid() {
+			grid.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
+			for(int i=0;i<WIDTH;i++) {
+					StackPane tempStack = new StackPane();
+					tempStack.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, null, null)));
+					Rectangle tempRect = new Rectangle(80,512,Color.LIGHTBLUE);
+					tempStack.getChildren().add(tempRect);
+					StackPane.setMargin(tempRect, new Insets(5));
+					grid.add(tempStack, i, 0);
+			}
+		}
+	}
+	
+	public Node getNodeByRowColumnIndex(GridPane grid,int row,int column) {
+		  Node result = null;
+		  List<Node> childrens = grid.getChildren();
+
+		  for (Node node : childrens) {
+		    if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+		      result = node;
+		      break;
+		    }
+		  }
+
+		  return result;
 	}
 }
