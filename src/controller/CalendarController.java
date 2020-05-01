@@ -1,23 +1,30 @@
 package controller;
 
 
+import java.util.Observable;
+import java.util.Observer;
+
 import model.Day;
 import model.Event;
 import model.Month;
 import model.Year;
 import view.Calendar;
+import view.CalendarView;
 
-public class CalendarController {
+public class CalendarController extends Observable{
 	private Year[] years;
+	private CalendarView view;
 	
 	/**
 	 * The constructor for the controller, taking in an int representing the current year
 	 * @param currYear
 	 */
-	public CalendarController(int currYear) {
+	public CalendarController(int currYear, CalendarView view) {
 		years = new Year[3];
-		years[0] = new Year(currYear-1); years[1] = new Year(currYear); years[2] = new Year(currYear + 1);
-		
+		years[0] = new Year(currYear-1, view); years[1] = new Year(currYear, view); 
+		years[2] = new Year(currYear + 1, view);
+		this.addObserver((Observer) view);
+	
 	}
 	
 	/**
