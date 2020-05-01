@@ -23,39 +23,62 @@ public class Month extends java.util.Observable{
 				days = new Day[28 + offset];
 			}
 		} else {
+			days = new Day[42];
 			switch(name) {
 				case "January":
-					days = new Day[31 + offset];
+					for (int i = offset; i < 31 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "March":
-					days = new Day[31 + offset];
+					for (int i = offset; i < 31 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "April":
-					days = new Day[30 + offset];
+					for (int i = offset; i < 30 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "May":
-					days = new Day[31 + offset];
+					for (int i = offset; i < 31 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "June":
-					days = new Day[30 + offset];
+					for (int i = offset; i < 30 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "July":
-					days = new Day[31 + offset];
+					for (int i = offset; i < 31 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "August":
-					days = new Day[31 + offset];
+					for (int i = offset; i < 31 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "September":
-					days = new Day[30 + offset];
+					for (int i = offset; i < 30 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "October":
-					days = new Day[31 + offset];
+					for (int i = offset; i < 31 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "November":
-					days = new Day[30 + offset];
+					for (int i = offset; i < 30 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 				case "December":
-					days = new Day[31 + offset];
+					for (int i = offset; i < 31 + offset; i++) {
+						days[i] = new Day(i % 7, i - offset, name);
+					}
 					break;
 			}
 		}
