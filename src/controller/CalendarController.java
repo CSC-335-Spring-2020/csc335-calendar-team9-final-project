@@ -24,6 +24,7 @@ public class CalendarController extends Observable{
 	 */
 	public CalendarController(int currYear, CalendarView view) {
 		this.currYear = currYear;
+		this.view = view;
 		years = new HashMap<Integer, Year>();
 		years.put(currYear, new Year(currYear, view));
 		years.put(currYear - 1, new Year(currYear - 1, view));
@@ -60,6 +61,13 @@ public class CalendarController extends Observable{
 		return day.addEvent(index, event);
 	}
 	
+	public void changeYear(int year) {
+		if (years.containsKey(year)) {
+			currYear = year;
+		} else {
+			years.put(year,  new Year(year, view));
+		}
+	}
 	/**
 	 * Takes in a year and a month and returns the array of Day objects for that
 	 * month
