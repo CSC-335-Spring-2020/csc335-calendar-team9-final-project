@@ -19,14 +19,20 @@ public class Month extends java.util.Observable{
 		int offset = getOffset();
 		startDayOfWeek = offset + 1;
 		this.addObserver((Observer) view);
+		days = new Day[42];
 		if (name.equals("February")) {
 			if (leap(year)) {
-				days = new Day[29 + offset];
+				for (int i = offset; i < 29 + offset; i++) {
+					days[i] = new Day(i % 7, i - offset, name, view);
+					days[i].addObserver(view);
+				}
 			} else {
-				days = new Day[28 + offset];
+				for (int i = offset; i < 28 + offset; i++) {
+					days[i] = new Day(i % 7, i - offset, name, view);
+					days[i].addObserver(view);
+				}
 			}
 		} else {
-			days = new Day[42];
 			switch(name) {
 				case "January":
 					for (int i = offset; i < 31 + offset; i++) {
