@@ -20,7 +20,6 @@ public class Month extends java.util.Observable{
 		startDayOfWeek = offset + 1;
 		this.addObserver((Observer) view);
 		days = new Day[42];
-		System.out.println(offset);
 		if (name.equals("February")) {
 			if (leap(year)) {
 				System.out.println("leap");
@@ -108,7 +107,6 @@ public class Month extends java.util.Observable{
 	
 	private int getOffset() {
 		int offset = ((35 + ((year-1) / 4) - ((year-1) / 100) + ((year-1) / 400) + (year-1)) + 1) % 7;
-		System.out.println(offset + "---");
 		if (!name.contentEquals("January") && !name.contentEquals("February") && leap(year)) {
 			offset++;
 		}
