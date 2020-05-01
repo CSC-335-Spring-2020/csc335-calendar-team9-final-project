@@ -34,15 +34,24 @@ import model.Year;
 public class CalendarView extends Application implements Observer {
 	private CalendarController controller;
 	private int currYear;
+	private MonthView months;
+	private String currMonth;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		controller = new CalendarController(2020,this);
 		currYear = 2020;
-		MonthView months = new MonthView("May");
+		currMonth = "May";
+		months = new MonthView("May");
 		months.show();
 	}
 	
+	private void newMonth(String month) {
+		months.close();
+		currMonth = month;
+		months = new MonthView(month);
+		months.show();
+	}
 	public class MonthView extends Stage {
 		private static final int WIDTH = 7;
 		private static final int HEIGHT = 6;
@@ -118,10 +127,17 @@ public class CalendarView extends Application implements Observer {
 					"November", 
 					"December"
 					);
-			months.setValue("May");
+			months.setValue(currMonth);
+			months.setOnAction(e -> newMonth(months.getValue()));
+			
 			ComboBox<String> years = new ComboBox<String>();
 			years.getItems().addAll("2019", "2020", "2021");
-			years.setValue("2020");
+			years.setValue(String.valueOf(currYear));
+			years.setOnAction(e -> {
+				currYear = Integer.valueOf(years.getValue());
+				controller.changeYear(Integer.valueOf(years.getValue()));
+				newMonth(months.getValue());
+			});
 			buttonRow.getChildren().addAll(weeks, months, years);
 			buttonRow.setSpacing(8);
 			
