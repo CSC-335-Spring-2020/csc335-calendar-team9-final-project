@@ -219,7 +219,6 @@ public class CalendarView extends Application implements Observer {
 			}
 			grid.setOnMouseClicked((event) -> {
 				showEventBox((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
-				System.out.println((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
 			});
 		}
 		private void buildButtons() {
@@ -306,7 +305,6 @@ public class CalendarView extends Application implements Observer {
 						}
 					}
 			grid.setOnMouseClicked((event) -> {
-				System.out.println((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
 				showEventBox((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
 				
 			});
@@ -354,9 +352,6 @@ public class CalendarView extends Application implements Observer {
 					newWeek(weeks.getValue());
 				}
 			});
-			System.out.println(weeks == null);
-			System.out.println(months == null);
-			System.out.println(years == null);
 			buttonRow.getChildren().addAll(weeks, months, years);
 			buttonRow.setSpacing(8);
 			
