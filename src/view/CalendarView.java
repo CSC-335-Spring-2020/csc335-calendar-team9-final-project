@@ -296,7 +296,7 @@ public class CalendarView extends Application implements Observer {
 					tempStack.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, null, null)));
 					Rectangle tempRect = new Rectangle(80,512,Color.LIGHTBLUE);
 					tempStack.getChildren().add(tempRect);
-					if (count > 0) {
+					if (count > 0 && days[i] != null) {
 						Text dayLabel = new Text(String.valueOf(count));
 						tempStack.getChildren().add(dayLabel);
 					}
