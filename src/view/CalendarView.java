@@ -9,7 +9,10 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -19,9 +22,11 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Day;
 
@@ -67,6 +72,110 @@ public class CalendarView extends Application implements Observer {
 		weeks.show();
 	}
 	
+	
+	private void showEventBox(int i) {
+		BorderPane pane = new BorderPane();
+		Scene scene = new Scene(pane);
+		
+		VBox vbox = new VBox();
+		HBox label = new HBox();
+		HBox sTime = new HBox();
+		HBox eTime = new HBox();
+		HBox notes = new HBox();
+		HBox loc = new HBox();
+		HBox buttons = new HBox();
+		
+		//Label line setup
+		Label title = new Label("Event Title: ");
+		TextField tField = new TextField();
+		tField.setPrefWidth(150);
+		label.getChildren().addAll(title, tField);
+		label.setSpacing(8);
+		
+		//Start Time setup
+		ComboBox<String> sh = new ComboBox<String>();
+		sh.getItems().addAll("12", "11", "10", "9", "8", 
+				"7", "6", "5", "4", "3", "2", "1"
+				);
+		sh.setValue("12");
+		ComboBox<String> sm = new ComboBox<String>();
+		for (int f = 0; f < 60; f++) {
+			sm.getItems().add(String.format("%02d" , f));
+		}
+		sm.setValue("00");
+		Label shl = new Label("Start Time: ");
+		ComboBox<String> aam = new ComboBox<String>();
+		aam.getItems().addAll("AM", "PM");
+		aam.setValue("PM");
+		sTime.getChildren().addAll(shl, sh, sm, aam);
+		sTime.setSpacing(8);
+		
+		
+		//End Time setup
+		ComboBox<String> eh = new ComboBox<String>();
+		eh.getItems().addAll("12", "11", "10", "9", "8", 
+				"7", "6", "5", "4", "3", "2", "1"
+				);
+		eh.setValue("1");
+		ComboBox<String> em = new ComboBox<String>();
+		for (int f = 0; f < 60; f++) {
+			em.getItems().add(String.format("%02d" , f));
+		}
+		em.setValue("00");
+		ComboBox<String> eam = new ComboBox<String>();
+		eam.getItems().addAll("AM", "PM");
+		eam.setValue("PM");
+		Label ehl = new Label("End Time:  ");
+		eTime.getChildren().addAll(ehl, eh, em, eam);
+		eTime.setSpacing(8);
+		
+		
+		//Notes setup
+		Label noteLabel = new Label("Notes: ");
+		TextField noteField = new TextField();
+		noteField.setPrefHeight(200);
+		noteField.setPrefWidth(200);
+		notes.getChildren().addAll(noteLabel, noteField);
+		
+		//Location setup
+		Label locTitle = new Label("Location: ");
+		TextField locField = new TextField();
+		locField.setPrefWidth(150);
+		loc.setSpacing(8);
+		loc.getChildren().addAll(locTitle, locField);
+		
+
+		
+		//EventBox setup
+		EventBox box = new EventBox(i, tField, sh, sm, eh, em, noteField, locField);
+		box.initModality(Modality.APPLICATION_MODAL);
+		
+		//HBox Line 4 setup
+		Button ok = new Button("OK");
+		Button cancel = new Button("Cancel");
+		buttons.getChildren().addAll(ok, cancel);
+		buttons.setPadding(new Insets(8, 8, 8, 8));
+		buttons.setSpacing(8);
+		ok.setOnAction(e -> box.close());
+		cancel.setOnAction(e -> box.close());
+		
+		//Vbox setup
+		vbox.getChildren().addAll(label, sTime, eTime, notes, loc, buttons);
+		vbox.setPadding(new Insets(8,8,8,8));
+		vbox.setSpacing(8);
+		pane.setCenter(vbox);
+		
+		pane.setCenter(vbox);
+		box.setScene(scene);
+		box.setTitle("New Event");
+		box.showAndWait();
+		
+		
+		
+	}
+	
+	
+	
 	private class MonthView extends Stage {
 		private static final int WIDTH = 7;
 		private static final int HEIGHT = 6;
@@ -109,6 +218,7 @@ public class CalendarView extends Application implements Observer {
 				}
 			}
 			grid.setOnMouseClicked((event) -> {
+				showEventBox((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
 				System.out.println((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
 			});
 		}
@@ -195,10 +305,16 @@ public class CalendarView extends Application implements Observer {
 					grid.add(tempStack, i, 0);
 						}
 					}
-					
+			grid.setOnMouseClicked((event) -> {
+				System.out.println((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
+				showEventBox((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
+				
+			});
 			}
 		
 		
+		
+
 		private void buildButtons() {
 			ComboBox<String> weeks = new ComboBox<String>();
 			weeks.getItems().addAll("Month View", "Week 1", "Week 2","Week 3","Week 4","Week 5","Week 6");
@@ -257,8 +373,8 @@ public class CalendarView extends Application implements Observer {
 	
 	private class EventBox extends Stage {
 		
-		public EventBox() {
-			//TODO
+		public EventBox(int i, TextField tField, ComboBox<String> sh, ComboBox<String> sm, ComboBox<String> eh, ComboBox<String> em, TextField noteField, TextField locField) {
+			
 		}
 	}
 	
