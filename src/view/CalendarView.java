@@ -284,8 +284,8 @@ public class CalendarView extends Application implements Observer {
 			grid.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
 			int count = 0;
 			Day[] days = controller.getDays(month);
-			int low = (weekNum - 1) * 7;
-			int high = (weekNum * 7);
+			int low = (weekNum - 1) * WIDTH;
+			int high = (weekNum * WIDTH);
 			for(int i=0;i<days.length;i++) {
 				if (days[i] != null) {
 					count++;
