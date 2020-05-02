@@ -67,7 +67,6 @@ public class CalendarView extends Application implements Observer {
 		}
 		String[] instruction = week.split(" ");
 		int num = Integer.valueOf(instruction[1]);
-		System.out.println(num);
 		weeks = new WeekView(num, currMonth);
 		weeks.show();
 	}
