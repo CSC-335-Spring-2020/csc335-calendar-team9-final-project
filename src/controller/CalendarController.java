@@ -91,9 +91,14 @@ public class CalendarController extends Observable{
 	 * @param notes The notes of the event (can be null)
 	 * @param loc The location of the event (can be null)
 	 */
-	public void addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc) {
-		Event event = new Event(day, label, sH, sM, eH, eM, notes, loc);
-		day.addEvent(day.getEvents().size()-1, event);
+	public boolean addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc) {
+		if (label.length() == 0) {
+			return false;
+		} else {
+			Event event = new Event(day, label, sH, sM, eH, eM, notes, loc);
+			day.addEvent(day.getEvents().size()-1, event);
+			return true;
+		}
 	}
 	
 	/**
