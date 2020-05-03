@@ -73,104 +73,6 @@ public class CalendarView extends Application implements Observer {
 		weeks.show();
 	}
 	
-	
-	private void showEventBox(int i) {
-		BorderPane pane = new BorderPane();
-		Scene scene = new Scene(pane);
-		
-		VBox vbox = new VBox();
-		HBox label = new HBox();
-		HBox sTime = new HBox();
-		HBox eTime = new HBox();
-		HBox notes = new HBox();
-		HBox loc = new HBox();
-		HBox buttons = new HBox();
-		
-		//Label line setup
-		Label title = new Label("Event Title: ");
-		TextField tField = new TextField();
-		tField.setPrefWidth(150);
-		label.getChildren().addAll(title, tField);
-		label.setSpacing(8);
-		
-		//Start Time setup
-		ComboBox<String> sh = new ComboBox<String>();
-		for (int j = 1; j < 25; j++) {
-			sh.getItems().add(String.valueOf(j));
-		}
-		sh.setValue("12");
-		ComboBox<String> sm = new ComboBox<String>();
-		for (int f = 0; f < 60; f++) {
-			sm.getItems().add(String.format("%02d" , f));
-		}
-		sm.setValue("00");
-		Label shl = new Label("Start Time: ");
-		sTime.getChildren().addAll(shl, sh, sm );
-		sTime.setSpacing(8);
-		
-		
-		//End Time setup
-		ComboBox<String> eh = new ComboBox<String>();
-		for (int j = 1; j < 25; j++) {
-			eh.getItems().add(String.valueOf(j));
-		}
-		eh.setValue("1");
-		ComboBox<String> em = new ComboBox<String>();
-		for (int f = 0; f < 60; f++) {
-			em.getItems().add(String.format("%02d" , f));
-		}
-		em.setValue("00");
-		Label ehl = new Label("End Time:  ");
-		eTime.getChildren().addAll(ehl, eh, em);
-		eTime.setSpacing(8);
-		
-		
-		//Notes setup
-		Label noteLabel = new Label("Notes: ");
-		TextArea noteField = new TextArea();
-		noteField.setPrefHeight(200);
-		noteField.setPrefWidth(200);
-		notes.getChildren().addAll(noteLabel, noteField);
-		
-		//Location setup
-		Label locTitle = new Label("Location: ");
-		TextField locField = new TextField();
-		locField.setPrefWidth(150);
-		loc.setSpacing(8);
-		loc.getChildren().addAll(locTitle, locField);
-		
-
-		
-		//EventBox setup
-		Stage box = new Stage();
-		box.initModality(Modality.APPLICATION_MODAL);
-		
-		//HBox Line 4 setup
-		Button ok = new Button("OK");
-		Button cancel = new Button("Cancel");
-		buttons.getChildren().addAll(ok, cancel);
-		buttons.setPadding(new Insets(8, 8, 8, 8));
-		buttons.setSpacing(8);
-		ok.setOnAction(e -> box.close());
-		cancel.setOnAction(e -> box.close());
-		
-		//Vbox setup
-		vbox.getChildren().addAll(label, sTime, eTime, notes, loc, buttons);
-		vbox.setPadding(new Insets(8,8,8,8));
-		vbox.setSpacing(8);
-		pane.setCenter(vbox);
-		
-		pane.setCenter(vbox);
-		box.setScene(scene);
-		box.setTitle("New Event");
-		box.showAndWait();
-		
-		
-		
-	}
-	
-	
-	
 	private class MonthView extends Stage {
 		private static final int WIDTH = 7;
 		private static final int HEIGHT = 6;
@@ -369,7 +271,12 @@ public class CalendarView extends Application implements Observer {
 			this.day = day;
 			this.initModality(Modality.APPLICATION_MODAL);
 			BorderPane control = new BorderPane();
-			VBox eventsVBox = new VBox();
+			Button addEvent = new Button("Add Event");
+			addEvent.setOnAction((event) -> {
+				addEventBox add = new addEventBox();
+				add.showAndWait();
+			});
+			VBox eventsVBox = new VBox(addEvent);
 			List<Event> eventsList = day.getEvents();
 			for(Event e: eventsList) {
 				Rectangle eventRect = new Rectangle(80,Math.max(20, 2 * e.getDuration()),Color.LIGHTBLUE);
@@ -380,6 +287,7 @@ public class CalendarView extends Application implements Observer {
 				eventsVBox.getChildren().add(eventRect);
 			}
 			control.setCenter(eventsVBox);
+			controller.save();
 			this.setTitle(day.getMonth() + " " + String.valueOf(day.getDate() + 1));
 			this.setScene(new Scene(control));
 		}
@@ -391,6 +299,94 @@ public class CalendarView extends Application implements Observer {
 		public EventBox(Event e) {
 			event = e;
 			this.initModality(Modality.APPLICATION_MODAL);
+		}
+	}
+	
+	private class addEventBox extends Stage {
+		public addEventBox() {
+			this.initModality(Modality.APPLICATION_MODAL);
+			BorderPane pane = new BorderPane();
+			Scene scene = new Scene(pane);
+			
+			VBox vbox = new VBox();
+			HBox label = new HBox();
+			HBox sTime = new HBox();
+			HBox eTime = new HBox();
+			HBox notes = new HBox();
+			HBox loc = new HBox();
+			HBox buttons = new HBox();
+			
+			//Label line setup
+			Label title = new Label("Event Title: ");
+			TextField tField = new TextField();
+			tField.setPrefWidth(150);
+			label.getChildren().addAll(title, tField);
+			label.setSpacing(8);
+			
+			//Start Time setup
+			ComboBox<String> sh = new ComboBox<String>();
+			for (int j = 0; j < 24; j++) {
+				sh.getItems().add(String.valueOf(j));
+			}
+			sh.setValue("12");
+			ComboBox<String> sm = new ComboBox<String>();
+			for (int f = 0; f < 60; f++) {
+				sm.getItems().add(String.format("%02d" , f));
+			}
+			sm.setValue("00");
+			Label shl = new Label("Start Time: ");
+			sTime.getChildren().addAll(shl, sh, sm );
+			sTime.setSpacing(8);
+			
+			
+			//End Time setup
+			ComboBox<String> eh = new ComboBox<String>();
+			for (int j = 0; j < 24; j++) {
+				eh.getItems().add(String.valueOf(j));
+			}
+			eh.setValue("1");
+			ComboBox<String> em = new ComboBox<String>();
+			for (int f = 0; f < 60; f++) {
+				em.getItems().add(String.format("%02d" , f));
+			}
+			em.setValue("00");
+			Label ehl = new Label("End Time:  ");
+			eTime.getChildren().addAll(ehl, eh, em);
+			eTime.setSpacing(8);
+			
+			
+			//Notes setup
+			Label noteLabel = new Label("Notes: ");
+			TextArea noteField = new TextArea();
+			noteField.setPrefHeight(200);
+			noteField.setPrefWidth(200);
+			notes.getChildren().addAll(noteLabel, noteField);
+			
+			//Location setup
+			Label locTitle = new Label("Location: ");
+			TextField locField = new TextField();
+			locField.setPrefWidth(150);
+			loc.setSpacing(8);
+			loc.getChildren().addAll(locTitle, locField);
+			
+			//HBox Line 4 setup
+			Button ok = new Button("OK");
+			Button cancel = new Button("Cancel");
+			buttons.getChildren().addAll(ok, cancel);
+			buttons.setPadding(new Insets(8, 8, 8, 8));
+			buttons.setSpacing(8);
+			ok.setOnAction(e -> this.close());
+			cancel.setOnAction(e -> this.close());
+			
+			//Vbox setup
+			vbox.getChildren().addAll(label, sTime, eTime, notes, loc, buttons);
+			vbox.setPadding(new Insets(8,8,8,8));
+			vbox.setSpacing(8);
+			pane.setCenter(vbox);
+			
+			pane.setCenter(vbox);
+			this.setScene(scene);
+			this.setTitle("New Event");
 		}
 	}
 	
