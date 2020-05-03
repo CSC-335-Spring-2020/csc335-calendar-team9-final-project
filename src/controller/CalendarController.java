@@ -89,6 +89,7 @@ public class CalendarController extends Observable{
 	 * @param notes The notes of the event (can be null)
 	 * @param loc The location of the event (can be null)
 	 */
+
 	public boolean addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc) {
 		if (label.length() == 0) {
 			return false;
@@ -97,28 +98,42 @@ public class CalendarController extends Observable{
 			event.addObserver(view);
 			day.addEvent(event);
 			return true;
-		}
+    }
 	}
 	
 	/**
 	 * Adds the given event to the given day's list of events. Returns false if 
 	 * the event already existed for the day
-	 * @param index The index at which the event is to be added
 	 * @param day The day to add the event to
 	 * @param event The event to be added
 	 * @return boolean indicating if the event was successfully added or not
 	 */
-	public boolean addEvent(int index, Day day, Event event) {
-		return day.addEvent(event);
+	public boolean addEvent(Day day, Event event) {
 	}
 	
+	/**
+	 * This method returns the current year
+	 * @return int The calendar's current year
+	 */
+	public int getYear() {
+		return this.currYear;
+	}
+	
+	/**
+	 * This method takes in a year and changes the current year of the 
+	 * calendar to the inputed year
+	 * @param year The year to put in as the new current year
+	 */
 	public void changeYear(int year) {
 		if (years.containsKey(year)) {
 			currYear = year;
 		} else {
 			years.put(year,  new Year(year, view));
+			years.put(year, new Year(year, view));
+			currYear = year;
 		}
 	}
+	
 	/**
 	 * Takes in a year and a month and returns the array of Day objects for that
 	 * month

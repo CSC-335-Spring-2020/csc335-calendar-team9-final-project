@@ -185,7 +185,10 @@ public class Event extends java.util.Observable implements java.io.Serializable{
 		this.notifyObservers();
 	}
 		
-	
+	/**
+	 * Gets the duration of the event in minutes
+	 * @return int The minute duration of the event
+	 */
 	public int getDuration() {
 		int high = (sH * 60) + sM;
 		int low = (eH * 60) + eM;
