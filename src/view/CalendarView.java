@@ -347,9 +347,7 @@ public class CalendarView extends Application implements Observer {
 	}
 	
 	private class addEventBox extends Stage {
-		public boolean cancel;
 		public addEventBox(Day day) {
-			this.cancel = false;
 			this.initModality(Modality.APPLICATION_MODAL);
 			BorderPane pane = new BorderPane();
 			Scene scene = new Scene(pane);
@@ -428,9 +426,9 @@ public class CalendarView extends Application implements Observer {
 					invalid.setContentText("An event must contain a title.");
 					invalid.showAndWait();
 				}
+				this.close();
 			});
 			cancel.setOnAction((e) -> {
-				this.cancel = true;
 				this.close();
 			});
 			
