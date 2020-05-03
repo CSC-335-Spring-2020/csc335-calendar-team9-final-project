@@ -186,6 +186,13 @@ public class Event extends java.util.Observable implements java.io.Serializable{
 	}
 		
 	
+	public int getDuration() {
+		int high = (sH * 60) + sM;
+		int low = (eH * 60) + eM;
+		return low - high;
+		
+	}
+	
 
 
 }
