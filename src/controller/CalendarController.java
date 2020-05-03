@@ -96,6 +96,7 @@ public class CalendarController extends Observable{
 			return false;
 		} else {
 			Event event = new Event(day, label, sH, sM, eH, eM, notes, loc);
+			event.addObserver(view);
 			day.addEvent(day.getEvents().size()-1, event);
 			return true;
 		}
