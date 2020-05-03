@@ -95,7 +95,7 @@ public class CalendarView extends Application implements Observer {
 			buildButtons();
 			buildLabels();
 			VBox buttonsAndLabels = new VBox();
-			buttonsAndLabels.setMargin(dayLabel, new Insets(6,0,0,8));
+			VBox.setMargin(dayLabel, new Insets(6,0,0,8));
 			buttonsAndLabels.getChildren().addAll(buttonRow, dayLabel);
 			control.setCenter(grid);
 			control.setTop(buttonsAndLabels);
@@ -141,10 +141,10 @@ public class CalendarView extends Application implements Observer {
 			Label sun = new Label("Sunday");
 			Label sat = new Label("Saturday");
 			dayLabel.getChildren().addAll(sun, mon, tue, wed, thu, fri, sat);
-			dayLabel.setMargin(mon, new Insets(0,0,0,15));
-			dayLabel.setMargin(tue, new Insets(0,0,0,12));
-			dayLabel.setMargin(wed, new Insets(0,0,0,11));
-			dayLabel.setMargin(sat, new Insets(0,0,0,12));
+			HBox.setMargin(mon, new Insets(0,0,0,15));
+			HBox.setMargin(tue, new Insets(0,0,0,12));
+			HBox.setMargin(wed, new Insets(0,0,0,11));
+			HBox.setMargin(sat, new Insets(0,0,0,12));
 			dayLabel.setSpacing(39);
 			
 		}
@@ -206,7 +206,7 @@ public class CalendarView extends Application implements Observer {
 			buildButtons();
 			buildLabels();
 			VBox buttonsAndLabels = new VBox();
-			buttonsAndLabels.setMargin(dayLabel, new Insets(6,0,0,8));
+			VBox.setMargin(dayLabel, new Insets(6,0,0,8));
 			buttonsAndLabels.getChildren().addAll(buttonRow, dayLabel);
 			control.setCenter(grid);
 			control.setTop(buttonsAndLabels);
@@ -224,10 +224,10 @@ public class CalendarView extends Application implements Observer {
 			Label sun = new Label("Sunday");
 			Label sat = new Label("Saturday");
 			dayLabel.getChildren().addAll(sun, mon, tue, wed, thu, fri, sat);
-			dayLabel.setMargin(mon, new Insets(0,0,0,15));
-			dayLabel.setMargin(tue, new Insets(0,0,0,12));
-			dayLabel.setMargin(wed, new Insets(0,0,0,11));
-			dayLabel.setMargin(sat, new Insets(0,0,0,12));
+			HBox.setMargin(mon, new Insets(0,0,0,15));
+			HBox.setMargin(tue, new Insets(0,0,0,12));
+			HBox.setMargin(wed, new Insets(0,0,0,11));
+			HBox.setMargin(sat, new Insets(0,0,0,12));
 			dayLabel.setSpacing(39);
 			
 		}
