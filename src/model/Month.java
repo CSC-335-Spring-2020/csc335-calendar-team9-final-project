@@ -11,10 +11,8 @@ public class Month extends java.util.Observable implements java.io.Serializable{
 	private int year;
 	private Day[] days;
 	private int startDayOfWeek;
-	private CalendarView observer;
 	
 	public Month(String name, int year, CalendarView view) {
-		this.observer = view;
 		this.name = name;
 		this.year = year;
 		int offset = getOffset();
@@ -101,6 +99,16 @@ public class Month extends java.util.Observable implements java.io.Serializable{
 						days[i].addObserver(view);
 					}
 					break;
+			}
+		}
+	}
+	
+	public void setObserver(CalendarView view) {
+		for (int i = 0; i < days.length; i++) {
+			if (days[i] != null) {
+				days[i].deleteObservers();
+				days[i].addObserver(view);
+				days[i].setObserver(view);
 			}
 		}
 	}

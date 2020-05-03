@@ -49,8 +49,13 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 		for (int i = 0; i < events.size(); i++) {
 			this.events.add(events.get(i));
 		}
-		
-		
+	}
+	
+	public void setObserver(CalendarView view) {
+		for (Event event : events) {
+			event.deleteObservers();
+			event.addObserver(view);
+		}
 	}
 	
 	/**
@@ -154,7 +159,6 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	 */
 	public int getDate() {
 		return date;
-		
 	}
 	
 	/**
