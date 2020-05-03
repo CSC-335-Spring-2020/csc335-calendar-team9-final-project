@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -125,7 +126,7 @@ public class CalendarView extends Application implements Observer {
 		
 		//Notes setup
 		Label noteLabel = new Label("Notes: ");
-		TextField noteField = new TextField();
+		TextArea noteField = new TextArea();
 		noteField.setPrefHeight(200);
 		noteField.setPrefWidth(200);
 		notes.getChildren().addAll(noteLabel, noteField);
@@ -361,7 +362,7 @@ public class CalendarView extends Application implements Observer {
 	
 	private class EventBox extends Stage {
 		
-		public EventBox(int i, TextField tField, ComboBox<String> sh, ComboBox<String> sm, ComboBox<String> eh, ComboBox<String> em, TextField noteField, TextField locField) {
+		public EventBox(int i, TextField tField, ComboBox<String> sh, ComboBox<String> sm, ComboBox<String> eh, ComboBox<String> em, TextArea noteField, TextField locField) {
 			
 		}
 	}
