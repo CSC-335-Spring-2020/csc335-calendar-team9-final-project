@@ -15,16 +15,14 @@ import java.util.Observer;
 
 import model.Day;
 import model.Event;
-import model.Month;
 import model.Year;
-import view.Calendar;
 import view.CalendarView;
 
 public class CalendarController extends Observable{
 	private CalendarView view;
 	private int currYear;
 	private Map<Integer, Year> years;
-	private final String saveName = "calanders";
+	private final String saveName = "calendars";
 	
 	/**
 	 * The constructor for the controller, taking in an int representing the current year

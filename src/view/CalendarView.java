@@ -324,19 +324,30 @@ public class CalendarView extends Application implements Observer {
 				addEventBox add = new addEventBox(day);
 				add.showAndWait();
 				if(add.changed) {
+					controller.save();
 					this.close();
 				}
 			});
 			VBox eventsVBox = new VBox(addEvent);
 			List<Event> eventsList = day.getEvents();
 			for(Event e: eventsList) {
-				Rectangle eventRect = new Rectangle(80,Math.max(20, 2 * e.getDuration()),Color.LIGHTBLUE);
-				eventRect.setOnMouseClicked((event) -> {
+				StackPane tempStack = new StackPane();
+				Rectangle eventRect = new Rectangle(300,Math.max(20,e.getDuration()),Color.LIGHTBLUE);
+				tempStack.getChildren().add(eventRect);
+				tempStack.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
+				tempStack.getChildren().add(new Text(e.getLabel()));
+				tempStack.setOnMouseClicked((event) -> {
 					EventBox eventDetails = new EventBox(e);
 					eventDetails.showAndWait();
 				});
-				eventsVBox.getChildren().add(eventRect);
+				eventsVBox.getChildren().add(tempStack);
+			};
+			if(eventsList.isEmpty()) {
+				Label noEvents = new Label("There are currently no events to display.");
+				noEvents.setPadding(new Insets(10));
+				eventsVBox.getChildren().add(noEvents);
 			}
+			eventsVBox.setPrefWidth(300);
 			control.setCenter(eventsVBox);
 			this.setTitle(day.getMonth() + " " + String.valueOf(day.getDate() + 1));
 			this.setScene(new Scene(control));
@@ -346,7 +357,39 @@ public class CalendarView extends Application implements Observer {
 	private class EventBox extends Stage {
 
 		public EventBox(Event e) {
-			this.initModality(Modality.APPLICATION_MODAL);
+			BorderPane control = new BorderPane();
+			control.setPrefHeight(200);
+			control.setPrefWidth(300);
+			Label titleInfo = new Label("Event Title:");
+			Label title = new Label(e.getLabel());
+			Label startInfo = new Label("Starts at:");
+			Label start = new Label(String.format("%02d:%02d", e.getSH(),e.getSM()));
+			Label endInfo = new Label("Ends at:");
+			Label end = new Label(String.format("%02d:%02d", e.getEH(),e.getEM()));
+			Label locInfo = new Label("Location:");
+			Label loc = new Label(e.getLoc());
+			Label notesInfo = new Label("Notes:");
+			Label notes = new Label(e.getNotes());
+			Button removeButton = new Button("Remove Event");
+			titleInfo.setPadding(new Insets(5));
+			title.setPadding(new Insets(5));
+			startInfo.setPadding(new Insets(5));
+			start.setPadding(new Insets(5));
+			endInfo.setPadding(new Insets(5));
+			end.setPadding(new Insets(5));
+			locInfo.setPadding(new Insets(5));
+			loc.setPadding(new Insets(5));
+			notesInfo.setPadding(new Insets(5));
+			notes.setPadding(new Insets(5));
+			removeButton.setOnAction((event) -> {
+				controller.save();
+				//At this point can call a removeEvent function
+				this.close();
+			});
+			VBox details = new VBox(titleInfo,title,startInfo,start,endInfo,end,locInfo,loc,notesInfo,notes);
+			control.setCenter(details);
+			control.setBottom(removeButton);
+			this.setScene(new Scene(control));
 		}
 	}
 	
@@ -394,7 +437,7 @@ public class CalendarView extends Application implements Observer {
 			for (int j = 0; j < 24; j++) {
 				eh.getItems().add(String.valueOf(j));
 			}
-			eh.setValue("1");
+			eh.setValue("13");
 			ComboBox<String> em = new ComboBox<String>();
 			for (int f = 0; f < 60; f++) {
 				em.getItems().add(String.format("%02d" , f));
@@ -429,7 +472,7 @@ public class CalendarView extends Application implements Observer {
 				if(!controller.addEvent(day, tField.getText(), Integer.valueOf(sh.getValue()), Integer.valueOf(sm.getValue()),
 															Integer.valueOf(eh.getValue()), Integer.valueOf(em.getValue()), noteField.getText(), locField.getText())) {
 					Alert invalid = new Alert(AlertType.ERROR);
-					invalid.setContentText("An event must contain a title.");
+					invalid.setContentText("That is not a valid event. Please make sure you have a title and a positive duration.");
 					invalid.showAndWait();
 				}
 				changed = true;
