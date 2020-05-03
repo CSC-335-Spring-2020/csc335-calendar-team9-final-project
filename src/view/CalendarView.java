@@ -408,7 +408,7 @@ public class CalendarView extends Application implements Observer {
 				HBox tempBox = new HBox(time,tempStack);
 				tempBox.setSpacing(10);
 				eventsVBox.getChildren().add(tempBox);
-			};
+			}
 			if(eventsList.isEmpty()) {
 				Label noEvents = new Label("There are currently no events to display.");
 				noEvents.setPadding(new Insets(10));
