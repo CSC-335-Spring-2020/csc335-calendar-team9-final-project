@@ -40,6 +40,7 @@ public class CalendarView extends Application implements Observer {
 	private MonthView months;
 	private WeekView weeks;
 	private String currMonth;
+	private int currDate;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -123,8 +124,8 @@ public class CalendarView extends Application implements Observer {
 				}
 			}
 			grid.setOnMouseClicked((event) -> {
-				int date = (int)(event.getY()/82) * WIDTH + (int)event.getX()/92;
-				Day day = controller.getDays(month)[date];
+				currDate = (int)(event.getY()/82) * WIDTH + (int)event.getX()/92;
+				Day day = controller.getDays(month)[currDate];
 				if(day != null) {
 					DayView dayView = new DayView(day);
 					dayView.showAndWait();
@@ -256,11 +257,11 @@ public class CalendarView extends Application implements Observer {
 					}
 			}
 			grid.setOnMouseClicked((event) -> {
-				int date = low + (int)event.getX()/92;
-				Day day = controller.getDays(month)[date];
+				currDate = low + (int)event.getX()/92;
+				Day day = controller.getDays(month)[currDate];
 				if(day != null) {
 					DayView dayView = new DayView(day);
-					dayView.showAndWait();
+					dayView.show();
 				}	
 			});
 			}
@@ -322,6 +323,9 @@ public class CalendarView extends Application implements Observer {
 			addEvent.setOnAction((event) -> {
 				addEventBox add = new addEventBox(day);
 				add.showAndWait();
+				if(add.changed) {
+					this.close();
+				}
 			});
 			VBox eventsVBox = new VBox(addEvent);
 			List<Event> eventsList = day.getEvents();
@@ -347,7 +351,9 @@ public class CalendarView extends Application implements Observer {
 	}
 	
 	private class addEventBox extends Stage {
+		public boolean changed;
 		public addEventBox(Day day) {
+			changed = false;
 			this.initModality(Modality.APPLICATION_MODAL);
 			BorderPane pane = new BorderPane();
 			Scene scene = new Scene(pane);
@@ -426,6 +432,7 @@ public class CalendarView extends Application implements Observer {
 					invalid.setContentText("An event must contain a title.");
 					invalid.showAndWait();
 				}
+				changed = true;
 				this.close();
 			});
 			cancel.setOnAction((e) -> {
@@ -467,7 +474,10 @@ public class CalendarView extends Application implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
+		Day day = controller.getDays(currMonth)[currDate];
+		if(day != null) {
+			DayView dayView = new DayView(day);
+			dayView.show();
+		}
 	}
 }
