@@ -102,18 +102,25 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 		switch (this.day) {
 		case 1:
 			dayOf =  "Sunday";
+			break;
 		case 2:
 			dayOf =  "Monday";
+			break;
 		case 3:
 			dayOf =  "Tuesday";
+			break;
 		case 4:
 			dayOf =  "Wednesday";
+			break;
 		case 5:
 			dayOf =  "Thursday";
+			break;
 		case 6:
 			dayOf =  "Friday";
+			break;
 		case 7:
-			return "Sunday";
+			dayOf = "Saturday";
+			break;
 		}
 		return dayOf;
 	}

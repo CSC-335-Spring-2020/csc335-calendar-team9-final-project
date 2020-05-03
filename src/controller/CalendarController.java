@@ -60,21 +60,27 @@ public class CalendarController extends Observable{
 		return day.addEvent(event);
 	}
 	
+	/**
+	 * This method returns the current year
+	 * @return int The calendar's current year
+	 */
+	public int getYear() {
+		return this.currYear;
+	}
+	
+	/**
+	 * This method takes in a year and changes the current year of the 
+	 * calendar to the inputed year
+	 * @param year The year to put in as the new current year
+	 */
 	public void changeYear(int year) {
 		if (years.containsKey(year)) {
 			currYear = year;
 		} else {
 			years.put(year,  new Year(year, view));
+			years.put(year, new Year(year, view));
 			currYear = year;
 		}
-	}
-	
-	/**
-	 * Returns the current year of the calendar
-	 * @return int The curr year
-	 */
-	public int getYear() {
-		return currYear;
 	}
 	
 	/**
