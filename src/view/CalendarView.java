@@ -268,6 +268,7 @@ public class CalendarView extends Application implements Observer {
 			BorderPane.setMargin(grid, new Insets(8));
 			buildGrid();
 			buildButtons();
+			buildLabels();
 			control.setCenter(grid);
 			control.setTop(buttonRow);
 			this.setTitle("Calendar");
@@ -275,6 +276,11 @@ public class CalendarView extends Application implements Observer {
 			this.show();
 		}
 		
+		private void buildLabels() {
+			// TODO Auto-generated method stub
+			
+		}
+
 		private void buildGrid() {
 			grid.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
 			int count = 0;
