@@ -11,7 +11,8 @@ import view.CalendarView;
  * about the day, including date, day (of the week), events, and the month the day is in.
  *
  */
-public class Day extends java.util.Observable{
+public class Day extends java.util.Observable implements java.io.Serializable{
+	private static final long serialVersionUID = 1;
 	private int day;
 	private int date;
 	private String month;

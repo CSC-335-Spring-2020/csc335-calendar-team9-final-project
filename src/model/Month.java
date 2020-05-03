@@ -4,8 +4,9 @@ import java.util.Observer;
 
 import view.CalendarView;
 
-public class Month extends java.util.Observable{
+public class Month extends java.util.Observable implements java.io.Serializable{
 	
+	private static final long serialVersionUID = 1;
 	private String name;
 	private int year;
 	private Day[] days;

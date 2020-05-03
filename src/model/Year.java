@@ -7,8 +7,9 @@ import java.util.Observer;
 
 import view.CalendarView;
 
-public class Year extends java.util.Observable{
+public class Year extends java.util.Observable implements java.io.Serializable{
 	
+	private static final long serialVersionUID = 1;
 	private Map<String, Month> months = new HashMap<String, Month>();
 	private Map<Integer, String> monthNames = new HashMap<Integer, String>();
 	private int year;

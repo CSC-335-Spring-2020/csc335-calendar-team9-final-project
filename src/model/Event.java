@@ -3,7 +3,8 @@ package model;
 /**
  * This class represents an Event object that contains a variety of information about a given calendar event. 
  */
-public class Event extends java.util.Observable{
+public class Event extends java.util.Observable implements java.io.Serializable{
+	private static final long serialVersionUID = 1;
 	private Day day;
 	private String label;
 	private int sH;

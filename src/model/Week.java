@@ -1,7 +1,7 @@
 package model;
 
-public class Week extends java.util.Observable{
-	
+public class Week extends java.util.Observable implements java.io.Serializable{
+	private static final long serialVersionUID = 1;
 	private Day[] days;
 	private int weekNum;
 
