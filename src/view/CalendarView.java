@@ -213,7 +213,12 @@ public class CalendarView extends Application implements Observer {
 				}
 			}
 			grid.setOnMouseClicked((event) -> {
-				showEventBox((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
+				int date = (int)(event.getY()/82) * WIDTH + (int)event.getX()/92;
+				Day day = controller.getDays(month)[date];
+				if(day != null) {
+					DayView dayView = new DayView(day);
+					dayView.showAndWait();
+				}	
 			});
 		}
 		private void buildButtons() {
@@ -297,11 +302,15 @@ public class CalendarView extends Application implements Observer {
 					}
 					StackPane.setMargin(tempRect, new Insets(5));
 					grid.add(tempStack, i, 0);
-						}
 					}
+			}
 			grid.setOnMouseClicked((event) -> {
-				showEventBox((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
-				
+				int date = low + (int)event.getX()/92;
+				Day day = controller.getDays(month)[date];
+				if(day != null) {
+					DayView dayView = new DayView(day);
+					dayView.showAndWait();
+				}	
 			});
 			}
 		
@@ -371,7 +380,7 @@ public class CalendarView extends Application implements Observer {
 				eventsVBox.getChildren().add(eventRect);
 			}
 			control.setCenter(eventsVBox);
-			this.setTitle(day.getMonth() + " " + String.valueOf(day.getDate()));
+			this.setTitle(day.getMonth() + " " + String.valueOf(day.getDate() + 1));
 			this.setScene(new Scene(control));
 		}
 	}
