@@ -70,10 +70,6 @@ public class Year extends java.util.Observable implements java.io.Serializable{
 			monthNames.put(12, "December");
 		}
 		
-		public void setMonth(Month month) {
-			months.put(month.getName(), month);
-		}
-		
 		public Month getMonth(int monthNum) {
 			return months.get(monthNames.get(monthNum));
 		}
@@ -82,15 +78,4 @@ public class Year extends java.util.Observable implements java.io.Serializable{
 			return months.get(monthName);
 		}
 		
-		private boolean leap(int year) {
-			if (!(year % 4 == 0)) {
-				return false;
-			} else if (!(year % 100 == 0)) {
-				return true;
-			} else if (!(year % 400 == 0)) {
-				return false;
-			} else {
-				return true;
-			}
-		}
 }

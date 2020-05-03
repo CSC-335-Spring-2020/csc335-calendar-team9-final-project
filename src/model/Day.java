@@ -65,15 +65,14 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	/**
 	 * Adds the given event to the events list of the day, returns false if the event 
 	 * already exists
-	 * @param i The index at which to insert the event
 	 * @param event The event to add
 	 * @return boolean indicating if the event is able to be added or not
 	 */
-	public boolean addEvent(int i, Event event) {
+	public boolean addEvent(Event event) {
 		if (events.contains(event)) {
 			return false;
 		}
-		events.add(i, event);
+		events.add(event);
 		this.setChanged();
 		this.notifyObservers();
 		return true;
