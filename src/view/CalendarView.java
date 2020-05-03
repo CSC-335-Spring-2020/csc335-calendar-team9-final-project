@@ -29,6 +29,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Day;
+import model.Event;
 
 public class CalendarView extends Application implements Observer {
 	private CalendarController controller;
@@ -359,16 +360,32 @@ public class CalendarView extends Application implements Observer {
 	
 	
 	private class DayView extends Stage {
-		
-		public DayView() {
-			//TODO
+		private Day day;
+		public DayView(Day day) {
+			this.day = day;
+			this.initModality(Modality.APPLICATION_MODAL);
+			BorderPane control = new BorderPane();
+			VBox eventsVBox = new VBox();
+			List<Event> eventsList = day.getEvents();
+			for(Event e: eventsList) {
+				Rectangle eventRect = new Rectangle(80,100,Color.LIGHTBLUE);
+				eventRect.setOnMouseClicked((event) -> {
+					EventBox eventDetails = new EventBox(e);
+					eventDetails.showAndWait();
+				});
+				eventsVBox.getChildren().add(eventRect);
+			}
+			control.setCenter(eventsVBox);
+			this.setScene(new Scene(control));
+			this.show();
 		}
 	}
 	
 	private class EventBox extends Stage {
-		
-		public EventBox(int i, TextField tField, ComboBox<String> sh, ComboBox<String> sm, ComboBox<String> eh, ComboBox<String> em, TextField noteField, TextField locField) {
-			
+		private Event event;
+		public EventBox(Event e) {
+			event = e;
+			this.initModality(Modality.APPLICATION_MODAL);
 		}
 	}
 	
