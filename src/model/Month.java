@@ -13,6 +13,7 @@ public class Month extends java.util.Observable implements java.io.Serializable{
 	private int startDayOfWeek;
 	private CalendarView observer;
 	private int numDays;
+
 	
 	/**
 	 * Constructor, takes in the month name, year its in, and the view
@@ -21,7 +22,6 @@ public class Month extends java.util.Observable implements java.io.Serializable{
 	 * @param view The view the month will be looked at in
 	 */
 	public Month(String name, int year, CalendarView view) {
-		this.observer = view;
 		this.name = name;
 		this.year = year;
 		int offset = getOffset();
@@ -125,10 +125,15 @@ public class Month extends java.util.Observable implements java.io.Serializable{
 		}
 	}
 	
-	/**
-	 * Returns the offset of days of the week before the month actually starts
-	 * @return int The offset number
-	 */
+	public void setObserver(CalendarView view) {
+		for (int i = 0; i < days.length; i++) {
+			if (days[i] != null) {
+				days[i].deleteObservers();
+				days[i].addObserver(view);
+				days[i].setObserver(view);
+			}
+		}
+	}
 	private int getOffset() {
 		int offset = ((35 + ((year-1) / 4) - ((year-1) / 100) + ((year-1) / 400) + (year-1)) + 1) % 7;
 		if (!name.contentEquals("January") && !name.contentEquals("February") && leap(year)) {
