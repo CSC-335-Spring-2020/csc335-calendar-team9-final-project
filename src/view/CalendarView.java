@@ -371,8 +371,8 @@ public class CalendarView extends Application implements Observer {
 				eventsVBox.getChildren().add(eventRect);
 			}
 			control.setCenter(eventsVBox);
+			this.setTitle(day.getMonth() + " " + String.valueOf(day.getDate()));
 			this.setScene(new Scene(control));
-			this.show();
 		}
 	}
 	
