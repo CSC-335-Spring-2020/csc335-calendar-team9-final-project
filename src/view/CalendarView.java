@@ -176,6 +176,7 @@ public class CalendarView extends Application implements Observer {
 		private static final int HEIGHT = 6;
 		private GridPane grid;
 		private HBox buttonRow;
+		private HBox dayLabel;
 		private String month;
 		public MonthView(String month) {
 			this.month = month;
@@ -185,10 +186,15 @@ public class CalendarView extends Application implements Observer {
 			buttonRow = new HBox();
 			BorderPane.setMargin(grid, new Insets(8));
 			BorderPane.setMargin(buttonRow, new Insets(5, 0, 3, 8));
+			dayLabel = new HBox();
 			buildGrid();
 			buildButtons();
+			buildLabels();
+			VBox buttonsAndLabels = new VBox();
+			buttonsAndLabels.setMargin(dayLabel, new Insets(6,0,0,8));
+			buttonsAndLabels.getChildren().addAll(buttonRow, dayLabel);
 			control.setCenter(grid);
-			control.setTop(buttonRow);
+			control.setTop(buttonsAndLabels);
 			this.setTitle("Calendar");
 			this.setScene(new Scene(control));
 		}
@@ -216,6 +222,24 @@ public class CalendarView extends Application implements Observer {
 				showEventBox((int)(event.getY()/82) * WIDTH + (int)(event.getX()/92));
 			});
 		}
+		
+		private void buildLabels() {
+			Label mon = new Label("Monday");
+			Label tue = new Label("Tuesday");
+			Label wed = new Label("Wednesday");
+			Label thu = new Label("Thursday");
+			Label fri = new Label("Friday");
+			Label sun = new Label("Sunday");
+			Label sat = new Label("Saturday");
+			dayLabel.getChildren().addAll(sun, mon, tue, wed, thu, fri, sat);
+			dayLabel.setMargin(mon, new Insets(0,0,0,15));
+			dayLabel.setMargin(tue, new Insets(0,0,0,12));
+			dayLabel.setMargin(wed, new Insets(0,0,0,11));
+			dayLabel.setMargin(sat, new Insets(0,0,0,12));
+			dayLabel.setSpacing(39);
+			
+		}
+		
 		private void buildButtons() {
 			ComboBox<String> weeks = new ComboBox<String>();
 			weeks.getItems().addAll("Month View", "Week 1", "Week 2","Week 3","Week 4","Week 5","Week 6");
@@ -259,6 +283,7 @@ public class CalendarView extends Application implements Observer {
 		private GridPane grid;
 		private HBox buttonRow;
 		private String month;
+		private HBox dayLabel;
 		public WeekView(int weekNum, String currMonth) {
 			this.month = currMonth;
 			this.weekNum = weekNum;
@@ -266,19 +291,35 @@ public class CalendarView extends Application implements Observer {
 			control.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
 			grid = new GridPane();
 			buttonRow = new HBox();
+			dayLabel = new HBox();
 			BorderPane.setMargin(grid, new Insets(8));
 			buildGrid();
 			buildButtons();
 			buildLabels();
+			VBox buttonsAndLabels = new VBox();
+			buttonsAndLabels.setMargin(dayLabel, new Insets(6,0,0,8));
+			buttonsAndLabels.getChildren().addAll(buttonRow, dayLabel);
 			control.setCenter(grid);
-			control.setTop(buttonRow);
+			control.setTop(buttonsAndLabels);
 			this.setTitle("Calendar");
 			this.setScene(new Scene(control));
 			this.show();
 		}
 		
 		private void buildLabels() {
-			// TODO Auto-generated method stub
+			Label mon = new Label("Monday");
+			Label tue = new Label("Tuesday");
+			Label wed = new Label("Wednesday");
+			Label thu = new Label("Thursday");
+			Label fri = new Label("Friday");
+			Label sun = new Label("Sunday");
+			Label sat = new Label("Saturday");
+			dayLabel.getChildren().addAll(sun, mon, tue, wed, thu, fri, sat);
+			dayLabel.setMargin(mon, new Insets(0,0,0,15));
+			dayLabel.setMargin(tue, new Insets(0,0,0,12));
+			dayLabel.setMargin(wed, new Insets(0,0,0,11));
+			dayLabel.setMargin(sat, new Insets(0,0,0,12));
+			dayLabel.setSpacing(39);
 			
 		}
 
