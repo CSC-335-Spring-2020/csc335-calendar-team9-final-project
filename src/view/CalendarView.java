@@ -572,26 +572,6 @@ public class CalendarView extends Application implements Observer {
 			this.setTitle("New Event");
 		}
 	}
-	
-	/**
-	 * Utility method for retrieving the node at a given location in a grid pane.
-	 * @param grid The grid to locate a node within.
-	 * @param row The row index of the grid to grab from.
-	 * @param column The column index of the grid.
-	 * @return The node found at the specified location, null if not present.
-	 * This method is used to get a specific item from a grid pane. It can be difficult to grab a particular item, so this is used instead.
-	 * It loops through all children, and when it find the node whose coordinates match the requested, it returns it.
-	 * Will return null if there is no node at the specified location.
-	 */
-	public Node getNodeByRowColumnIndex(GridPane grid,int row,int column) {
-		  List<Node> childrens = grid.getChildren();
-		  for (Node node : childrens) {
-		    if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
-		      return node;
-		    }
-		  }
-		  return null;
-	}
 
 	/**
 	 * This method redraws the given view when an update is detected in the model.
