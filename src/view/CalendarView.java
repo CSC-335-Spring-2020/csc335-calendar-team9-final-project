@@ -42,6 +42,12 @@ public class CalendarView extends Application implements Observer {
 	private String currMonth;
 	private int currDate;
 	
+	/**
+	 * start initializes the controller to use and the necessary variables.
+	 * @param stage Terrible stage that we don't want or need.
+	 * Creates a controller, sets the current year to 2020, month to May.
+	 * Produces a default view of the current month, May 2020.
+	 */
 	@Override
 	public void start(Stage stage) throws Exception {
 		controller = new CalendarController(2020,this);
@@ -51,6 +57,12 @@ public class CalendarView extends Application implements Observer {
 		months.show();
 	}
 	
+	/**
+	 * A method to change the month to a new month.
+	 * @param month The month to display now.
+	 * Updates the new month, closes any currently open calendar views, and creates a new view.
+	 * The new month is shown as a MonthView.
+	 */
 	private void newMonth(String month) {
 		if (months != null) {
 			months.close();
@@ -63,6 +75,12 @@ public class CalendarView extends Application implements Observer {
 		months.show();
 	}
 	
+	/**
+	 * Produces a new WeekView for the given week.
+	 * @param week The string that contains the number of the week to display.
+	 * Closes any currently open views and opens a WeekView of the given month and numbered week.
+	 * Since the week is received as "Week #", a split and index is needed to get the number.
+	 */
 	private void newWeek(String week) {
 		if (months != null) {
 			months.close();
@@ -83,6 +101,13 @@ public class CalendarView extends Application implements Observer {
 		private HBox buttonRow;
 		private HBox dayLabel;
 		private String month;
+		
+		/**
+		 * Creates a new view of a month, with all days shown.
+		 * @param month The month to show of the current year.
+		 * Produces a button selection system to change the view, and a grid of day objects.
+		 * Each day can be clicked to bring up the DayView for that day
+		 */
 		public MonthView(String month) {
 			this.month = month;
 			BorderPane control = new BorderPane();
@@ -104,6 +129,11 @@ public class CalendarView extends Application implements Observer {
 			this.setScene(new Scene(control));
 		}
 		
+		/**
+		 * Produces a 7x6 grid of rectangles to represent the days of the month.
+		 * Each month is labeled, with no label if the day does not fit in the month.
+		 * Each day, when clicked, brings up the DayView for that day of the month.
+		 */
 		private void buildGrid() {
 			grid.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
 			Day[] days = controller.getDays(month);
@@ -133,6 +163,10 @@ public class CalendarView extends Application implements Observer {
 			});
 		}
 		
+		/**
+		 * Adds the labels for each day of the week at the top of the calendar grid.
+		 * Starts the week on a Sunday, ends on Saturday.
+		 */
 		private void buildLabels() {
 			Label mon = new Label("Monday");
 			Label tue = new Label("Tuesday");
@@ -150,6 +184,10 @@ public class CalendarView extends Application implements Observer {
 			
 		}
 		
+		/**
+		 * Method for producing the year, month, and week selectors to change the calendar view.
+		 * If the week selector is changed to a numbered week, a WeekView is produced instead of a MonthView.
+		 */
 		private void buildButtons() {
 			ComboBox<String> weeks = new ComboBox<String>();
 			weeks.getItems().addAll("Month View", "Week 1", "Week 2","Week 3","Week 4","Week 5","Week 6");
@@ -194,6 +232,14 @@ public class CalendarView extends Application implements Observer {
 		private HBox buttonRow;
 		private String month;
 		private HBox dayLabel;
+		
+		/**
+		 * Constructor for a 7 day view of the currently selected week.
+		 * @param weekNum The number representing which week (1-6) of the month to display.
+		 * @param currMonth The string of the current month, e.g. "May"
+		 * A WeekView consists of selector buttons to change the current year, month, or week, a grid of the current days, and labels.
+		 * Each day can be clicked to bring up the DayView for that specific day.
+		 */
 		public WeekView(int weekNum, String currMonth) {
 			this.month = currMonth;
 			this.weekNum = weekNum;
@@ -216,6 +262,10 @@ public class CalendarView extends Application implements Observer {
 			this.show();
 		}
 		
+		/**
+		 * Adds the labels for each day of the week at the top of the calendar grid.
+		 * Starts the week on a Sunday, ends on Saturday.
+		 */
 		private void buildLabels() {
 			Label mon = new Label("Monday");
 			Label tue = new Label("Tuesday");
@@ -233,6 +283,10 @@ public class CalendarView extends Application implements Observer {
 			
 		}
 
+		/**
+		 * Method to produce the 7 slot grid for a week view. Each slot gets a label of its date.
+		 * When any day in the week is clicked, the specific day view is opened for that date.
+		 */
 		private void buildGrid() {
 			grid.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
 			int count = 0;
@@ -268,7 +322,10 @@ public class CalendarView extends Application implements Observer {
 		
 		
 		
-
+		/**
+		 * Method for producing the year, month, and week selectors to change the calendar view.
+		 * If the week selector is changed to month view, it changes back to a full month view instead of a 7 day view.
+		 */
 		private void buildButtons() {
 			ComboBox<String> weeks = new ComboBox<String>();
 			weeks.getItems().addAll("Month View", "Week 1", "Week 2","Week 3","Week 4","Week 5","Week 6");
@@ -316,6 +373,13 @@ public class CalendarView extends Application implements Observer {
 	
 	
 	private class DayView extends Stage {
+		
+		/**
+		 * Produces a GUI to look at a specific day.
+		 * @param day The Day object to produce an interactive view for.
+		 * This builds a list of the events present in the given day. Each slot scales to the length of the event.
+		 * There is also an option to add a new event to the day.
+		 */
 		public DayView(Day day) {
 			this.initModality(Modality.APPLICATION_MODAL);
 			BorderPane control = new BorderPane();
@@ -356,6 +420,12 @@ public class CalendarView extends Application implements Observer {
 	
 	private class EventBox extends Stage {
 
+		/**
+		 * This window provides a basic overview of the details of an event, and the ability to remove it.
+		 * @param e The event object to provide information for.
+		 * Mostly a way to display text, this window displays the information associated with an event.
+		 * There is also a button that removes the event from the calendar. 
+		 */
 		public EventBox(Event e) {
 			BorderPane control = new BorderPane();
 			control.setPrefHeight(200);
@@ -382,8 +452,8 @@ public class CalendarView extends Application implements Observer {
 			notesInfo.setPadding(new Insets(5));
 			notes.setPadding(new Insets(5));
 			removeButton.setOnAction((event) -> {
-				controller.save();
 				//At this point can call a removeEvent function
+				controller.save();
 				this.close();
 			});
 			VBox details = new VBox(titleInfo,title,startInfo,start,endInfo,end,locInfo,loc,notesInfo,notes);
@@ -395,6 +465,14 @@ public class CalendarView extends Application implements Observer {
 	
 	private class addEventBox extends Stage {
 		public boolean changed;
+		
+		/**
+		 * This window allows the user to add a new event to the given day.
+		 * @param day The Day object to add a new event to.
+		 * A new event consists of a title, start and end times, location, and notes.
+		 * These parameters are collected from the user using various input features like text fields
+		 * and sent to the controller to produce a new event and store it in the model.
+		 */
 		public addEventBox(Day day) {
 			changed = false;
 			this.initModality(Modality.APPLICATION_MODAL);
@@ -472,6 +550,7 @@ public class CalendarView extends Application implements Observer {
 				if(!controller.addEvent(day, tField.getText(), Integer.valueOf(sh.getValue()), Integer.valueOf(sm.getValue()),
 															Integer.valueOf(eh.getValue()), Integer.valueOf(em.getValue()), noteField.getText(), locField.getText())) {
 					Alert invalid = new Alert(AlertType.ERROR);
+					invalid.setTitle("Invalid event");
 					invalid.setContentText("That is not a valid event. Please make sure you have a title and a positive duration.");
 					invalid.showAndWait();
 				}
@@ -498,23 +577,27 @@ public class CalendarView extends Application implements Observer {
 	 * Utility method for retrieving the node at a given location in a grid pane.
 	 * @param grid The grid to locate a node within.
 	 * @param row The row index of the grid to grab from.
-	 * @param column The
-	 * @return
+	 * @param column The column index of the grid.
+	 * @return The node found at the specified location, null if not present.
+	 * This method is used to get a specific item from a grid pane. It can be difficult to grab a particular item, so this is used instead.
+	 * It loops through all children, and when it find the node whose coordinates match the requested, it returns it.
+	 * Will return null if there is no node at the specified location.
 	 */
 	public Node getNodeByRowColumnIndex(GridPane grid,int row,int column) {
-		  Node result = null;
 		  List<Node> childrens = grid.getChildren();
-
 		  for (Node node : childrens) {
 		    if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
-		      result = node;
-		      break;
+		      return node;
 		    }
 		  }
-
-		  return result;
+		  return null;
 	}
 
+	/**
+	 * This method redraws the given view when an update is detected in the model.
+	 * When an event is added or removed from the calendar, the currently viewed day is refreshed
+	 * to reflect the new event list. This is done by producing a new DayView of the most recently viewed day.
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Day day = controller.getDays(currMonth)[currDate];
