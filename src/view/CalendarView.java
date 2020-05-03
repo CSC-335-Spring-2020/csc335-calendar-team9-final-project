@@ -372,7 +372,7 @@ public class CalendarView extends Application implements Observer {
 			VBox eventsVBox = new VBox();
 			List<Event> eventsList = day.getEvents();
 			for(Event e: eventsList) {
-				Rectangle eventRect = new Rectangle(80,100,Color.LIGHTBLUE);
+				Rectangle eventRect = new Rectangle(80,Math.max(20, 2 * e.getDuration()),Color.LIGHTBLUE);
 				eventRect.setOnMouseClicked((event) -> {
 					EventBox eventDetails = new EventBox(e);
 					eventDetails.showAndWait();
