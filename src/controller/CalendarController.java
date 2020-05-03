@@ -1,6 +1,13 @@
 package controller;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -17,6 +24,7 @@ public class CalendarController extends Observable{
 	private CalendarView view;
 	private int currYear;
 	private Map<Integer, Year> years;
+	private final String saveName = "calanders";
 	
 	/**
 	 * The constructor for the controller, taking in an int representing the current year
@@ -26,11 +34,50 @@ public class CalendarController extends Observable{
 		this.currYear = currYear;
 		this.view = view;
 		years = new HashMap<Integer, Year>();
-		years.put(currYear, new Year(currYear, view));
-		years.put(currYear - 1, new Year(currYear - 1, view));
-		years.put(currYear + 1, new Year(currYear + 1, view));
-		this.addObserver((Observer) view);
+		File check = new File(saveName);
+		if (check.isFile()) {
+			FileInputStream fileIn;
+			ObjectInputStream input;
+			try {
+				fileIn = new FileInputStream(saveName);
+				input = new ObjectInputStream(fileIn);
+				years = (Map<Integer, Year>) input.readObject();
+				for (Year year : years.values()) {
+					year.deleteObservers();
+					year.addObserver(view);
+					year.setObserver(view);
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			years.put(currYear, new Year(currYear, view));
+			years.put(currYear - 1, new Year(currYear - 1, view));
+			years.put(currYear + 1, new Year(currYear + 1, view));
+			this.addObserver((Observer) view);
+		}
+	}
 	
+	public void save() {
+		FileOutputStream fileOut;
+		ObjectOutputStream output;
+		File file = new File(saveName);
+		file.delete();
+		try {
+			fileOut = new FileOutputStream(saveName, false);
+			output = new ObjectOutputStream(fileOut);
+			output.writeObject(years);
+			output.close();
+			fileOut.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

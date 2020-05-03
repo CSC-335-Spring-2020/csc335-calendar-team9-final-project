@@ -13,13 +13,10 @@ public class Year extends java.util.Observable implements java.io.Serializable{
 	private Map<String, Month> months = new HashMap<String, Month>();
 	private Map<Integer, String> monthNames = new HashMap<Integer, String>();
 	private int year;
-	private CalendarView observer;
 
 		public Year(int year, CalendarView view) {
 			fillMonthNames();
-
 			this.year = year;
-
 			months.put("January", new Month("January", year, view));
 			months.put("February", new Month("February", year, view));
 			months.put("March", new Month("March", year, view));
@@ -44,7 +41,7 @@ public class Year extends java.util.Observable implements java.io.Serializable{
 			months.get("October").addObserver(view);
 			months.get("November").addObserver(view);
 			months.get("September").addObserver(view);
-		}{}
+		}
 		
 		public Year(int year, List<Month> months) {
 			fillMonthNames();
@@ -52,6 +49,14 @@ public class Year extends java.util.Observable implements java.io.Serializable{
 			this.year = year;
 			for (Month month : months) {
 				this.months.put(month.getName(), month);
+			}
+		}
+		
+		public void setObserver(CalendarView view) {
+			for (Month month : months.values()) {
+				month.deleteObservers();
+				month.addObserver(view);
+				month.setObserver(view);
 			}
 		}
 		
