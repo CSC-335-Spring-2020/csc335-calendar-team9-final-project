@@ -141,7 +141,7 @@ public class CalendarView extends Application implements Observer {
 
 		
 		//EventBox setup
-		EventBox box = new EventBox(i, tField, sh, sm, eh, em, noteField, locField);
+		Stage box = new Stage();
 		box.initModality(Modality.APPLICATION_MODAL);
 		
 		//HBox Line 4 setup
