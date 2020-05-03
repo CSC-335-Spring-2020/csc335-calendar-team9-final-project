@@ -7,7 +7,6 @@ import java.util.Observer;
 import controller.CalendarController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -393,6 +392,7 @@ public class CalendarView extends Application implements Observer {
 				}
 			});
 			VBox eventsVBox = new VBox(addEvent);
+			VBox.setMargin(addEvent, new Insets(10));
 			List<Event> eventsList = day.getEvents();
 			for(Event e: eventsList) {
 				StackPane tempStack = new StackPane();
@@ -404,14 +404,18 @@ public class CalendarView extends Application implements Observer {
 					EventBox eventDetails = new EventBox(e);
 					eventDetails.showAndWait();
 				});
-				eventsVBox.getChildren().add(tempStack);
+				Label time = new Label(String.format("%02d:%02d", e.getSH(),e.getSM()));
+				HBox tempBox = new HBox(time,tempStack);
+				tempBox.setSpacing(10);
+				eventsVBox.getChildren().add(tempBox);
 			};
 			if(eventsList.isEmpty()) {
 				Label noEvents = new Label("There are currently no events to display.");
 				noEvents.setPadding(new Insets(10));
 				eventsVBox.getChildren().add(noEvents);
 			}
-			eventsVBox.setPrefWidth(300);
+			eventsVBox.setPrefWidth(340);
+			eventsVBox.setMinHeight(500);
 			control.setCenter(eventsVBox);
 			this.setTitle(day.getMonth() + " " + String.valueOf(day.getDate() + 1));
 			this.setScene(new Scene(control));
@@ -459,6 +463,7 @@ public class CalendarView extends Application implements Observer {
 			VBox details = new VBox(titleInfo,title,startInfo,start,endInfo,end,locInfo,loc,notesInfo,notes);
 			control.setCenter(details);
 			control.setBottom(removeButton);
+			BorderPane.setMargin(removeButton, new Insets(10));
 			this.setScene(new Scene(control));
 		}
 	}
