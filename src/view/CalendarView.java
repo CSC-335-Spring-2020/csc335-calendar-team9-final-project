@@ -93,9 +93,9 @@ public class CalendarView extends Application implements Observer {
 		
 		//Start Time setup
 		ComboBox<String> sh = new ComboBox<String>();
-		sh.getItems().addAll("12", "11", "10", "9", "8", 
-				"7", "6", "5", "4", "3", "2", "1"
-				);
+		for (int j = 1; j < 25; j++) {
+			sh.getItems().add(String.valueOf(j));
+		}
 		sh.setValue("12");
 		ComboBox<String> sm = new ComboBox<String>();
 		for (int f = 0; f < 60; f++) {
@@ -103,29 +103,23 @@ public class CalendarView extends Application implements Observer {
 		}
 		sm.setValue("00");
 		Label shl = new Label("Start Time: ");
-		ComboBox<String> aam = new ComboBox<String>();
-		aam.getItems().addAll("AM", "PM");
-		aam.setValue("PM");
-		sTime.getChildren().addAll(shl, sh, sm, aam);
+		sTime.getChildren().addAll(shl, sh, sm );
 		sTime.setSpacing(8);
 		
 		
 		//End Time setup
 		ComboBox<String> eh = new ComboBox<String>();
-		eh.getItems().addAll("12", "11", "10", "9", "8", 
-				"7", "6", "5", "4", "3", "2", "1"
-				);
+		for (int j = 1; j < 25; j++) {
+			eh.getItems().add(String.valueOf(j));
+		}
 		eh.setValue("1");
 		ComboBox<String> em = new ComboBox<String>();
 		for (int f = 0; f < 60; f++) {
 			em.getItems().add(String.format("%02d" , f));
 		}
 		em.setValue("00");
-		ComboBox<String> eam = new ComboBox<String>();
-		eam.getItems().addAll("AM", "PM");
-		eam.setValue("PM");
 		Label ehl = new Label("End Time:  ");
-		eTime.getChildren().addAll(ehl, eh, em, eam);
+		eTime.getChildren().addAll(ehl, eh, em);
 		eTime.setSpacing(8);
 		
 		
