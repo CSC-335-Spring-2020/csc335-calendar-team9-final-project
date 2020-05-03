@@ -24,7 +24,7 @@ public class CalendarController extends Observable{
 	private CalendarView view;
 	private int currYear;
 	private Map<Integer, Year> years;
-	private final String saveName = "calanders";
+	private final String saveName = "calendars";
 	
 	/**
 	 * The constructor for the controller, taking in an int representing the current year
@@ -93,6 +93,7 @@ public class CalendarController extends Observable{
 	 */
 	public void addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc) {
 		Event event = new Event(day, label, sH, sM, eH, eM, notes, loc);
+		event.addObserver(view);
 		day.addEvent(day.getEvents().size()-1, event);
 	}
 	
