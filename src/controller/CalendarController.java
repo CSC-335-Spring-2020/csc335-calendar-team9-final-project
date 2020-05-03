@@ -97,7 +97,7 @@ public class CalendarController extends Observable{
 		} else {
 			Event event = new Event(day, label, sH, sM, eH, eM, notes, loc);
 			event.addObserver(view);
-			day.addEvent(day.getEvents().size()-1, event);
+			day.addEvent(event);
 			return true;
 		}
 	}
@@ -111,7 +111,7 @@ public class CalendarController extends Observable{
 	 * @return boolean indicating if the event was successfully added or not
 	 */
 	public boolean addEvent(int index, Day day, Event event) {
-		return day.addEvent(index, event);
+		return day.addEvent(event);
 	}
 	
 	public void changeYear(int year) {
