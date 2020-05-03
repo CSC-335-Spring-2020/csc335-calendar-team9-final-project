@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -313,14 +314,12 @@ public class CalendarView extends Application implements Observer {
 	
 	
 	private class DayView extends Stage {
-		private Day day;
 		public DayView(Day day) {
-			this.day = day;
 			this.initModality(Modality.APPLICATION_MODAL);
 			BorderPane control = new BorderPane();
 			Button addEvent = new Button("Add Event");
 			addEvent.setOnAction((event) -> {
-				addEventBox add = new addEventBox();
+				addEventBox add = new addEventBox(day);
 				add.showAndWait();
 			});
 			VBox eventsVBox = new VBox(addEvent);
@@ -334,7 +333,6 @@ public class CalendarView extends Application implements Observer {
 				eventsVBox.getChildren().add(eventRect);
 			}
 			control.setCenter(eventsVBox);
-			controller.save();
 			this.setTitle(day.getMonth() + " " + String.valueOf(day.getDate() + 1));
 			this.setScene(new Scene(control));
 		}
@@ -342,15 +340,15 @@ public class CalendarView extends Application implements Observer {
 	
 	private class EventBox extends Stage {
 
-		private Event event;
 		public EventBox(Event e) {
-			event = e;
 			this.initModality(Modality.APPLICATION_MODAL);
 		}
 	}
 	
 	private class addEventBox extends Stage {
-		public addEventBox() {
+		public boolean cancel;
+		public addEventBox(Day day) {
+			this.cancel = false;
 			this.initModality(Modality.APPLICATION_MODAL);
 			BorderPane pane = new BorderPane();
 			Scene scene = new Scene(pane);
@@ -422,8 +420,18 @@ public class CalendarView extends Application implements Observer {
 			buttons.getChildren().addAll(ok, cancel);
 			buttons.setPadding(new Insets(8, 8, 8, 8));
 			buttons.setSpacing(8);
-			ok.setOnAction(e -> this.close());
-			cancel.setOnAction(e -> this.close());
+			ok.setOnAction((e) -> {
+				if(!controller.addEvent(day, tField.getText(), Integer.valueOf(sh.getValue()), Integer.valueOf(sm.getValue()),
+															Integer.valueOf(eh.getValue()), Integer.valueOf(em.getValue()), noteField.getText(), locField.getText())) {
+					Alert invalid = new Alert(AlertType.ERROR);
+					invalid.setContentText("An event must contain a title.");
+					invalid.showAndWait();
+				}
+			});
+			cancel.setOnAction((e) -> {
+				this.cancel = true;
+				this.close();
+			});
 			
 			//Vbox setup
 			vbox.getChildren().addAll(label, sTime, eTime, notes, loc, buttons);
