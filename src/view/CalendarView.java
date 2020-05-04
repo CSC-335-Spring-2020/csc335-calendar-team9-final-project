@@ -147,13 +147,13 @@ public class CalendarView extends Application implements Observer {
 						tempRect = new Rectangle(80,70,Color.rgb(130,180,250));
 						tempStack.getChildren().add(tempRect);
 						Text dayLabel = new Text(String.valueOf(currDay));
+						VBox dayInfo = new VBox(dayLabel);
+						tempStack.getChildren().add(dayInfo);
 						currDay++;
-						tempStack.getChildren().add(dayLabel);
 					} else {
 						tempRect = new Rectangle(80,70,Color.LIGHTBLUE);
 						tempStack.getChildren().add(tempRect);
 					}
-					StackPane.setMargin(tempRect, new Insets(5));
 					grid.add(tempStack, j, i);
 				}
 			}
