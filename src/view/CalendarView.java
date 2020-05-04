@@ -36,8 +36,7 @@ import model.Event;
 public class CalendarView extends Application implements Observer {
 	private CalendarController controller;
 	private int currYear;
-	private MonthView months;
-	private WeekView weeks;
+	private Stage currView;
 	private String currMonth;
 	private int currDate;
 	
@@ -52,8 +51,8 @@ public class CalendarView extends Application implements Observer {
 		controller = new CalendarController(2020,this);
 		currYear = 2020;
 		currMonth = "May";
-		months = new MonthView("May");
-		months.show();
+		currView = new MonthView("May");
+		currView.show();
 	}
 	
 	/**
@@ -63,15 +62,12 @@ public class CalendarView extends Application implements Observer {
 	 * The new month is shown as a MonthView.
 	 */
 	private void newMonth(String month) {
-		if (months != null) {
-			months.close();
-		}
-		if (weeks != null){
-			weeks.close();
+		if (currView != null) {
+			currView.close();
 		}
 		currMonth = month;
-		months = new MonthView(month);
-		months.show();
+		currView = new MonthView(month);
+		currView.show();
 	}
 	
 	/**
@@ -81,16 +77,13 @@ public class CalendarView extends Application implements Observer {
 	 * Since the week is received as "Week #", a split and index is needed to get the number.
 	 */
 	private void newWeek(String week) {
-		if (months != null) {
-			months.close();
-		}
-		if (weeks != null){
-			weeks.close();
+		if (currView != null) {
+			currView.close();
 		}
 		String[] instruction = week.split(" ");
 		int num = Integer.valueOf(instruction[1]);
-		weeks = new WeekView(num, currMonth);
-		weeks.show();
+		currView = new WeekView(num, currMonth);
+		currView.show();
 	}
 	
 	private class MonthView extends Stage {
@@ -146,8 +139,14 @@ public class CalendarView extends Application implements Observer {
 					if(days[i*WIDTH + j] != null) {
 						tempRect = new Rectangle(80,70,Color.rgb(130,180,250));
 						tempStack.getChildren().add(tempRect);
-						Text dayLabel = new Text(String.valueOf(currDay));
-						VBox dayInfo = new VBox(dayLabel);
+						int eventCount = days[i*WIDTH + j].getEvents().size();
+						String eventCountString = "";
+						if(eventCount == 1) {
+							eventCountString = "1 Event";
+						} else if(eventCount > 1) {
+							eventCountString = String.format("%d Events", eventCount);
+						}
+						VBox dayInfo = new VBox(new Text(String.valueOf(currDay)), new Text(eventCountString));
 						tempStack.getChildren().add(dayInfo);
 						currDay++;
 					} else {
@@ -158,7 +157,7 @@ public class CalendarView extends Application implements Observer {
 				}
 			}
 			grid.setOnMouseClicked((event) -> {
-				currDate = (int)(event.getY()/82) * WIDTH + (int)event.getX()/92;
+				currDate = (int)(event.getY()/72) * WIDTH + (int)event.getX()/82;
 				Day day = controller.getDays(month)[currDate];
 				if(day != null) {
 					DayView dayView = new DayView(day);
@@ -308,13 +307,19 @@ public class CalendarView extends Application implements Observer {
 					if (count > 0 && days[i] != null) {
 						tempRect = new Rectangle(80,512,Color.rgb(130,180,250));
 						tempStack.getChildren().add(tempRect);
-						Text dayLabel = new Text(String.valueOf(count));
-						tempStack.getChildren().add(dayLabel);
+						int eventCount = days[i].getEvents().size();
+						String eventCountString = "";
+						if(eventCount == 1) {
+							eventCountString = "1 Event";
+						} else if(eventCount > 1) {
+							eventCountString = String.format("%d Events", eventCount);
+						}
+						VBox dayInfo = new VBox(new Text(String.valueOf(i)), new Text(eventCountString));
+						tempStack.getChildren().add(dayInfo);
 					} else {
 						tempRect = new Rectangle(80,512,Color.LIGHTBLUE);
 						tempStack.getChildren().add(tempRect);
 					}
-					StackPane.setMargin(tempRect, new Insets(5));
 					grid.add(tempStack, i, 0);
 					}
 			}
