@@ -108,8 +108,8 @@ public class CalendarController extends Observable{
 	 * @param event The event to be added
 	 * @return boolean indicating if the event was successfully added or not
 	 */
-	public boolean addEvent(Day day, Event event) {
-	}
+	//public boolean addEvent(Day day, Event event) {
+	//}
 	
 	/**
 	 * This method returns the current year
