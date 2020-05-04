@@ -383,6 +383,11 @@ public class CalendarView extends Application implements Observer {
 			
 		}
 		
+		/**
+		 * Simple getter method to retrieve the current week number.
+		 * @return The number of the week, from 1-6 through the month.
+		 * This is used to help refresh the view when an event is added or removed.
+		 */
 		public int getWeek() {
 			return this.weekNum;
 		}
@@ -421,6 +426,11 @@ public class CalendarView extends Application implements Observer {
 				tempStack.setOnMouseClicked((event) -> {
 					EventBox eventDetails = new EventBox(e);
 					eventDetails.showAndWait();
+					if(eventDetails.removed) {
+						day.removeEvent(e);
+						controller.save();
+						this.close();
+					}
 				});
 				Label time = new Label(String.format("%02d:%02d", e.getSH(),e.getSM()));
 				HBox tempBox = new HBox(time,tempStack);
@@ -441,7 +451,7 @@ public class CalendarView extends Application implements Observer {
 	}
 	
 	private class EventBox extends Stage {
-
+		public boolean removed;
 		/**
 		 * This window provides a basic overview of the details of an event, and the ability to remove it.
 		 * @param e The event object to provide information for.
@@ -449,6 +459,7 @@ public class CalendarView extends Application implements Observer {
 		 * There is also a button that removes the event from the calendar. 
 		 */
 		public EventBox(Event e) {
+			this.removed = false;
 			BorderPane control = new BorderPane();
 			control.setPrefHeight(200);
 			control.setPrefWidth(300);
@@ -474,8 +485,7 @@ public class CalendarView extends Application implements Observer {
 			notesInfo.setPadding(new Insets(5));
 			notes.setPadding(new Insets(5));
 			removeButton.setOnAction((event) -> {
-				//At this point can call a removeEvent function
-				controller.save();
+				this.removed = true;
 				this.close();
 			});
 			VBox details = new VBox(titleInfo,title,startInfo,start,endInfo,end,locInfo,loc,notesInfo,notes);

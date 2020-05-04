@@ -107,6 +107,8 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 		for (Event e : events) {
 			if (e.getLabel().equals(event.getLabel())) {
 				events.remove(e);
+				this.setChanged();
+				this.notifyObservers();
 				return;
 			}
 		}
