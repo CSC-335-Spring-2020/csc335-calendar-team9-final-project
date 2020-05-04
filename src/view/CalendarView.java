@@ -382,6 +382,15 @@ public class CalendarView extends Application implements Observer {
 			buttonRow.setSpacing(8);
 			
 		}
+		
+		/**
+		 * Simple getter method to retrieve the current week number.
+		 * @return The number of the week, from 1-6 through the month.
+		 * This is used to help refresh the view when an event is added or removed.
+		 */
+		public int getWeek() {
+			return this.weekNum;
+		}
 	}
 	
 	
@@ -417,6 +426,11 @@ public class CalendarView extends Application implements Observer {
 				tempStack.setOnMouseClicked((event) -> {
 					EventBox eventDetails = new EventBox(e);
 					eventDetails.showAndWait();
+					if(eventDetails.removed) {
+						day.removeEvent(e);
+						controller.save();
+						this.close();
+					}
 				});
 				Label time = new Label(String.format("%02d:%02d", e.getSH(),e.getSM()));
 				HBox tempBox = new HBox(time,tempStack);
@@ -437,7 +451,7 @@ public class CalendarView extends Application implements Observer {
 	}
 	
 	private class EventBox extends Stage {
-
+		public boolean removed;
 		/**
 		 * This window provides a basic overview of the details of an event, and the ability to remove it.
 		 * @param e The event object to provide information for.
@@ -445,6 +459,7 @@ public class CalendarView extends Application implements Observer {
 		 * There is also a button that removes the event from the calendar. 
 		 */
 		public EventBox(Event e) {
+			this.removed = false;
 			BorderPane control = new BorderPane();
 			control.setPrefHeight(200);
 			control.setPrefWidth(300);
@@ -470,8 +485,7 @@ public class CalendarView extends Application implements Observer {
 			notesInfo.setPadding(new Insets(5));
 			notes.setPadding(new Insets(5));
 			removeButton.setOnAction((event) -> {
-				//At this point can call a removeEvent function
-				controller.save();
+				this.removed = true;
 				this.close();
 			});
 			VBox details = new VBox(titleInfo,title,startInfo,start,endInfo,end,locInfo,loc,notesInfo,notes);
@@ -596,10 +610,19 @@ public class CalendarView extends Application implements Observer {
 	 * This method redraws the given view when an update is detected in the model.
 	 * When an event is added or removed from the calendar, the currently viewed day is refreshed
 	 * to reflect the new event list. This is done by producing a new DayView of the most recently viewed day.
+	 * It also rebuilds the open calendar to reflect the change in event counts for the given day.
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Day day = controller.getDays(currMonth)[currDate];
+		if(currView instanceof MonthView) {
+			currView.close();
+			currView = new MonthView(currMonth);
+			currView.show();
+		} else if(currView instanceof WeekView) {
+			currView.close();
+			currView = new WeekView(((WeekView) currView).getWeek(),currMonth);
+		}
 		if(day != null) {
 			DayView dayView = new DayView(day);
 			dayView.show();
