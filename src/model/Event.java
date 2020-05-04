@@ -3,7 +3,7 @@ package model;
 /**
  * This class represents an Event object that contains a variety of information about a given calendar event. 
  */
-public class Event extends java.util.Observable implements java.io.Serializable{
+public class Event extends java.util.Observable implements java.io.Serializable, Comparable<Event>{
 	private static final long serialVersionUID = 1;
 	private Day day;
 	private String label;
@@ -194,6 +194,21 @@ public class Event extends java.util.Observable implements java.io.Serializable{
 		int low = (eH * 60) + eM;
 		return low - high;
 		
+	}
+
+	@Override
+	public int compareTo(Event event) {
+		if (event == null) {
+			throw new NullPointerException();
+		} else if (this.sH < event.sH) {
+			return -1;
+		} else if (this.sH == event.sH && this.sM < event.sM) {
+			return -1;
+		} else if (this.sH == event.sH && this.sM == event.sM) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 	
 
