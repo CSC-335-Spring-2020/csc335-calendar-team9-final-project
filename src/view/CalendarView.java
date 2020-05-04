@@ -382,6 +382,10 @@ public class CalendarView extends Application implements Observer {
 			buttonRow.setSpacing(8);
 			
 		}
+		
+		public int getWeek() {
+			return this.weekNum;
+		}
 	}
 	
 	
@@ -596,10 +600,19 @@ public class CalendarView extends Application implements Observer {
 	 * This method redraws the given view when an update is detected in the model.
 	 * When an event is added or removed from the calendar, the currently viewed day is refreshed
 	 * to reflect the new event list. This is done by producing a new DayView of the most recently viewed day.
+	 * It also rebuilds the open calendar to reflect the change in event counts for the given day.
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Day day = controller.getDays(currMonth)[currDate];
+		if(currView instanceof MonthView) {
+			currView.close();
+			currView = new MonthView(currMonth);
+			currView.show();
+		} else if(currView instanceof WeekView) {
+			currView.close();
+			currView = new WeekView(((WeekView) currView).getWeek(),currMonth);
+		}
 		if(day != null) {
 			DayView dayView = new DayView(day);
 			dayView.show();
