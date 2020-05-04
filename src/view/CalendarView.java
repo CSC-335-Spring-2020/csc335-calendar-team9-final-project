@@ -144,9 +144,14 @@ public class CalendarView extends Application implements Observer {
 					Rectangle tempRect = new Rectangle(80,70,Color.LIGHTBLUE);
 					tempStack.getChildren().add(tempRect);
 					if(days[i*WIDTH + j] != null) {
+						tempRect = new Rectangle(80,70,Color.rgb(130,180,250));
+						tempStack.getChildren().add(tempRect);
 						Text dayLabel = new Text(String.valueOf(currDay));
 						currDay++;
 						tempStack.getChildren().add(dayLabel);
+					} else {
+						tempRect = new Rectangle(80,70,Color.LIGHTBLUE);
+						tempStack.getChildren().add(tempRect);
 					}
 					StackPane.setMargin(tempRect, new Insets(5));
 					grid.add(tempStack, j, i);
@@ -298,12 +303,16 @@ public class CalendarView extends Application implements Observer {
 				}
 				if (i >= low && i < high) {
 					StackPane tempStack = new StackPane();
-					tempStack.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, null, null)));
-					Rectangle tempRect = new Rectangle(80,512,Color.LIGHTBLUE);
-					tempStack.getChildren().add(tempRect);
+					tempStack.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
+					Rectangle tempRect;
 					if (count > 0 && days[i] != null) {
+						tempRect = new Rectangle(80,512,Color.rgb(130,180,250));
+						tempStack.getChildren().add(tempRect);
 						Text dayLabel = new Text(String.valueOf(count));
 						tempStack.getChildren().add(dayLabel);
+					} else {
+						tempRect = new Rectangle(80,512,Color.LIGHTBLUE);
+						tempStack.getChildren().add(tempRect);
 					}
 					StackPane.setMargin(tempRect, new Insets(5));
 					grid.add(tempStack, i, 0);
