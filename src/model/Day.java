@@ -99,6 +99,20 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	}
 	
 	/**
+	 * This method removes the first instance of the event with the passed
+	 * in label within the events list of the day
+	 * @param label The title of the event to remove
+	 */
+	public void removeEvent(Event event) {
+		for (Event e : events) {
+			if (e.getLabel().equals(event.getLabel())) {
+				events.remove(e);
+				return;
+			}
+		}
+	}
+	
+	/**
 	 * Returns the day of the week of the day object
 	 * @return a string indicating day of the week
 	 */

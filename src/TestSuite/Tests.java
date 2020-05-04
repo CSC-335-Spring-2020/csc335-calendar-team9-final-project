@@ -36,9 +36,7 @@ public class Tests {
 		CalendarController controller =  new CalendarController(currYear, view);
 		controller.addEvent(day, "Crying", 0, 0, 23, 0, "Hahahaha", "My house");
 		assertEquals("Crying", day.getEvents().get(0).getLabel());
-		Event event = new Event(day, "Crying", 0, 0, 23, 0, "Hahahaha", "My house");
-		controller.addEvent(day, event);
-		assertEquals("Crying", day.getEvents().get(1).getLabel());
+		
 	}
 	
 	@Test
