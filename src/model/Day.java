@@ -25,6 +25,9 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	 * @param i The given day of the week
 	 * @param date The given date
 	 * @param month The given month that the day is in
+	 * This method sets all of the fields that are given as parameters,
+	 * along with setting the view as an observer and creating an empty arraylist of 
+	 * events to set as the Day's events
 	 */
 	public Day(int i, int date, String month, CalendarView view) {
 		this.day = i;
@@ -41,6 +44,8 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	 * @param date The given date
 	 * @param month The given month that the day is in
 	 * @param events The given list of events to set as the day's events
+	 * This method does everything the above constructor does (minus setting the view as 
+	 * an Observer) as well as taking in a list of events to set as the Day's events
 	 */
 	public Day(int day, int date, String month, List<Event> events) {
 		this.day = day;
@@ -52,6 +57,12 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 		}
 	}
 	
+	/**
+	 * This method takes in a view to set as the Day's observer and does so
+	 * @param view The view to set as the Observer of the day
+	 * This method sets the view as the Observer of the Day object which
+	 * extends observable, as well as deleting the previous observers beforehand
+	 */
 	public void setObserver(CalendarView view) {
 		for (Event event : events) {
 			event.deleteObservers();
@@ -62,6 +73,7 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	/**
 	 * Returns the day's events
 	 * @return the list of events
+	 * Does exactly what it says, simple getter
 	 */
 	public List<Event> getEvents() {
 		return events;
@@ -73,6 +85,10 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	 * already exists
 	 * @param event The event to add
 	 * @return boolean indicating if the event is able to be added or not
+	 * This method takes in an Event object to add to the Day's list of events and 
+	 * adds it to the list, then sorts the event list based on start time. The Day is 
+	 * then set as changed and observing objects are notified. True is returned if added successfully 
+	 * (if the event wasn't already in the list of events)
 	 */
 	public boolean addEvent(Event event) {
 		if (events.contains(event)) {
@@ -90,6 +106,9 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	/**
 	 * This method sets the events to the passed in list of events
 	 * @param events The new events list to set as the Day's events
+	 * This method sets the list of events to the passed in list of 
+	 * events by making a deep copy, then the Day is set as changed and observers are
+	 * notified.
 	 */
 	public void setEvents(List<Event> events) {
 		this.events = new ArrayList<Event>();
@@ -104,6 +123,9 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	 * This method removes the first instance of the event with the passed
 	 * in label within the events list of the day
 	 * @param label The title of the event to remove
+	 * This method takes in an event object and removes the given event from the list of 
+	 * events. The Day is then set as changed and observers are notified (note, the 
+	 * event is found by comparing event labels).
 	 */
 	public void removeEvent(Event event) {
 		for (Event e : events) {
@@ -119,6 +141,9 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	/**
 	 * Returns the day of the week of the day object
 	 * @return a string indicating day of the week
+	 * This method uses a switch case and the day field to 
+	 * figure out what word day of the week corresponds to the Day object's day
+	 * of the week integer, and it returns the int.
 	 */
 	public String getDay() {
 		String dayOf = "";
@@ -151,6 +176,8 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	/**
 	 * This sets the current day of the week to the passed in day
 	 * @param day The new day of the week to attribute to the day
+	 * This method takes in an integer representing the day of the week
+	 * and sets the day as changed as well as notifying observers. 
 	 */
 	public void setDay(int day) {
 		this.day = day;
@@ -161,15 +188,17 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	/**
 	 * Returns the month that the day is in
 	 * @return a string indicating the month
+	 * This is a simple getter that returns the month name the day is in.
 	 */
 	public String getMonth() {
 		return month;
-		
 	}
 	
 	/**
-	 * Sets the month the Day is in to the new passed-in month
+	 * Sets the month the Day is in to the new passed in month
 	 * @param month The new month the day is in
+	 * This method sets the month the day is in to the passed in month, sets the Day as 
+	 * changed, and notifies the observers.
 	 */
 	public void setMonth(String month) {
 		this.month = month;
@@ -180,6 +209,7 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	/**
 	 * Returns the day's date
 	 * @return int indicating the date
+	 * This simply gets the int date of the Day
 	 */
 	public int getDate() {
 		return date;
@@ -188,6 +218,8 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	/**
 	 * Sets the Day's date to the new passed in date
 	 * @param date The new date for the Day object
+	 * This takes in an int date and sets the Day's date to the 
+	 * int, sets the Day as changed, and notifies the observers.
 	 */
 	public void setDate(int date) {
 		this.date = date;
