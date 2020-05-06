@@ -3,7 +3,7 @@ package model;
  * This class represents an Event object that contains a variety of information about a given calendar event.
  * This class uses CalendarView to allow the view to present events to the user, as well as the Day class. 
  */
-public class Event extends java.util.Observable implements java.io.Serializable, Comparable<Event>{
+public class Event implements java.io.Serializable, Comparable<Event>{
 	private static final long serialVersionUID = 1;
 	private Day day;
 	private String label;
@@ -146,8 +146,6 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 */
 	public void setDay(Day day) {
 		this.day = day;
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	/**
@@ -158,8 +156,6 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 */
 	public void setLabel(String label) {
 		this.label = label;
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	/**
@@ -170,8 +166,6 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 */
 	public void setSH(int sH) {
 		this.sH = sH;
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	/**
@@ -182,8 +176,6 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 */
 	public void setSM(int sM) {
 		this.sM = sM;
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	/**
@@ -194,8 +186,6 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 */
 	public void setEH(int eH) {
 		this.eH = eH;
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	/**
@@ -206,8 +196,6 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 */
 	public void setEM(int eM) {
 		this.eM = eM;
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	/**
@@ -218,8 +206,6 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 */
 	public void setNotes(String notes) {
 		this.notes = notes;
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	/**
@@ -230,8 +216,6 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 */
 	public void setLoc(String loc) {
 		this.loc = loc;
-		this.setChanged();
-		this.notifyObservers();
 	}
 		
 	/**

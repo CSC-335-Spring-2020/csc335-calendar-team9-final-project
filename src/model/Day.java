@@ -30,11 +30,10 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	 * along with setting the view as an observer and creating an empty arraylist of 
 	 * events to set as the Day's events
 	 */
-	public Day(int i, int date, String month, CalendarView view) {
+	public Day(int i, int date, String month) {
 		this.day = i;
 		this.date = date;
 		this.month = month;
-		this.addObserver((Observer) view);
 		events = new ArrayList<Event>();
 	}
 	
@@ -55,19 +54,6 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 		this.events = new ArrayList<Event>();
 		for (int i = 0; i < events.size(); i++) {
 			this.events.add(events.get(i));
-		}
-	}
-	
-	/**
-	 * This method takes in a view to set as the Day's observer and does so
-	 * @param view The view to set as the Observer of the day
-	 * This method sets the view as the Observer of the Day object which
-	 * extends observable, as well as deleting the previous observers beforehand
-	 */
-	public void setObserver(CalendarView view) {
-		for (Event event : events) {
-			event.deleteObservers();
-			event.addObserver(view);
 		}
 	}
 	
@@ -116,27 +102,7 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 		for (int i = 0; i < events.size(); i++) {
 			this.events.add(events.get(i));
 		}
-		this.setChanged();
 		this.notifyObservers();
-	}
-	
-	/**
-	 * This method removes the first instance of the event with the passed
-	 * in label within the events list of the day
-	 * @param label The title of the event to remove
-	 * This method takes in an event object and removes the given event from the list of 
-	 * events. The Day is then set as changed and observers are notified (note, the 
-	 * event is found by comparing event labels).
-	 */
-	public void removeEvent(Event event) {
-		for (Event e : events) {
-			if (e.getLabel().equals(event.getLabel())) {
-				events.remove(e);
-				this.setChanged();
-				this.notifyObservers();
-				return;
-			}
-		}
 	}
 	
 	/**
@@ -203,8 +169,6 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	 */
 	public void setMonth(String month) {
 		this.month = month;
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	/**
@@ -224,8 +188,6 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 	 */
 	public void setDate(int date) {
 		this.date = date;
-		this.setChanged();
-		this.notifyObservers();
 	}
 
 }

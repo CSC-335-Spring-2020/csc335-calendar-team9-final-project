@@ -47,7 +47,7 @@ public class Tests {
 	@Test
 	void test_addEvents() {
 		CalendarView view = new CalendarView();
-		Day day = new Day(1, 12, "April", view);
+		Day day = new Day(1, 12, "April");
 		int currYear = 2020;
 		CalendarController controller =  new CalendarController(currYear, view);
 		controller.addEvent(day, "Crying", 0, 0, 23, 0, "Hahahaha", "My house", "BLUE");
@@ -96,8 +96,8 @@ public class Tests {
 	@Test
 	void test_setDay() {
 		CalendarView view = new CalendarView();
-		Month month = new Month("April", 2022, view);
-		Day day = new Day(1, 12, "April", view);
+		Month month = new Month("April", 2022);
+		Day day = new Day(1, 12, "April");
 		//month array starts at 0
 		month.setDay(day, 11);
 		assertEquals(day, month.getDay(11));
@@ -113,7 +113,7 @@ public class Tests {
 	@Test 
 	void test_getNumDays() {
 		CalendarView view = new CalendarView();
-		Month month = new Month("April", 2022, view);
+		Month month = new Month("April", 2022);
 		assertEquals(30, month.getNumDays());
 		
 	}
@@ -126,7 +126,7 @@ public class Tests {
 	@Test
 	void test_getName() {
 		CalendarView view = new CalendarView();
-		Month month = new Month("April", 2022, view);
+		Month month = new Month("April", 2022);
 		assertEquals("April", month.getName());
 	}
 	
@@ -138,7 +138,7 @@ public class Tests {
 	@Test
 	void test_getYear() {
 		CalendarView view = new CalendarView();
-		Month month = new Month("April", 2022, view);
+		Month month = new Month("April", 2022);
 		assertEquals(2022, month.getYear());
 		
 	}
@@ -153,9 +153,9 @@ public class Tests {
 	@Test
 	void test_leapYear() {
 		CalendarView view = new CalendarView();
-		Month month = new Month("February", 400, view);
+		Month month = new Month("February", 400);
 		assertEquals(29, month.getNumDays());
-		Month month2 = new Month("February", 1800, view);
+		Month month2 = new Month("February", 1800);
 		assertEquals(28, month2.getNumDays());
 		
 	}
@@ -171,18 +171,18 @@ public class Tests {
 	void test_yearFill() {
 		CalendarView view = new CalendarView();
 		List<Month> monthNames = new ArrayList<Month>();
-		monthNames.add(new Month("January", 2020, view));
-		monthNames.add(new Month("February", 2020, view));
-		monthNames.add(new Month("March", 2020, view));
-		monthNames.add(new Month("April", 2020, view));
-		monthNames.add(new Month("May", 2020, view));
-		monthNames.add(new Month("June", 2020, view));
-		monthNames.add(new Month("July", 2020, view));
-		monthNames.add(new Month("August", 2020, view));
-		monthNames.add(new Month("September", 2020, view));
-		monthNames.add(new Month("October", 2020, view));
-		monthNames.add(new Month("November", 2020, view));
-		monthNames.add(new Month("December", 2020, view));
+		monthNames.add(new Month("January", 2020));
+		monthNames.add(new Month("February", 2020));
+		monthNames.add(new Month("March", 2020));
+		monthNames.add(new Month("April", 2020));
+		monthNames.add(new Month("May", 2020));
+		monthNames.add(new Month("June", 2020));
+		monthNames.add(new Month("July", 2020));
+		monthNames.add(new Month("August", 2020));
+		monthNames.add(new Month("September", 2020));
+		monthNames.add(new Month("October", 2020));
+		monthNames.add(new Month("November", 2020));
+		monthNames.add(new Month("December", 2020));
 		Year year = new Year(2020, monthNames);
 		//month numbers start at 1
 		assertEquals("January", year.getMonth(1).getName());
@@ -274,7 +274,7 @@ public class Tests {
 		Event e = new Event(day2, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
 		events.add(e);
 		events.add(e);
-		Day day = new Day(5, 12, "April", view);
+		Day day = new Day(5, 12, "April");
 		day.setEvents(events);
 		assertEquals(events, day.getEvents());
 	}
@@ -287,7 +287,7 @@ public class Tests {
 	@Test
 	void test_getDate() {
 		CalendarView view = new CalendarView();
-		Day day = new Day(5, 12, "April", view);
+		Day day = new Day(5, 12, "April");
 		assertEquals(12, day.getDate());
 	}
 	
@@ -300,7 +300,7 @@ public class Tests {
 	@Test
 	void test_setters() {
 		CalendarView view = new CalendarView();
-		Day day = new Day(5, 12, "April", view);
+		Day day = new Day(5, 12, "April");
 		day.setMonth("March");
 		assertEquals("March", day.getMonth());
 		day.setDate(13);

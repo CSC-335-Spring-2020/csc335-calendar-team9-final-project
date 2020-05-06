@@ -53,11 +53,6 @@ public class CalendarController extends Observable{
 				fileIn = new FileInputStream(saveName);
 				input = new ObjectInputStream(fileIn);
 				years = (Map<Integer, Year>) input.readObject();
-				for (Year year : years.values()) {
-					year.deleteObservers();
-					year.addObserver(view);
-					year.setObserver(view);
-				}
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -66,9 +61,9 @@ public class CalendarController extends Observable{
 				e.printStackTrace();
 			}
 		} else {
-			years.put(currYear, new Year(currYear, view));
-			years.put(currYear - 1, new Year(currYear - 1, view));
-			years.put(currYear + 1, new Year(currYear + 1, view));
+			years.put(currYear, new Year(currYear));
+			years.put(currYear - 1, new Year(currYear - 1));
+			years.put(currYear + 1, new Year(currYear + 1));
 			this.addObserver((Observer) view);
 		}
 	}
@@ -117,8 +112,9 @@ public class CalendarController extends Observable{
 			return false;
 		} else {
 			Event event = new Event(day, label, sH, sM, eH, eM, notes, loc, color);
-			event.addObserver(view);
 			day.addEvent(event);
+			this.setChanged();
+			this.notifyObservers();
 			return true;
 		}
 	}
@@ -134,6 +130,25 @@ public class CalendarController extends Observable{
 	}
 	
 	/**
+	 * This method removes the first instance of the event with the passed
+	 * in label within the events list of the day
+	 * @param label The title of the event to remove
+	 * This method takes in an event object and removes the given event from the list of 
+	 * events. The Day is then set as changed and observers are notified (note, the 
+	 * event is found by comparing event labels).
+	 */
+	public void removeEvent(Day day, Event event) {
+		for (Event e : day.getEvents()) {
+			if (e.getLabel().equals(event.getLabel())) {
+				day.getEvents().remove(e);
+				//this.setChanged();
+				this.notifyObservers();
+				return;
+			}
+		}
+	}
+	
+	/**
 	 * This method takes in a year and changes the current year of the 
 	 * calendar to the inputed year
 	 * @param year The year to put in as the new current year
@@ -144,9 +159,10 @@ public class CalendarController extends Observable{
 		if (years.containsKey(year)) {
 			currYear = year;
 		} else {
-			years.put(year, new Year(year, view));
+			years.put(year, new Year(year));
 			currYear = year;
 		}
+
 	}
 	
 	/**

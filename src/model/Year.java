@@ -11,7 +11,7 @@ import view.CalendarView;
  * This represents a Year of a calendar, and uses the Month, Week, Day, and Event classes to model 
  * a year, as well as CalendarView in order to allow the view to access the Year to present visually.
  */
-public class Year extends java.util.Observable implements java.io.Serializable{
+public class Year implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1;
 	private Map<String, Month> months = new HashMap<String, Month>();
@@ -22,37 +22,24 @@ public class Year extends java.util.Observable implements java.io.Serializable{
 		 * This is the constructor for the year, takes in the int year 
 		 * and the view which will observe the Year object. 
 		 * @param year The integer year
-		 * @param view The CalendarView object 
 		 * This method creates the months map with all of the year's months as
 		 * well as adds the months' observers in the map to the view. 
 		 */
-		public Year(int year, CalendarView view) {
+		public Year(int year) {
 			fillMonthNames();
 			this.year = year;
-			months.put("January", new Month("January", year, view));
-			months.put("February", new Month("February", year, view));
-			months.put("March", new Month("March", year, view));
-			months.put("April", new Month("April", year, view));
-			months.put("May", new Month("May", year, view));
-			months.put("June", new Month("June", year, view));
-			months.put("July", new Month("July", year, view));
-			months.put("August", new Month("August", year, view));
-			months.put("September", new Month("September", year, view));
-			months.put("October", new Month("October", year, view));
-			months.put("November", new Month("November", year, view));
-			months.put("December", new Month("December", year, view));
-			months.get("January").addObserver(view);
-			months.get("February").addObserver(view);
-			months.get("March").addObserver(view);
-			months.get("April").addObserver(view);
-			months.get("May").addObserver(view);
-			months.get("June").addObserver(view);
-			months.get("July").addObserver(view);
-			months.get("August").addObserver(view);
-			months.get("September").addObserver(view);
-			months.get("October").addObserver(view);
-			months.get("November").addObserver(view);
-			months.get("September").addObserver(view);
+			months.put("January", new Month("January", year));
+			months.put("February", new Month("February", year));
+			months.put("March", new Month("March", year));
+			months.put("April", new Month("April", year));
+			months.put("May", new Month("May", year));
+			months.put("June", new Month("June", year));
+			months.put("July", new Month("July", year));
+			months.put("August", new Month("August", year));
+			months.put("September", new Month("September", year));
+			months.put("October", new Month("October", year));
+			months.put("November", new Month("November", year));
+			months.put("December", new Month("December", year));
 		}
 		
 		/**
@@ -71,21 +58,7 @@ public class Year extends java.util.Observable implements java.io.Serializable{
 				this.months.put(month.getName(), month);
 			}
 		}
-		
-		/**
-		 * This method sets the Year's observer to be the passed in CalendarView. 
-		 * @param view The CalendarView object
-		 * This method sets the Year's observer sets the observer as discussed above, 
-		 * by going through each month and setting the month's observer to the view, as well 
-		 * as deleting the previous observer beforehand. 
-		 */
-		public void setObserver(CalendarView view) {
-			for (Month month : months.values()) {
-				month.deleteObservers();
-				month.addObserver(view);
-				month.setObserver(view);
-			}
-		}
+
 		
 		/**
 		 * This method fills the monthNames map for the Year which 

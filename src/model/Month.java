@@ -8,7 +8,7 @@ import view.CalendarView;
  * This represents a Month of a calendar, and uses the Week, Day, Year, and Event classes to model 
  * a month, as well as CalendarView in order to allow the view to access the month to present visually.
  */
-public class Month extends java.util.Observable implements java.io.Serializable{
+public class Month implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1;
 	private String name;
@@ -29,24 +29,21 @@ public class Month extends java.util.Observable implements java.io.Serializable{
 	 * method then uses the name to figure out how many days are in the month and creates the array
 	 * of day objects accordingly. 
 	 */
-	public Month(String name, int year, CalendarView view) {
+	public Month(String name, int year) {
 		this.name = name;
 		this.year = year;
 		int offset = getOffset();
 		startDayOfWeek = offset + 1;
-		this.addObserver((Observer) view);
 		days = new Day[42];
 		if (name.equals("February")) {
 			if (leap(year)) {
 				for (int i = offset; i < 29 + offset; i++) {
-					days[i] = new Day(i % 7, i - offset, name, view);
-					days[i].addObserver(view);
+					days[i] = new Day(i % 7, i - offset, name);
 					numDays = 29;
 				}
 			} else {
 				for (int i = offset; i < 28 + offset; i++) {
-					days[i] = new Day(i % 7, i - offset, name, view);
-					days[i].addObserver(view);
+					days[i] = new Day(i % 7, i - offset, name);
 					numDays = 28;
 				}
 			}
@@ -54,98 +51,70 @@ public class Month extends java.util.Observable implements java.io.Serializable{
 			switch(name) {
 				case "January":
 					for (int i = offset; i < 31 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 31;
 					}
 					break;
 				case "March":
 					for (int i = offset; i < 31 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 31;
 					}
 					break;
 				case "April":
 					for (int i = offset; i < 30 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 30;
 					}
 					break;
 				case "May":
 					for (int i = offset; i < 31 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 31;
 					}
 					break;
 				case "June":
 					for (int i = offset; i < 30 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 30;
 					}
 					break;
 				case "July":
 					for (int i = offset; i < 31 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 31;
 					}
 					break;
 				case "August":
 					for (int i = offset; i < 31 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 31;
 					}
 					break;
 				case "September":
 					for (int i = offset; i < 30 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 30;
 					}
 					break;
 				case "October":
 					for (int i = offset; i < 31 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 31;
 					}
 					break;
 				case "November":
 					for (int i = offset; i < 30 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 30;
 					}
 					break;
 				case "December":
 					for (int i = offset; i < 31 + offset; i++) {
-						days[i] = new Day(i % 7, i - offset, name, view);
-						days[i].addObserver(view);
+						days[i] = new Day(i % 7, i - offset, name);
 						numDays = 31;
 					}
 					break;
-			}
-		}
-	}
-	
-	/**
-	 * This method takes in a view and sets the view as an observer of each individual day within
-	 * the month object. 
-	 * @param view The view to set as an observer
-	 * The method takes the inputed view and goes through a loop setting the view to the 
-	 * Day's observer, deleting all other observers that were previously the Day's observer.
-	 */
-	public void setObserver(CalendarView view) {
-		for (int i = 0; i < days.length; i++) {
-			if (days[i] != null) {
-				days[i].deleteObservers();
-				days[i].addObserver(view);
-				days[i].setObserver(view);
 			}
 		}
 	}
@@ -214,8 +183,6 @@ public class Month extends java.util.Observable implements java.io.Serializable{
 		if (dayNum <= days.length) {
 			days[dayNum - 1] = day;
 		}
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	/**

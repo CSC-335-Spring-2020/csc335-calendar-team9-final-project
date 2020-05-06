@@ -428,7 +428,7 @@ public class CalendarView extends Application implements Observer {
 					EventBox eventDetails = new EventBox(e);
 					eventDetails.showAndWait();
 					if(eventDetails.removed) {
-						day.removeEvent(e);
+						controller.removeEvent(day, e);
 						controller.save();
 						this.close();
 					}
