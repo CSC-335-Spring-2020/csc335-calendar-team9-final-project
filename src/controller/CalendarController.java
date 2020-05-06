@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import javafx.scene.paint.Color;
 import model.Day;
 import model.Event;
 import model.Year;
