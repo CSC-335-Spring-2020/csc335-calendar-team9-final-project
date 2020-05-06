@@ -92,7 +92,7 @@ public class CalendarController extends Observable{
 	 */
 
 	public boolean addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc,
-			Color color) {
+			String color) {
 		if (label.length() == 0) {
 			return false;
 		} else {

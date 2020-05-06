@@ -35,7 +35,7 @@ public class Tests {
 		Day day = new Day(1, 12, "April", view);
 		int currYear = 2020;
 		CalendarController controller =  new CalendarController(currYear, view);
-		controller.addEvent(day, "Crying", 0, 0, 23, 0, "Hahahaha", "My house", Color.LAVENDERBLUSH);
+		controller.addEvent(day, "Crying", 0, 0, 23, 0, "Hahahaha", "My house", "BLUE");
 		assertEquals("Crying", day.getEvents().get(0).getLabel());
 		
 	}
@@ -161,7 +161,7 @@ public class Tests {
 		assertEquals(null, week.getDay(12));
 		List<Event> events = new ArrayList<Event>();
 		Day day2 = new Day(0, 24, "March", events);
-		Event e = new Event(day2, "I'm so tired", 1, 30, 2, 30, ":(", "My House", Color.BEIGE);
+		Event e = new Event(day2, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
 		events.add(e);
 		events.add(e);
 		Day day = new Day(0, 24, "March", events);
@@ -175,7 +175,7 @@ public class Tests {
 	void test_addEventDay() {
 		List<Event> events = new ArrayList<Event>();
 		Day day = new Day(0, 24, "March", events);
-		Event e = new Event(day, "I'm so tired", 1, 30, 2, 30, ":(", "My House", Color.BEIGE);
+		Event e = new Event(day, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
 		day.addEvent(e);
 		assertEquals(false, day.addEvent(e));
 	}
@@ -185,7 +185,7 @@ public class Tests {
 		List<Event> events = new ArrayList<Event>();
 		CalendarView view = new CalendarView();
 		Day day2 = new Day(0, 24, "March", events);
-		Event e = new Event(day2, "I'm so tired", 1, 30, 2, 30, ":(", "My House", Color.BEIGE);
+		Event e = new Event(day2, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
 		events.add(e);
 		events.add(e);
 		Day day = new Day(5, 12, "April", view);
@@ -232,7 +232,7 @@ public class Tests {
 	void test_duration() {
 		List<Event> events = new ArrayList<Event>();
 		Day day = new Day(0, 24, "March", events);
-		Event e = new Event(day, "I'm so tired", 1, 30, 2, 30, ":(", "My House", Color.BEIGE);
+		Event e = new Event(day, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
 		assertEquals(60, e.getDuration());
 		
 	}
@@ -241,7 +241,7 @@ public class Tests {
 	void test_getters_event() {
 		List<Event> events = new ArrayList<Event>();
 		Day day = new Day(0, 24, "March", events);
-		Event e = new Event(day, "I'm so tired", 1, 30, 2, 30, ":(", "My House", Color.BEIGE);
+		Event e = new Event(day, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
 		assertEquals(day, e.getDay());
 		assertEquals("I'm so tired", e.getLabel());
 		assertEquals(1, e.getSH());
@@ -256,7 +256,7 @@ public class Tests {
 	void test_setters_event() {
 		List<Event> events = new ArrayList<Event>();
 		Day day = new Day(0, 24, "March", events);
-		Event e = new Event(day, "I'm so tired", 1, 30, 2, 30, ":(", "My House", Color.BEIGE);
+		Event e = new Event(day, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
 		Day day2 = new Day(0, 24, "March", events);
 		e.setDay(day2);
 		assertEquals(day2, e.getDay());

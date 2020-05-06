@@ -13,7 +13,7 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	private int eM;
 	private String notes;
 	private String loc;
-	private Color color;
+	private String color;
 	
 	/**
 	 * Constructor for the event object. 
@@ -26,8 +26,9 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 * @param eM The end minute of the event
 	 * @param notes The notes or description of the event (may be null)
 	 * @param loc The attributed location of the event (may be null)
+	 * @param color The color of the event
 	 */
-	public Event(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc, Color color) {
+	public Event(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc, String color) {
 		this.day = day;
 		this.label = label;
 		this.sH = sH;
@@ -50,18 +51,18 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	}
 	
 	/**
-	 * This method sets the color of the Event to the inputted color
+	 * This method sets the color of the Event to the inputed color
 	 * @param color The color to set to 
 	 */
-	public void setColor(Color color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 	
 	/**
 	 * This method returns the color of the event
-	 * @return Color the event color
+	 * @return String the event color
 	 */
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 	
