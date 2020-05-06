@@ -419,7 +419,7 @@ public class CalendarView extends Application implements Observer {
 			List<Event> eventsList = day.getEvents();
 			for(Event e: eventsList) {
 				StackPane tempStack = new StackPane();
-				Rectangle eventRect = new Rectangle(300,Math.max(20,e.getDuration()),Color.LIGHTBLUE);
+				Rectangle eventRect = new Rectangle(300,Math.max(20,e.getDuration()),e.getColor());
 				tempStack.getChildren().add(eventRect);
 				tempStack.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
 				tempStack.getChildren().add(new Text(e.getLabel()));
@@ -498,6 +498,7 @@ public class CalendarView extends Application implements Observer {
 	
 	private class addEventBox extends Stage {
 		public boolean changed;
+		private Color color;
 		
 		/**
 		 * This window allows the user to add a new event to the given day.
@@ -573,6 +574,36 @@ public class CalendarView extends Application implements Observer {
 			loc.setSpacing(8);
 			loc.getChildren().addAll(locTitle, locField);
 			
+			//Color setup
+			
+			ComboBox<String> colors = new ComboBox<String>();
+			colors.getItems().addAll("Red","Orange","Yellow","Green","Blue","Purple");
+			colors.setValue("Blue");
+			colors.setOnAction((e) -> {
+				switch(colors.getValue()) {
+				case "Red":
+					color = Color.RED;
+					break;
+				case "Orange":
+					color = Color.ORANGE;
+					break;
+				case "Yellow":
+					color = Color.YELLOW;
+					break;
+				case "Green":
+					color = Color.GREEN;
+					break;
+				case "Blue":
+					color = Color.BLUE;
+					break;
+				case "Purple":
+					color = Color.PURPLE;
+					break;
+				default:
+					color = Color.LIGHTBLUE;
+				}
+			});
+			
 			//HBox Line 4 setup
 			Button ok = new Button("OK");
 			Button cancel = new Button("Cancel");
@@ -581,7 +612,7 @@ public class CalendarView extends Application implements Observer {
 			buttons.setSpacing(8);
 			ok.setOnAction((e) -> {
 				if(!controller.addEvent(day, tField.getText(), Integer.valueOf(sh.getValue()), Integer.valueOf(sm.getValue()),
-															Integer.valueOf(eh.getValue()), Integer.valueOf(em.getValue()), noteField.getText(), locField.getText())) {
+															Integer.valueOf(eh.getValue()), Integer.valueOf(em.getValue()), noteField.getText(), locField.getText(), color)) {
 					Alert invalid = new Alert(AlertType.ERROR);
 					invalid.setTitle("Invalid event");
 					invalid.setContentText("That is not a valid event. Please make sure you have a title and a positive duration.");
@@ -595,7 +626,7 @@ public class CalendarView extends Application implements Observer {
 			});
 			
 			//Vbox setup
-			vbox.getChildren().addAll(label, sTime, eTime, notes, loc, buttons);
+			vbox.getChildren().addAll(label, sTime, eTime, notes, loc, colors, buttons);
 			vbox.setPadding(new Insets(8,8,8,8));
 			vbox.setSpacing(8);
 			pane.setCenter(vbox);
