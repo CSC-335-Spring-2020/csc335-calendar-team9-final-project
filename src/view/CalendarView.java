@@ -179,11 +179,12 @@ public class CalendarView extends Application implements Observer {
 			Label sun = new Label("Sunday");
 			Label sat = new Label("Saturday");
 			dayLabel.getChildren().addAll(sun, mon, tue, wed, thu, fri, sat);
-			HBox.setMargin(mon, new Insets(0,0,0,15));
-			HBox.setMargin(tue, new Insets(0,0,0,12));
-			HBox.setMargin(wed, new Insets(0,0,0,11));
-			HBox.setMargin(sat, new Insets(0,0,0,12));
-			dayLabel.setSpacing(39);
+			HBox.setMargin(mon, new Insets(0,0,0,34));
+			HBox.setMargin(tue, new Insets(0,0,0,29));
+			HBox.setMargin(wed, new Insets(0,0,0,26));
+			HBox.setMargin(thu, new Insets(0,22,0,14));
+			HBox.setMargin(sat, new Insets(0,0,0,35));
+			dayLabel.setSpacing(10);
 			
 		}
 		
@@ -278,12 +279,12 @@ public class CalendarView extends Application implements Observer {
 			Label sun = new Label("Sunday");
 			Label sat = new Label("Saturday");
 			dayLabel.getChildren().addAll(sun, mon, tue, wed, thu, fri, sat);
-			HBox.setMargin(mon, new Insets(0,0,0,15));
-			HBox.setMargin(tue, new Insets(0,0,0,12));
-			HBox.setMargin(wed, new Insets(0,0,0,11));
-			HBox.setMargin(sat, new Insets(0,0,0,12));
-			dayLabel.setSpacing(39);
-			
+			HBox.setMargin(mon, new Insets(0,0,0,34));
+			HBox.setMargin(tue, new Insets(0,0,0,29));
+			HBox.setMargin(wed, new Insets(0,0,0,26));
+			HBox.setMargin(thu, new Insets(0,22,0,14));
+			HBox.setMargin(sat, new Insets(0,0,0,35));
+			dayLabel.setSpacing(10);
 		}
 
 		/**
