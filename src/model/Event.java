@@ -1,5 +1,5 @@
 package model;
-
+import javafx.scene.paint.Color;
 /**
  * This class represents an Event object that contains a variety of information about a given calendar event. 
  */
@@ -13,6 +13,7 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	private int eM;
 	private String notes;
 	private String loc;
+	private Color color;
 	
 	/**
 	 * Constructor for the event object. 
@@ -26,7 +27,7 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 * @param notes The notes or description of the event (may be null)
 	 * @param loc The attributed location of the event (may be null)
 	 */
-	public Event(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc) {
+	public Event(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc, Color color) {
 		this.day = day;
 		this.label = label;
 		this.sH = sH;
@@ -35,6 +36,7 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 		this.eM = eM;
 		this.notes = notes;
 		this.loc = loc;
+		this.color = color;
 		
 		
 	}
@@ -45,6 +47,22 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 	 */
 	public Day getDay() {
 		return day;
+	}
+	
+	/**
+	 * This method sets the color of the Event to the inputted color
+	 * @param color The color to set to 
+	 */
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	/**
+	 * This method returns the color of the event
+	 * @return Color the event color
+	 */
+	public Color getColor() {
+		return color;
 	}
 	
 	/**
@@ -196,6 +214,9 @@ public class Event extends java.util.Observable implements java.io.Serializable,
 		
 	}
 
+	/**
+	 * This mehtod overrides the Comparable method 
+	 */
 	@Override
 	public int compareTo(Event event) {
 		if (event == null) {

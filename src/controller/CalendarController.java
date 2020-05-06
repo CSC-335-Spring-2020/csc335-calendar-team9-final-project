@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.scene.paint.Color;
 import model.Day;
 import model.Event;
 import model.Year;
@@ -90,11 +91,12 @@ public class CalendarController extends Observable{
 	 * @param loc The location of the event (can be null)
 	 */
 
-	public boolean addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc) {
+	public boolean addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc,
+			Color color) {
 		if (label.length() == 0) {
 			return false;
 		} else {
-			Event event = new Event(day, label, sH, sM, eH, eM, notes, loc);
+			Event event = new Event(day, label, sH, sM, eH, eM, notes, loc, color);
 			event.addObserver(view);
 			day.addEvent(event);
 			return true;
