@@ -100,7 +100,6 @@ public class CalendarController extends Observable{
 	 * and it creates an event (which has an Observer, the controller's view object). If the event 
 	 * is able to be added (if the label isn't empty), true is returned. 
 	 */
-
 	public boolean addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc,
 			String color) {
 		if (label.length() == 0) {
@@ -129,14 +128,13 @@ public class CalendarController extends Observable{
 	 * in label within the events list of the day
 	 * @param label The title of the event to remove
 	 * This method takes in an event object and removes the given event from the list of 
-	 * events. The Day is then set as changed and observers are notified (note, the 
+	 * events. Then observers are notified (note, the 
 	 * event is found by comparing event labels).
 	 */
 	public void removeEvent(Day day, Event event) {
 		for (Event e : day.getEvents()) {
 			if (e.getLabel().equals(event.getLabel())) {
 				day.getEvents().remove(e);
-				//this.setChanged();
 				this.notifyObservers();
 				return;
 			}
