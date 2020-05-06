@@ -1,5 +1,4 @@
 package model;
-import javafx.scene.paint.Color;
 /**
  * This class represents an Event object that contains a variety of information about a given calendar event. 
  */
