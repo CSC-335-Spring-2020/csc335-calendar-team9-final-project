@@ -1,5 +1,6 @@
 package model;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observer;
 
@@ -78,6 +79,7 @@ public class Day extends java.util.Observable implements java.io.Serializable{
 			return false;
 		}
 		events.add(event);
+		Collections.sort(events);
 		this.setChanged();
 		this.notifyObservers();
 		return true;

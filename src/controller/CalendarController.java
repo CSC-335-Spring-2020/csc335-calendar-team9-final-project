@@ -27,6 +27,11 @@ public class CalendarController extends Observable{
 	/**
 	 * The constructor for the controller, taking in an int representing the current year
 	 * @param currYear
+	 * This method takes in the current year of the calendar as well as the view (which will
+	 * be an Observer) and creates the Calendar with the various important fields of the controller.
+	 * The method creates a HashMap of years (which are the different Calendars) as well as 
+	 * creating a save file for the calendar's save state. The constructor sets all of these things
+	 * and then sets the view as an observer. 
 	 */
 	public CalendarController(int currYear, CalendarView view) {
 		this.currYear = currYear;
@@ -60,6 +65,11 @@ public class CalendarController extends Observable{
 		}
 	}
 	
+	/**
+	 * This method "saves" the state of the Calendar by writing to the save file that
+	 * the controller contains. The method creates a save file with the controller's saveName 
+	 * and deletes the previous save file before creating the new one to replace it. 
+	 */
 	public void save() {
 		FileOutputStream fileOut;
 		ObjectOutputStream output;
@@ -88,6 +98,9 @@ public class CalendarController extends Observable{
 	 * @param eM The end minute of the minute
 	 * @param notes The notes of the event (can be null)
 	 * @param loc The location of the event (can be null)
+	 * This method takes in all of the necessary fields for the event to add to the inputted day, 
+	 * and it creates an event (which has an Observer, the controller's view object). If the event 
+	 * is able to be added (if the label isn't empty), true is returned. 
 	 */
 
 	public boolean addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc,
@@ -99,22 +112,14 @@ public class CalendarController extends Observable{
 			event.addObserver(view);
 			day.addEvent(event);
 			return true;
-    }
+		}
 	}
-	
-	/**
-	 * Adds the given event to the given day's list of events. Returns false if 
-	 * the event already existed for the day
-	 * @param day The day to add the event to
-	 * @param event The event to be added
-	 * @return boolean indicating if the event was successfully added or not
-	 */
-	//public boolean addEvent(Day day, Event event) {
-	//}
+
 	
 	/**
 	 * This method returns the current year
 	 * @return int The calendar's current year
+	 * This method simply returns the current year as an integer.
 	 */
 	public int getYear() {
 		return this.currYear;
@@ -124,12 +129,13 @@ public class CalendarController extends Observable{
 	 * This method takes in a year and changes the current year of the 
 	 * calendar to the inputed year
 	 * @param year The year to put in as the new current year
+	 * This method takes in the integer year and if the year is not in the year map, it is added and 
+	 * the current year is set to it. If it is in the map, it is simply set as the current year. 
 	 */
 	public void changeYear(int year) {
 		if (years.containsKey(year)) {
 			currYear = year;
 		} else {
-			years.put(year,  new Year(year, view));
 			years.put(year, new Year(year, view));
 			currYear = year;
 		}
@@ -141,6 +147,8 @@ public class CalendarController extends Observable{
 	 * @param monthName The month to grab the days of
 	 * @param year The year in which the month is
 	 * @return Day[] the array of days for that month
+	 * This method takes in a String monthName and returns the current year's Day array for the given
+	 * month. 
 	 */
 	public Day[] getDays(String monthName) {
 		return years.get(currYear).getMonth(monthName).getDays();

@@ -5,6 +5,7 @@ public class Week extends java.util.Observable implements java.io.Serializable{
 	private Day[] days;
 	private int weekNum;
 
+	
 	public Week(int weekNum) {
 		this.weekNum = weekNum;
 		days = new Day[7]; 
