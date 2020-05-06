@@ -10,7 +10,8 @@ import view.CalendarView;
  * 
  * This class represents a single day, which contains various important information
  * about the day, including date, day (of the week), events, and the month the day is in.
- *
+ * This uses the Month, Week, YEar, and Event classes to model 
+ * a day, as well as CalendarView in order to allow the view to access the Day to present visually.
  */
 public class Day extends java.util.Observable implements java.io.Serializable{
 	private static final long serialVersionUID = 1;

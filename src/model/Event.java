@@ -1,6 +1,7 @@
 package model;
 /**
- * This class represents an Event object that contains a variety of information about a given calendar event. 
+ * This class represents an Event object that contains a variety of information about a given calendar event.
+ * This class uses CalendarView to allow the view to present events to the user, as well as the Day class. 
  */
 public class Event extends java.util.Observable implements java.io.Serializable, Comparable<Event>{
 	private static final long serialVersionUID = 1;

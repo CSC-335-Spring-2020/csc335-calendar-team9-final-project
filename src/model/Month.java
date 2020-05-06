@@ -4,6 +4,10 @@ import java.util.Observer;
 
 import view.CalendarView;
 
+/**
+ * This represents a Month of a calendar, and uses the Week, Day, Year, and Event classes to model 
+ * a month, as well as CalendarView in order to allow the view to access the month to present visually.
+ */
 public class Month extends java.util.Observable implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1;

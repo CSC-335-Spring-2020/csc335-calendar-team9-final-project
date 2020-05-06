@@ -18,6 +18,13 @@ import model.Event;
 import model.Year;
 import view.CalendarView;
 
+/**
+ * This is the Controller aspect of our MVC architecture for our Calendar. This class
+ * uses the various other classes within the model and bridges the view and model to create
+ * functionality for the calendar. This class requires access to Year.java, Event.java, 
+ * Month.java, Week.java, Day.java, and CalendarView.java. 
+ *
+ */
 public class CalendarController extends Observable{
 	private CalendarView view;
 	private int currYear;

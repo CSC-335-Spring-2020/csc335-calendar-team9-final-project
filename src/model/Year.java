@@ -7,6 +7,10 @@ import java.util.Observer;
 
 import view.CalendarView;
 
+/**
+ * This represents a Year of a calendar, and uses the Month, Week, Day, and Event classes to model 
+ * a year, as well as CalendarView in order to allow the view to access the Year to present visually.
+ */
 public class Year extends java.util.Observable implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1;
