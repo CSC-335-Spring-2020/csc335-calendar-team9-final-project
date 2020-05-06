@@ -14,10 +14,9 @@ public class Month implements java.io.Serializable{
 
 	
 	/**
-	 * Constructor, takes in the month name, year its in, and the view
+	 * Constructor, takes in the month name, year its in
 	 * @param name The month name
 	 * @param year The year the month is in
-	 * @param view The view the month will be looked at in
 	 * The method takes in the above parameters, and first uses the get offset method to 
 	 * figure out on what day of the week the month actually starts on in the given year. The
 	 * method then uses the name to figure out how many days are in the month and creates the array

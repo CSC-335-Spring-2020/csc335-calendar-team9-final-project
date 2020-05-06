@@ -8,11 +8,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import controller.CalendarController;
+import javafx.scene.paint.Color;
 import model.Day;
 import model.Event;
 import model.Month;
 import model.Week;
 import model.Year;
+import view.CalendarView;
 
 /**
  * This is the test suite for the model and controller aspects of the project.
@@ -48,12 +50,31 @@ public class Tests {
 		CalendarController controller =  new CalendarController(currYear);
 		controller.addEvent(day, "Crying", 0, 0, 23, 0, "Hahahaha", "My house", "BLUE");
 		assertEquals("Crying", day.getEvents().get(0).getLabel());
+		assertEquals(false, controller.addEvent(day, "", 0, 0, 23, 0, "Hahahaha", "My house", "BLUE"));
+		
+	}
+	
+	/**
+	 * This method tests the controller' removeEvent method by 
+	 * creating a controller with a day and an event, 
+	 * and testing if an Event can be successfully removed from a Day's list of events.
+	 */
+	@Test
+	void test_removeEvent() {
+		Day day = new Day(1, 12, "April");
+		int currYear = 2020;
+		CalendarController controller =  new CalendarController(currYear);
+		controller.addEvent(day, "Crying", 0, 0, 23, 0, "Hahahaha", "My house", "BLUE");
+		Event e = new Event(day, "Crying", 0, 0, 23, 0, "Hahahaha", "My house", "BLUE");
+		assertEquals("Crying", day.getEvents().get(0).getLabel());
+		controller.removeEvent(day, e);
+		assertEquals(0, day.getEvents().size());
 		
 	}
 	
 	/**
 	 * This method tests the changeYear method within the CalendarController class.
-	 * The method creates a view and the controller object, then changes the year twice and 
+	 * The method creates the controller object, then changes the year twice and 
 	 * ensures that the year is correct to the changed year. 
 	 */
 	@Test
@@ -69,7 +90,7 @@ public class Tests {
 	
 	/**
 	 * This method tests the getDays method of the CalendarController.
-	 * The method creates the view and controller, and checks that the first "day" object
+	 * The method creates the controller, and checks that the first "day" object
 	 * is equal to null for April within the year (this method is primarily checking that the
 	 * year correctly initiates the month objects inside of it).
 	 */
@@ -89,6 +110,7 @@ public class Tests {
 	 */
 	@Test
 	void test_setDay() {
+		CalendarView view = new CalendarView();
 		Month month = new Month("April", 2022);
 		Day day = new Day(1, 12, "April");
 		//month array starts at 0
@@ -105,6 +127,7 @@ public class Tests {
 	 */
 	@Test 
 	void test_getNumDays() {
+		CalendarView view = new CalendarView();
 		Month month = new Month("April", 2022);
 		assertEquals(30, month.getNumDays());
 		
@@ -117,6 +140,7 @@ public class Tests {
 	 */
 	@Test
 	void test_getName() {
+		CalendarView view = new CalendarView();
 		Month month = new Month("April", 2022);
 		assertEquals("April", month.getName());
 	}
@@ -128,6 +152,7 @@ public class Tests {
 	 */
 	@Test
 	void test_getYear() {
+		CalendarView view = new CalendarView();
 		Month month = new Month("April", 2022);
 		assertEquals(2022, month.getYear());
 		
@@ -142,6 +167,7 @@ public class Tests {
 	 */
 	@Test
 	void test_leapYear() {
+		CalendarView view = new CalendarView();
 		Month month = new Month("February", 400);
 		assertEquals(29, month.getNumDays());
 		Month month2 = new Month("February", 1800);
@@ -158,6 +184,7 @@ public class Tests {
 	 */
 	@Test
 	void test_yearFill() {
+		CalendarView view = new CalendarView();
 		List<Month> monthNames = new ArrayList<Month>();
 		monthNames.add(new Month("January", 2020));
 		monthNames.add(new Month("February", 2020));
@@ -257,6 +284,7 @@ public class Tests {
 	@Test
 	void test_setEvents() {
 		List<Event> events = new ArrayList<Event>();
+		CalendarView view = new CalendarView();
 		Day day2 = new Day(0, 24, "March", events);
 		Event e = new Event(day2, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
 		events.add(e);
@@ -273,6 +301,7 @@ public class Tests {
 	 */
 	@Test
 	void test_getDate() {
+		CalendarView view = new CalendarView();
 		Day day = new Day(5, 12, "April");
 		assertEquals(12, day.getDate());
 	}
@@ -285,6 +314,7 @@ public class Tests {
 	 */
 	@Test
 	void test_setters() {
+		CalendarView view = new CalendarView();
 		Day day = new Day(5, 12, "April");
 		day.setMonth("March");
 		assertEquals("March", day.getMonth());
@@ -371,8 +401,37 @@ public class Tests {
 		assertEquals(45, e.getSM());
 		assertEquals(3, e.getEH());
 		assertEquals(45, e.getEM());
-		
+		e.setColor("GREEN");
+		assertEquals("GREEN", e.getColor());
 	}
+	
+	/**
+	 * This method tests the compareTo(Event e) method for the Event class,
+	 * that takes in another event and compares the two based on start time.
+	 */
+	@Test
+	void test_compareTo() {
+		List<Event> events = new ArrayList<Event>();
+		Day day = new Day(0, 24, "March", events);
+		Event e = new Event(day, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
+		Event f = null;
+		assertThrows(
+				NullPointerException.class,
+				() -> {
+				e.compareTo(f);
+				}
+				);
+		
+		Event newE = new Event(day, "I stayed up till 4 am working on CS", 2, 30, 3, 30, ":(", "My House", "BLUE");
+		assertEquals(-1, e.compareTo(newE));
+		newE = new Event(day, "I stayed up till 4 am working on CS", 1, 35, 3, 30, ":(", "My House", "BLUE");
+		assertEquals(-1, e.compareTo(newE));
+		newE = new Event(day, "I stayed up till 4 am working on CS", 1, 30, 2, 30, ":(", "My House", "BLUE");
+		assertEquals(0, e.compareTo(newE));
+		newE = new Event(day, "I stayed up till 4 am working on CS", 1, 20, 2, 30, ":(", "My House", "BLUE");
+		assertEquals(1, e.compareTo(newE));
+	}
+	
 		
 		
 		

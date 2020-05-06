@@ -141,8 +141,7 @@ public class Event implements java.io.Serializable, Comparable<Event>{
 	/**
 	 * Sets the Day object of the event to the passed in day
 	 * @param day The new day object
-	 * This method sets the Day in which the event is to the passed in Day object, 
-	 * sets the Event as changed, and notifies the observer.
+	 * This method sets the Day in which the event is to the passed in Day object
 	 */
 	public void setDay(Day day) {
 		this.day = day;
@@ -151,8 +150,7 @@ public class Event implements java.io.Serializable, Comparable<Event>{
 	/**
 	 * Sets the label to the new passed in label
 	 * @param label The new label
-	 * Sets the Event label to the given label, sets the event as changed, 
-	 * and notifies the observer.
+	 * Sets the Event label to the given label
 	 */
 	public void setLabel(String label) {
 		this.label = label;
@@ -161,8 +159,7 @@ public class Event implements java.io.Serializable, Comparable<Event>{
 	/**
 	 * Sets the start hour of the event to the new start hour
 	 * @param sH The new start hour
-	 * Sets the Event start hour to the given start hour, sets the event as changed, 
-	 * and notifies the observer.
+	 * Sets the Event start hour to the given start hour
 	 */
 	public void setSH(int sH) {
 		this.sH = sH;
@@ -181,8 +178,7 @@ public class Event implements java.io.Serializable, Comparable<Event>{
 	/**
 	 * Sets the end hour to the passed in end hour
 	 * @param eH The new end hour
-	 * Sets the Event end hour to the given end hour, sets the event as changed, 
-	 * and notifies the observer.
+	 * Sets the Event end hour to the given end hour
 	 */
 	public void setEH(int eH) {
 		this.eH = eH;
@@ -191,8 +187,7 @@ public class Event implements java.io.Serializable, Comparable<Event>{
 	/**
 	 * Sets the end minute to the passed in end minute
 	 * @param eM The new end minute
-	 * Sets the Event end minute to the given end minute, sets the event as changed, 
-	 * and notifies the observer.
+	 * Sets the Event end minute to the given end minute
 	 */
 	public void setEM(int eM) {
 		this.eM = eM;
@@ -201,8 +196,7 @@ public class Event implements java.io.Serializable, Comparable<Event>{
 	/**
 	 * Sets the notes of the event to the new passed in notes
 	 * @param notes The new notes
-	 * Sets the Event notes to the given notes, sets the event as changed, 
-	 * and notifies the observer.
+	 * Sets the Event notes to the given notes
 	 */
 	public void setNotes(String notes) {
 		this.notes = notes;
@@ -211,8 +205,7 @@ public class Event implements java.io.Serializable, Comparable<Event>{
 	/**
 	 * Sets the location to the new passed in location
 	 * @param loc The new location
-	 * Sets the Event location to the given location, sets the event as changed, 
-	 * and notifies the observer.
+	 * Sets the Event location to the given location
 	 */
 	public void setLoc(String loc) {
 		this.loc = loc;

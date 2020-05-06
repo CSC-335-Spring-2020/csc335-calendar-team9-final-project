@@ -31,11 +31,10 @@ public class CalendarController extends Observable{
 	/**
 	 * The constructor for the controller, taking in an int representing the current year
 	 * @param currYear
-	 * This method takes in the current year of the calendar as well as the view (which will
-	 * be an Observer) and creates the Calendar with the various important fields of the controller.
+	 * This method takes in the current year of the calendar and creates the Calendar 
+	 * with the various important fields of the controller.
 	 * The method creates a HashMap of years (which are the different Calendars) as well as 
-	 * creating a save file for the calendar's save state. The constructor sets all of these things
-	 * and then sets the view as an observer. 
+	 * creating a save file for the calendar's save state. 
 	 */
 	@SuppressWarnings("unchecked")
 	public CalendarController(int currYear) {
@@ -102,7 +101,6 @@ public class CalendarController extends Observable{
 	 * and it creates an event (which has an Observer, the controller's view object). If the event 
 	 * is able to be added (if the label isn't empty), true is returned. 
 	 */
-
 	public boolean addEvent(Day day, String label, int sH, int sM, int eH, int eM, String notes, String loc,
 			String color) {
 		if (label.length() == 0) {
@@ -135,14 +133,13 @@ public class CalendarController extends Observable{
 	 * @param day The day to remove an event from
 	 * @param event the Event to remove from the specified day
 	 * This method takes in an event object and removes the given event from the list of 
-	 * events. The Day is then set as changed and observers are notified (note, the 
+	 * events. Then observers are notified (note, the 
 	 * event is found by comparing event labels).
 	 */
 	public void removeEvent(Day day, Event event) {
 		for (Event e : day.getEvents()) {
 			if (e.getLabel().equals(event.getLabel())) {
 				day.getEvents().remove(e);
-				//this.setChanged();
 				this.notifyObservers();
 				return;
 			}
