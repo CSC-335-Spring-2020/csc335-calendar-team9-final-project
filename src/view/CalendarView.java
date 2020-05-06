@@ -1,6 +1,9 @@
 package view;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,11 +51,11 @@ public class CalendarView extends Application implements Observer {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
-		controller = new CalendarController(2020);
+		currYear = LocalDate.now().getYear();
+		currMonth = LocalDate.now().getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+		controller = new CalendarController(currYear);
 		controller.addObserver(this);
-		currYear = 2020;
-		currMonth = "May";
-		currView = new MonthView("May");
+		currView = new MonthView(currMonth);
 		currView.show();
 	}
 	
