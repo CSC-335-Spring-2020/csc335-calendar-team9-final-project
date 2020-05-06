@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * This class represents a Week in the Calendar, and uses the Event class
+ * to keep track of given events on that day. 
+ *
+ */
 public class Week extends java.util.Observable implements java.io.Serializable{
 	private static final long serialVersionUID = 1;
 	private Day[] days;

@@ -31,11 +31,10 @@ public class CalendarController extends Observable{
 	/**
 	 * The constructor for the controller, taking in an int representing the current year
 	 * @param currYear
-	 * This method takes in the current year of the calendar as well as the view (which will
-	 * be an Observer) and creates the Calendar with the various important fields of the controller.
+	 * This method takes in the current year of the calendar and creates the Calendar 
+	 * with the various important fields of the controller.
 	 * The method creates a HashMap of years (which are the different Calendars) as well as 
-	 * creating a save file for the calendar's save state. The constructor sets all of these things
-	 * and then sets the view as an observer. 
+	 * creating a save file for the calendar's save state. 
 	 */
 	@SuppressWarnings("unchecked")
 	public CalendarController(int currYear) {
