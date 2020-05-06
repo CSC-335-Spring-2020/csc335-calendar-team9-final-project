@@ -450,6 +450,13 @@ public class CalendarView extends Application implements Observer {
 			this.setScene(new Scene(control));
 		}
 		
+		/**
+		 * A method for converting a color string to an actual JavaFX Color.
+		 * @param color The string of color to convert.
+		 * @return The JavaFX Color of the corresponding string.
+		 * A wrapper for a switch statement, converts the string "Red" to Color.RED for example.
+		 * If somehow the color string given is not one of the valid colors, it defaults to our favorite Color.LIGHTBLUE.
+		 */
 		private Color decode(String color) {
 			switch(color) {
 			case "Red":

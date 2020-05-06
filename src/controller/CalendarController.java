@@ -28,6 +28,7 @@ public class CalendarController extends Observable{
 	 * The constructor for the controller, taking in an int representing the current year
 	 * @param currYear
 	 */
+	@SuppressWarnings("unchecked")
 	public CalendarController(int currYear, CalendarView view) {
 		this.currYear = currYear;
 		this.view = view;
