@@ -36,8 +36,7 @@ import model.Event;
 public class CalendarView extends Application implements Observer {
 	private CalendarController controller;
 	private int currYear;
-	private MonthView months;
-	private WeekView weeks;
+	private Stage currView;
 	private String currMonth;
 	private int currDate;
 	
@@ -52,8 +51,8 @@ public class CalendarView extends Application implements Observer {
 		controller = new CalendarController(2020,this);
 		currYear = 2020;
 		currMonth = "May";
-		months = new MonthView("May");
-		months.show();
+		currView = new MonthView("May");
+		currView.show();
 	}
 	
 	/**
@@ -63,15 +62,12 @@ public class CalendarView extends Application implements Observer {
 	 * The new month is shown as a MonthView.
 	 */
 	private void newMonth(String month) {
-		if (months != null) {
-			months.close();
-		}
-		if (weeks != null){
-			weeks.close();
+		if (currView != null) {
+			currView.close();
 		}
 		currMonth = month;
-		months = new MonthView(month);
-		months.show();
+		currView = new MonthView(month);
+		currView.show();
 	}
 	
 	/**
@@ -81,16 +77,13 @@ public class CalendarView extends Application implements Observer {
 	 * Since the week is received as "Week #", a split and index is needed to get the number.
 	 */
 	private void newWeek(String week) {
-		if (months != null) {
-			months.close();
-		}
-		if (weeks != null){
-			weeks.close();
+		if (currView != null) {
+			currView.close();
 		}
 		String[] instruction = week.split(" ");
 		int num = Integer.valueOf(instruction[1]);
-		weeks = new WeekView(num, currMonth);
-		weeks.show();
+		currView = new WeekView(num, currMonth);
+		currView.show();
 	}
 	
 	private class MonthView extends Stage {
@@ -146,8 +139,14 @@ public class CalendarView extends Application implements Observer {
 					if(days[i*WIDTH + j] != null) {
 						tempRect = new Rectangle(80,70,Color.rgb(130,180,250));
 						tempStack.getChildren().add(tempRect);
-						Text dayLabel = new Text(String.valueOf(currDay));
-						VBox dayInfo = new VBox(dayLabel);
+						int eventCount = days[i*WIDTH + j].getEvents().size();
+						String eventCountString = "";
+						if(eventCount == 1) {
+							eventCountString = "1 Event";
+						} else if(eventCount > 1) {
+							eventCountString = String.format("%d Events", eventCount);
+						}
+						VBox dayInfo = new VBox(new Text(String.valueOf(currDay)), new Text(eventCountString));
 						tempStack.getChildren().add(dayInfo);
 						currDay++;
 					} else {
@@ -158,7 +157,7 @@ public class CalendarView extends Application implements Observer {
 				}
 			}
 			grid.setOnMouseClicked((event) -> {
-				currDate = (int)(event.getY()/82) * WIDTH + (int)event.getX()/92;
+				currDate = (int)(event.getY()/72) * WIDTH + (int)event.getX()/82;
 				Day day = controller.getDays(month)[currDate];
 				if(day != null) {
 					DayView dayView = new DayView(day);
@@ -180,11 +179,12 @@ public class CalendarView extends Application implements Observer {
 			Label sun = new Label("Sunday");
 			Label sat = new Label("Saturday");
 			dayLabel.getChildren().addAll(sun, mon, tue, wed, thu, fri, sat);
-			HBox.setMargin(mon, new Insets(0,0,0,15));
-			HBox.setMargin(tue, new Insets(0,0,0,12));
-			HBox.setMargin(wed, new Insets(0,0,0,11));
-			HBox.setMargin(sat, new Insets(0,0,0,12));
-			dayLabel.setSpacing(39);
+			HBox.setMargin(mon, new Insets(0,0,0,34));
+			HBox.setMargin(tue, new Insets(0,0,0,29));
+			HBox.setMargin(wed, new Insets(0,0,0,26));
+			HBox.setMargin(thu, new Insets(0,22,0,14));
+			HBox.setMargin(sat, new Insets(0,0,0,35));
+			dayLabel.setSpacing(10);
 			
 		}
 		
@@ -279,12 +279,12 @@ public class CalendarView extends Application implements Observer {
 			Label sun = new Label("Sunday");
 			Label sat = new Label("Saturday");
 			dayLabel.getChildren().addAll(sun, mon, tue, wed, thu, fri, sat);
-			HBox.setMargin(mon, new Insets(0,0,0,15));
-			HBox.setMargin(tue, new Insets(0,0,0,12));
-			HBox.setMargin(wed, new Insets(0,0,0,11));
-			HBox.setMargin(sat, new Insets(0,0,0,12));
-			dayLabel.setSpacing(39);
-			
+			HBox.setMargin(mon, new Insets(0,0,0,34));
+			HBox.setMargin(tue, new Insets(0,0,0,29));
+			HBox.setMargin(wed, new Insets(0,0,0,26));
+			HBox.setMargin(thu, new Insets(0,22,0,14));
+			HBox.setMargin(sat, new Insets(0,0,0,35));
+			dayLabel.setSpacing(10);
 		}
 
 		/**
@@ -308,13 +308,19 @@ public class CalendarView extends Application implements Observer {
 					if (count > 0 && days[i] != null) {
 						tempRect = new Rectangle(80,512,Color.rgb(130,180,250));
 						tempStack.getChildren().add(tempRect);
-						Text dayLabel = new Text(String.valueOf(count));
-						tempStack.getChildren().add(dayLabel);
+						int eventCount = days[i].getEvents().size();
+						String eventCountString = "";
+						if(eventCount == 1) {
+							eventCountString = "1 Event";
+						} else if(eventCount > 1) {
+							eventCountString = String.format("%d Events", eventCount);
+						}
+						VBox dayInfo = new VBox(new Text(String.valueOf(i)), new Text(eventCountString));
+						tempStack.getChildren().add(dayInfo);
 					} else {
 						tempRect = new Rectangle(80,512,Color.LIGHTBLUE);
 						tempStack.getChildren().add(tempRect);
 					}
-					StackPane.setMargin(tempRect, new Insets(5));
 					grid.add(tempStack, i, 0);
 					}
 			}
@@ -377,6 +383,15 @@ public class CalendarView extends Application implements Observer {
 			buttonRow.setSpacing(8);
 			
 		}
+		
+		/**
+		 * Simple getter method to retrieve the current week number.
+		 * @return The number of the week, from 1-6 through the month.
+		 * This is used to help refresh the view when an event is added or removed.
+		 */
+		public int getWeek() {
+			return this.weekNum;
+		}
 	}
 	
 	
@@ -405,13 +420,18 @@ public class CalendarView extends Application implements Observer {
 			List<Event> eventsList = day.getEvents();
 			for(Event e: eventsList) {
 				StackPane tempStack = new StackPane();
-				Rectangle eventRect = new Rectangle(300,Math.max(20,e.getDuration()),Color.LIGHTBLUE);
+				Rectangle eventRect = new Rectangle(300,Math.max(20,e.getDuration()),e.getColor());
 				tempStack.getChildren().add(eventRect);
 				tempStack.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
 				tempStack.getChildren().add(new Text(e.getLabel()));
 				tempStack.setOnMouseClicked((event) -> {
 					EventBox eventDetails = new EventBox(e);
 					eventDetails.showAndWait();
+					if(eventDetails.removed) {
+						day.removeEvent(e);
+						controller.save();
+						this.close();
+					}
 				});
 				Label time = new Label(String.format("%02d:%02d", e.getSH(),e.getSM()));
 				HBox tempBox = new HBox(time,tempStack);
@@ -432,7 +452,7 @@ public class CalendarView extends Application implements Observer {
 	}
 	
 	private class EventBox extends Stage {
-
+		public boolean removed;
 		/**
 		 * This window provides a basic overview of the details of an event, and the ability to remove it.
 		 * @param e The event object to provide information for.
@@ -440,6 +460,7 @@ public class CalendarView extends Application implements Observer {
 		 * There is also a button that removes the event from the calendar. 
 		 */
 		public EventBox(Event e) {
+			this.removed = false;
 			BorderPane control = new BorderPane();
 			control.setPrefHeight(200);
 			control.setPrefWidth(300);
@@ -465,8 +486,7 @@ public class CalendarView extends Application implements Observer {
 			notesInfo.setPadding(new Insets(5));
 			notes.setPadding(new Insets(5));
 			removeButton.setOnAction((event) -> {
-				//At this point can call a removeEvent function
-				controller.save();
+				this.removed = true;
 				this.close();
 			});
 			VBox details = new VBox(titleInfo,title,startInfo,start,endInfo,end,locInfo,loc,notesInfo,notes);
@@ -479,6 +499,7 @@ public class CalendarView extends Application implements Observer {
 	
 	private class addEventBox extends Stage {
 		public boolean changed;
+		private Color color;
 		
 		/**
 		 * This window allows the user to add a new event to the given day.
@@ -554,6 +575,36 @@ public class CalendarView extends Application implements Observer {
 			loc.setSpacing(8);
 			loc.getChildren().addAll(locTitle, locField);
 			
+			//Color setup
+			
+			ComboBox<String> colors = new ComboBox<String>();
+			colors.getItems().addAll("Red","Orange","Yellow","Green","Blue","Purple");
+			colors.setValue("Blue");
+			colors.setOnAction((e) -> {
+				switch(colors.getValue()) {
+				case "Red":
+					color = Color.RED;
+					break;
+				case "Orange":
+					color = Color.ORANGE;
+					break;
+				case "Yellow":
+					color = Color.YELLOW;
+					break;
+				case "Green":
+					color = Color.GREEN;
+					break;
+				case "Blue":
+					color = Color.BLUE;
+					break;
+				case "Purple":
+					color = Color.PURPLE;
+					break;
+				default:
+					color = Color.LIGHTBLUE;
+				}
+			});
+			
 			//HBox Line 4 setup
 			Button ok = new Button("OK");
 			Button cancel = new Button("Cancel");
@@ -562,7 +613,7 @@ public class CalendarView extends Application implements Observer {
 			buttons.setSpacing(8);
 			ok.setOnAction((e) -> {
 				if(!controller.addEvent(day, tField.getText(), Integer.valueOf(sh.getValue()), Integer.valueOf(sm.getValue()),
-															Integer.valueOf(eh.getValue()), Integer.valueOf(em.getValue()), noteField.getText(), locField.getText())) {
+															Integer.valueOf(eh.getValue()), Integer.valueOf(em.getValue()), noteField.getText(), locField.getText(), color)) {
 					Alert invalid = new Alert(AlertType.ERROR);
 					invalid.setTitle("Invalid event");
 					invalid.setContentText("That is not a valid event. Please make sure you have a title and a positive duration.");
@@ -576,7 +627,7 @@ public class CalendarView extends Application implements Observer {
 			});
 			
 			//Vbox setup
-			vbox.getChildren().addAll(label, sTime, eTime, notes, loc, buttons);
+			vbox.getChildren().addAll(label, sTime, eTime, notes, loc, colors, buttons);
 			vbox.setPadding(new Insets(8,8,8,8));
 			vbox.setSpacing(8);
 			pane.setCenter(vbox);
@@ -591,10 +642,19 @@ public class CalendarView extends Application implements Observer {
 	 * This method redraws the given view when an update is detected in the model.
 	 * When an event is added or removed from the calendar, the currently viewed day is refreshed
 	 * to reflect the new event list. This is done by producing a new DayView of the most recently viewed day.
+	 * It also rebuilds the open calendar to reflect the change in event counts for the given day.
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Day day = controller.getDays(currMonth)[currDate];
+		if(currView instanceof MonthView) {
+			currView.close();
+			currView = new MonthView(currMonth);
+			currView.show();
+		} else if(currView instanceof WeekView) {
+			currView.close();
+			currView = new WeekView(((WeekView) currView).getWeek(),currMonth);
+		}
 		if(day != null) {
 			DayView dayView = new DayView(day);
 			dayView.show();
