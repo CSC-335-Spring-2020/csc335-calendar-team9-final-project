@@ -191,6 +191,8 @@ public class CalendarView extends Application implements Observer {
 		/**
 		 * Method for producing the year, month, and week selectors to change the calendar view.
 		 * If the week selector is changed to a numbered week, a WeekView is produced instead of a MonthView.
+		 * 
+		 * This builds ComboBox's for each selector and sets the default to the current month and year as saved in the view. 
 		 */
 		private void buildButtons() {
 			ComboBox<String> weeks = new ComboBox<String>();
