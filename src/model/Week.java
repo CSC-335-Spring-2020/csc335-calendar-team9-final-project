@@ -3,7 +3,6 @@ package model;
 public class Week extends java.util.Observable implements java.io.Serializable{
 	private static final long serialVersionUID = 1;
 	private Day[] days;
-	private int weekNum;
 
 	/**
 	 * This is the constructor method for the Week object, and it takes in a weekNum (int version
@@ -13,7 +12,6 @@ public class Week extends java.util.Observable implements java.io.Serializable{
 	 * creates the array of Day objects for the week. 
 	 */
 	public Week(int weekNum) {
-		this.weekNum = weekNum;
 		days = new Day[7]; 
 	}
 	
@@ -25,7 +23,6 @@ public class Week extends java.util.Observable implements java.io.Serializable{
 	 * This method sets the Week's fields to the passed in objects
 	 */
 	public Week(int weekNum, Day[] days) {
-		this.weekNum = weekNum;
 		this.days = days;
 	}
 	

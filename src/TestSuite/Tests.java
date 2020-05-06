@@ -8,13 +8,11 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import controller.CalendarController;
-import javafx.scene.paint.Color;
 import model.Day;
 import model.Event;
 import model.Month;
 import model.Week;
 import model.Year;
-import view.CalendarView;
 
 /**
  * This is the test suite for the model and controller aspects of the project.
@@ -31,9 +29,8 @@ public class Tests {
 	 */
 	@Test
 	void testConstructor() {
-		CalendarView view = new CalendarView();
 		int currYear = 2020;
-		CalendarController controller =  new CalendarController(currYear, view);
+		CalendarController controller =  new CalendarController(currYear);
 		assertEquals(2020, controller.getYear());
 		
 	}
@@ -46,10 +43,9 @@ public class Tests {
 	 */
 	@Test
 	void test_addEvents() {
-		CalendarView view = new CalendarView();
 		Day day = new Day(1, 12, "April");
 		int currYear = 2020;
-		CalendarController controller =  new CalendarController(currYear, view);
+		CalendarController controller =  new CalendarController(currYear);
 		controller.addEvent(day, "Crying", 0, 0, 23, 0, "Hahahaha", "My house", "BLUE");
 		assertEquals("Crying", day.getEvents().get(0).getLabel());
 		
@@ -62,9 +58,8 @@ public class Tests {
 	 */
 	@Test
 	void test_changeYear() {
-		CalendarView view = new CalendarView();
 		int currYear = 2020;
-		CalendarController controller =  new CalendarController(currYear, view);
+		CalendarController controller =  new CalendarController(currYear);
 		controller.changeYear(2030);
 		assertEquals(2030, controller.getYear());
 		controller.changeYear(2021);
@@ -80,9 +75,8 @@ public class Tests {
 	 */
 	@Test
 	void test_getDays() {
-		CalendarView view = new CalendarView();
 		int currYear = 2020;
-		CalendarController controller =  new CalendarController(currYear, view);
+		CalendarController controller =  new CalendarController(currYear);
 		assertEquals(null, controller.getDays("April")[0]);
 		
 	}
@@ -95,7 +89,6 @@ public class Tests {
 	 */
 	@Test
 	void test_setDay() {
-		CalendarView view = new CalendarView();
 		Month month = new Month("April", 2022);
 		Day day = new Day(1, 12, "April");
 		//month array starts at 0
@@ -112,7 +105,6 @@ public class Tests {
 	 */
 	@Test 
 	void test_getNumDays() {
-		CalendarView view = new CalendarView();
 		Month month = new Month("April", 2022);
 		assertEquals(30, month.getNumDays());
 		
@@ -125,7 +117,6 @@ public class Tests {
 	 */
 	@Test
 	void test_getName() {
-		CalendarView view = new CalendarView();
 		Month month = new Month("April", 2022);
 		assertEquals("April", month.getName());
 	}
@@ -137,7 +128,6 @@ public class Tests {
 	 */
 	@Test
 	void test_getYear() {
-		CalendarView view = new CalendarView();
 		Month month = new Month("April", 2022);
 		assertEquals(2022, month.getYear());
 		
@@ -152,7 +142,6 @@ public class Tests {
 	 */
 	@Test
 	void test_leapYear() {
-		CalendarView view = new CalendarView();
 		Month month = new Month("February", 400);
 		assertEquals(29, month.getNumDays());
 		Month month2 = new Month("February", 1800);
@@ -169,7 +158,6 @@ public class Tests {
 	 */
 	@Test
 	void test_yearFill() {
-		CalendarView view = new CalendarView();
 		List<Month> monthNames = new ArrayList<Month>();
 		monthNames.add(new Month("January", 2020));
 		monthNames.add(new Month("February", 2020));
@@ -269,7 +257,6 @@ public class Tests {
 	@Test
 	void test_setEvents() {
 		List<Event> events = new ArrayList<Event>();
-		CalendarView view = new CalendarView();
 		Day day2 = new Day(0, 24, "March", events);
 		Event e = new Event(day2, "I'm so tired", 1, 30, 2, 30, ":(", "My House", "BLUE");
 		events.add(e);
@@ -286,7 +273,6 @@ public class Tests {
 	 */
 	@Test
 	void test_getDate() {
-		CalendarView view = new CalendarView();
 		Day day = new Day(5, 12, "April");
 		assertEquals(12, day.getDate());
 	}
@@ -299,7 +285,6 @@ public class Tests {
 	 */
 	@Test
 	void test_setters() {
-		CalendarView view = new CalendarView();
 		Day day = new Day(5, 12, "April");
 		day.setMonth("March");
 		assertEquals("March", day.getMonth());

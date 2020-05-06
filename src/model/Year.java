@@ -3,9 +3,6 @@ package model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observer;
-
-import view.CalendarView;
 
 /**
  * This represents a Year of a calendar, and uses the Month, Week, Day, and Event classes to model 
@@ -16,7 +13,6 @@ public class Year implements java.io.Serializable{
 	private static final long serialVersionUID = 1;
 	private Map<String, Month> months = new HashMap<String, Month>();
 	private Map<Integer, String> monthNames = new HashMap<Integer, String>();
-	private int year;
 
 		/**
 		 * This is the constructor for the year, takes in the int year 
@@ -27,7 +23,6 @@ public class Year implements java.io.Serializable{
 		 */
 		public Year(int year) {
 			fillMonthNames();
-			this.year = year;
 			months.put("January", new Month("January", year));
 			months.put("February", new Month("February", year));
 			months.put("March", new Month("March", year));
@@ -52,8 +47,6 @@ public class Year implements java.io.Serializable{
 		 */
 		public Year(int year, List<Month> months) {
 			fillMonthNames();
-			
-			this.year = year;
 			for (Month month : months) {
 				this.months.put(month.getName(), month);
 			}

@@ -48,7 +48,8 @@ public class CalendarView extends Application implements Observer {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
-		controller = new CalendarController(2020,this);
+		controller = new CalendarController(2020);
+		controller.addObserver(this);
 		currYear = 2020;
 		currMonth = "May";
 		currView = new MonthView("May");

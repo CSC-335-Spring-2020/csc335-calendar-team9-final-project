@@ -11,12 +11,10 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 
 import model.Day;
 import model.Event;
 import model.Year;
-import view.CalendarView;
 
 /**
  * This is the Controller aspect of our MVC architecture for our Calendar. This class
@@ -26,7 +24,6 @@ import view.CalendarView;
  *
  */
 public class CalendarController extends Observable{
-	private CalendarView view;
 	private int currYear;
 	private Map<Integer, Year> years;
 	private final String saveName = "calendars";
@@ -41,9 +38,8 @@ public class CalendarController extends Observable{
 	 * and then sets the view as an observer. 
 	 */
 	@SuppressWarnings("unchecked")
-	public CalendarController(int currYear, CalendarView view) {
+	public CalendarController(int currYear) {
 		this.currYear = currYear;
-		this.view = view;
 		years = new HashMap<Integer, Year>();
 		File check = new File(saveName);
 		if (check.isFile()) {
@@ -64,7 +60,6 @@ public class CalendarController extends Observable{
 			years.put(currYear, new Year(currYear));
 			years.put(currYear - 1, new Year(currYear - 1));
 			years.put(currYear + 1, new Year(currYear + 1));
-			this.addObserver((Observer) view);
 		}
 	}
 	

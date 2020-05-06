@@ -1,9 +1,5 @@
 package model;
 
-import java.util.Observer;
-
-import view.CalendarView;
-
 /**
  * This represents a Month of a calendar, and uses the Week, Day, Year, and Event classes to model 
  * a month, as well as CalendarView in order to allow the view to access the month to present visually.
@@ -14,8 +10,6 @@ public class Month implements java.io.Serializable{
 	private String name;
 	private int year;
 	private Day[] days;
-	private int startDayOfWeek;
-	private CalendarView observer;
 	private int numDays;
 
 	
@@ -33,7 +27,6 @@ public class Month implements java.io.Serializable{
 		this.name = name;
 		this.year = year;
 		int offset = getOffset();
-		startDayOfWeek = offset + 1;
 		days = new Day[42];
 		if (name.equals("February")) {
 			if (leap(year)) {
