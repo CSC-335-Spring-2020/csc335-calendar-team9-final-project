@@ -96,6 +96,8 @@ public class CalendarController extends Observable{
 	 * @param eM The end minute of the minute
 	 * @param notes The notes of the event (can be null)
 	 * @param loc The location of the event (can be null)
+	 * @param color The string representation of the color for color coding
+	 * @return a boolean value of if the attempt to add was successful
 	 * This method takes in all of the necessary fields for the event to add to the inputted day, 
 	 * and it creates an event (which has an Observer, the controller's view object). If the event 
 	 * is able to be added (if the label isn't empty), true is returned. 
@@ -130,7 +132,8 @@ public class CalendarController extends Observable{
 	/**
 	 * This method removes the first instance of the event with the passed
 	 * in label within the events list of the day
-	 * @param label The title of the event to remove
+	 * @param day The day to remove an event from
+	 * @param event the Event to remove from the specified day
 	 * This method takes in an event object and removes the given event from the list of 
 	 * events. The Day is then set as changed and observers are notified (note, the 
 	 * event is found by comparing event labels).
@@ -167,7 +170,6 @@ public class CalendarController extends Observable{
 	 * Takes in a year and a month and returns the array of Day objects for that
 	 * month
 	 * @param monthName The month to grab the days of
-	 * @param year The year in which the month is
 	 * @return Day[] the array of days for that month
 	 * This method takes in a String monthName and returns the current year's Day array for the given
 	 * month. 
