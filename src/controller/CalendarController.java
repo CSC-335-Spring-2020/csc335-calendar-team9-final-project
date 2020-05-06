@@ -106,6 +106,9 @@ public class CalendarController extends Observable{
 			return false;
 		} else {
 			Event event = new Event(day, label, sH, sM, eH, eM, notes, loc, color);
+			if(event.getDuration() < 0) {
+				return false;
+			}
 			day.addEvent(event);
 			this.setChanged();
 			this.notifyObservers();
