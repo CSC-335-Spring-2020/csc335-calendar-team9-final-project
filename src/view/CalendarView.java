@@ -1,6 +1,9 @@
 package view;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,10 +51,11 @@ public class CalendarView extends Application implements Observer {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
-		controller = new CalendarController(2020,this);
-		currYear = 2020;
-		currMonth = "May";
-		currView = new MonthView("May");
+		currYear = LocalDate.now().getYear();
+		currMonth = LocalDate.now().getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+		controller = new CalendarController(currYear);
+		controller.addObserver(this);
+		currView = new MonthView(currMonth);
 		currView.show();
 	}
 	
@@ -191,6 +195,8 @@ public class CalendarView extends Application implements Observer {
 		/**
 		 * Method for producing the year, month, and week selectors to change the calendar view.
 		 * If the week selector is changed to a numbered week, a WeekView is produced instead of a MonthView.
+		 * 
+		 * This builds ComboBox's for each selector and sets the default to the current month and year as saved in the view. 
 		 */
 		private void buildButtons() {
 			ComboBox<String> weeks = new ComboBox<String>();
@@ -420,7 +426,7 @@ public class CalendarView extends Application implements Observer {
 			List<Event> eventsList = day.getEvents();
 			for(Event e: eventsList) {
 				StackPane tempStack = new StackPane();
-				Rectangle eventRect = new Rectangle(300,Math.max(20,e.getDuration()),Color.LIGHTBLUE);
+				Rectangle eventRect = new Rectangle(300,Math.max(20,e.getDuration()),decode(e.getColor()));
 				tempStack.getChildren().add(eventRect);
 				tempStack.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
 				tempStack.getChildren().add(new Text(e.getLabel()));
@@ -428,7 +434,7 @@ public class CalendarView extends Application implements Observer {
 					EventBox eventDetails = new EventBox(e);
 					eventDetails.showAndWait();
 					if(eventDetails.removed) {
-						day.removeEvent(e);
+						controller.removeEvent(day, e);
 						controller.save();
 						this.close();
 					}
@@ -448,6 +454,32 @@ public class CalendarView extends Application implements Observer {
 			control.setCenter(eventsVBox);
 			this.setTitle(day.getMonth() + " " + String.valueOf(day.getDate() + 1));
 			this.setScene(new Scene(control));
+		}
+		
+		/**
+		 * A method for converting a color string to an actual JavaFX Color.
+		 * @param color The string of color to convert.
+		 * @return The JavaFX Color of the corresponding string.
+		 * A wrapper for a switch statement, converts the string "Red" to Color.RED for example.
+		 * If somehow the color string given is not one of the valid colors, it defaults to our favorite Color.LIGHTBLUE.
+		 */
+		private Color decode(String color) {
+			switch(color) {
+			case "Red":
+				return Color.RED;
+			case "Orange":
+				return Color.ORANGE;
+			case "Yellow":
+				return Color.YELLOW;
+			case "Green":
+				return Color.GREEN;
+			case "Blue":
+				return Color.BLUE;
+			case "Purple":
+				return Color.PURPLE;
+			default:
+				return Color.LIGHTBLUE;
+			}
 		}
 	}
 	
@@ -574,6 +606,13 @@ public class CalendarView extends Application implements Observer {
 			loc.setSpacing(8);
 			loc.getChildren().addAll(locTitle, locField);
 			
+			//Color setup
+			
+			ComboBox<String> colors = new ComboBox<String>();
+			colors.getItems().addAll("Red","Orange","Yellow","Green","Blue","Purple");
+			colors.setValue("Blue");
+			VBox.setMargin(colors, new Insets(8));
+			
 			//HBox Line 4 setup
 			Button ok = new Button("OK");
 			Button cancel = new Button("Cancel");
@@ -582,7 +621,7 @@ public class CalendarView extends Application implements Observer {
 			buttons.setSpacing(8);
 			ok.setOnAction((e) -> {
 				if(!controller.addEvent(day, tField.getText(), Integer.valueOf(sh.getValue()), Integer.valueOf(sm.getValue()),
-															Integer.valueOf(eh.getValue()), Integer.valueOf(em.getValue()), noteField.getText(), locField.getText())) {
+															Integer.valueOf(eh.getValue()), Integer.valueOf(em.getValue()), noteField.getText(), locField.getText(), colors.getValue())) {
 					Alert invalid = new Alert(AlertType.ERROR);
 					invalid.setTitle("Invalid event");
 					invalid.setContentText("That is not a valid event. Please make sure you have a title and a positive duration.");
@@ -596,7 +635,7 @@ public class CalendarView extends Application implements Observer {
 			});
 			
 			//Vbox setup
-			vbox.getChildren().addAll(label, sTime, eTime, notes, loc, buttons);
+			vbox.getChildren().addAll(label, sTime, eTime, notes, loc, colors, buttons);
 			vbox.setPadding(new Insets(8,8,8,8));
 			vbox.setSpacing(8);
 			pane.setCenter(vbox);
