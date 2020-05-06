@@ -33,6 +33,7 @@ public class CalendarController extends Observable{
 	 * creating a save file for the calendar's save state. The constructor sets all of these things
 	 * and then sets the view as an observer. 
 	 */
+	@SuppressWarnings("unchecked")
 	public CalendarController(int currYear, CalendarView view) {
 		this.currYear = currYear;
 		this.view = view;
