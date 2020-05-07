@@ -33,10 +33,9 @@ public class Tests {
 	void testConstructor() {
 		int currYear = 2020;
 		CalendarController controller =  new CalendarController(currYear);
+		assertEquals(2020, controller.getYear());
 		controller.save();
 		controller =  new CalendarController(currYear);
-		assertEquals(2020, controller.getYear());
-		
 	}
 	
 	/**
