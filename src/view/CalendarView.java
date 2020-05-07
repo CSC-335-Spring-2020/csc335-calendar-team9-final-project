@@ -525,6 +525,7 @@ public class CalendarView extends Application implements Observer {
 			control.setCenter(details);
 			control.setBottom(removeButton);
 			BorderPane.setMargin(removeButton, new Insets(10));
+			this.setTitle(e.getLabel());
 			this.setScene(new Scene(control));
 		}
 	}
