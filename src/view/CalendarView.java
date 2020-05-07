@@ -321,7 +321,7 @@ public class CalendarView extends Application implements Observer {
 						} else if(eventCount > 1) {
 							eventCountString = String.format("%d Events", eventCount);
 						}
-						VBox dayInfo = new VBox(new Text(String.valueOf(i)), new Text(eventCountString));
+						VBox dayInfo = new VBox(new Text(String.valueOf(count)), new Text(eventCountString));
 						tempStack.getChildren().add(dayInfo);
 					} else {
 						tempRect = new Rectangle(80,512,Color.LIGHTBLUE);
@@ -525,6 +525,7 @@ public class CalendarView extends Application implements Observer {
 			control.setCenter(details);
 			control.setBottom(removeButton);
 			BorderPane.setMargin(removeButton, new Insets(10));
+			this.setTitle(e.getLabel());
 			this.setScene(new Scene(control));
 		}
 	}

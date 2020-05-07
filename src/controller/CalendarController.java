@@ -140,6 +140,7 @@ public class CalendarController extends Observable{
 		for (Event e : day.getEvents()) {
 			if (e.getLabel().equals(event.getLabel())) {
 				day.getEvents().remove(e);
+				this.setChanged();
 				this.notifyObservers();
 				return;
 			}
