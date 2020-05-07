@@ -33,6 +33,8 @@ public class Tests {
 	void testConstructor() {
 		int currYear = 2020;
 		CalendarController controller =  new CalendarController(currYear);
+		controller.save();
+		controller =  new CalendarController(currYear);
 		assertEquals(2020, controller.getYear());
 		
 	}
